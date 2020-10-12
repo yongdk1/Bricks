@@ -1,0 +1,115 @@
+﻿@model BricksMeatballs.Models.FinancialModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<div>
+    <h4>FinancialModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.monthlyFixedIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.monthlyFixedIncome) : @ViewData["monthlyFixedIncome"]
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.monthlyVariableIncome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.monthlyVariableIncome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cashTowardsDownPayment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cashTowardsDownPayment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cpfOrdinaryAccount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cpfOrdinaryAccount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.creditMinPayments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.creditMinPayments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.carLoan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.carLoan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.otherHomeLoan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.otherHomeLoan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.otherLoan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.otherLoan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.propertyType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.propertyType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.loanTenure)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.loanTenure)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.maximumAffordableHousePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.maximumAffordableHousePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.age)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.age)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
