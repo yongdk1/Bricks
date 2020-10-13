@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\peiya\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\peiya\\.nuget\\packages"
+      "C:\\Users\\DuanKai\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\DuanKai\\.nuget\\packages"
     ]
   }
 }
