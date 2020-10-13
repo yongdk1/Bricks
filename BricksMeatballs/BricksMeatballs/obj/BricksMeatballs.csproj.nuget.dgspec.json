@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\peiya\\source\\repos\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj": {}
+    "C:\\Users\\DuanKai\\Source\\Repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj": {}
   },
   "projects": {
-    "C:\\Users\\peiya\\source\\repos\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj": {
+    "C:\\Users\\DuanKai\\Source\\Repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\peiya\\source\\repos\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
+        "projectUniqueName": "C:\\Users\\DuanKai\\Source\\Repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
         "projectName": "BricksMeatballs",
-        "projectPath": "C:\\Users\\peiya\\source\\repos\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
-        "packagesPath": "C:\\Users\\peiya\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\peiya\\source\\repos\\BricksMeatballs\\BricksMeatballs\\obj\\",
+        "projectPath": "C:\\Users\\DuanKai\\Source\\Repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
+        "packagesPath": "C:\\Users\\DuanKai\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DuanKai\\Source\\Repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\peiya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DuanKai\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
