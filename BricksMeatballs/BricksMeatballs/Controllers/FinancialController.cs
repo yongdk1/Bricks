@@ -2,55 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using BricksMeatballs.Models;
 using System.Web;
-using Microsoft.AspNetCore.Http;
 
 namespace BricksMeatballs.Controllers
 {
     public class FinancialController : Controller
     {
-        public IActionResult FinancialCal()
-        {
-            return View();
-        }
-        // GET: Financial
+        // GET: FinancialController
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Financial/Details/5
-        public ActionResult Details(int id)
+        // GET: FinancialController/Create
+        [HttpGet]
+        public IActionResult Create()
         {
-            return View();
+            FinancialModel fmodel = new FinancialModel();
+            return View(fmodel);
         }
 
-        // GET: Financial/Create
-        public ActionResult Calculator()
-        {
-            return View();
-        }
-
-        // POST: Financial/Create
+        // POST: FinancialController/Create
         [HttpPost]
-        public ActionResult Calculator(FinancialModel fmodel)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(FinancialModel fmodel)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    ViewData["monthlyFixedIncome"] = fmodel.monthlyFixedIncome;
-                    ViewData["monthlyVariableIncome"] = fmodel.monthlyVariableIncome;
-                    ViewData["cashTowardsDownPayment"] = fmodel.cashTowardsDownPayment;
-
-                    return View("Index");
-                }
-                else
-                {
-                    return View();
-                }
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -58,43 +40,20 @@ namespace BricksMeatballs.Controllers
             }
         }
 
-        // GET: Financial/Edit/5
+        // GET: FinancialController/Edit/
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Financial/Edit/5
+        // POST: FinancialController/Edit/
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Financial/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Financial/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
