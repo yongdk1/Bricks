@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "b+f1yXpH4Z7+IaL99/g/OqTBsKJXNdJtJXmgwKOQixR6pF+/rlIU+BhyS/gfssaySstRTc4jXnEyWLWnQ7DnQg==",
+  "dgSpecHash": "L8GIXgRJve7xf/GQVPM4qOid+VcgGCxItU43ierkRQ7qewhQ854PRSMO/rkeVh0LItCo3c3IhqszuppEzyyodQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\DuanKai\\Source\\Repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
+  "projectFilePath": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DuanKai\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\DuanKai\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

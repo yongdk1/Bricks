@@ -60,11 +60,14 @@ namespace BricksMeatballs.Models
         //25% minimum down payment,
         //5% minimum cash payment
         //Maximum LTV Ratio 55% (ends >65YO, >25 tenure) or 75%
+        //BSD: 1% on first 180,000; 2% on second 180,000; 3% on third 640,000; 4% on rest
+        //ABSD: SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
         public double CalculateBudget()
         {
             double maxDebtCommitment = 0.6 * (this.monthlyFixedIncome + this.monthlyVariableIncome * 0.7); //60%TDSR, 30%MSR HDB/EC
-            double minDownpayment = 4 * (this.cashTowardsDownPayment + this.cpfOrdinaryAccount); //25%
-            double minCashDownpayment = this.cashTowardsDownPayment; //5%
+            double minDownpaymentCashCPF = 4 * (this.cashTowardsDownPayment + this.cpfOrdinaryAccount); //25%
+            double minDownpaymentCash = 20 * this.cashTowardsDownPayment; //5%
+
 
             return 0;
         }
