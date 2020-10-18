@@ -212,5 +212,4 @@ C:\Users\DuanKai\Source\Repos\peiyan-lim\Bricks\BricksMeatballs\BricksMeatballs\
 C:\Users\DuanKai\Source\Repos\peiyan-lim\Bricks\BricksMeatballs\BricksMeatballs\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\DuanKai\Source\Repos\peiyan-lim\Bricks\BricksMeatballs\BricksMeatballs\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Runtime.Caching.dll
 C:\Users\DuanKai\Source\Repos\peiyan-lim\Bricks\BricksMeatballs\BricksMeatballs\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
-C:\Users\DuanKai\Source\Repos\peiyan-lim\Bricks\BricksMeatballs\BricksMeatballs\obj\Debug\netcoreapp3.1\Razor\Views\Financial\Details.cshtml.g.cs
 C:\Users\DuanKai\Source\Repos\peiyan-lim\Bricks\BricksMeatballs\BricksMeatballs\obj\Debug\netcoreapp3.1\Razor\Views\Financial\Create.cshtml.g.cs
