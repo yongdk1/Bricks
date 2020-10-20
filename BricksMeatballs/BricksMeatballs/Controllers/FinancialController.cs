@@ -14,7 +14,7 @@ namespace BricksMeatballs.Controllers
         // GET: FinancialController
         public ActionResult Index()
         {
-            return View(ViewBag.fmodel);
+            return View();
         }
 
         // GET: FinancialController/Create
@@ -32,7 +32,6 @@ namespace BricksMeatballs.Controllers
         {
             try
             {
-                ViewBag.fmodel = fmodel;
                 return RedirectToAction(nameof(Index));
             }
             catch
