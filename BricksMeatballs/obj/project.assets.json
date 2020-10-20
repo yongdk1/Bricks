@@ -8820,20 +8820,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\DuanKai\\.nuget\\packages\\": {}
+    "C:\\Users\\corli\\.nuget\\packages\\": {},
+    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
+      "projectUniqueName": "C:\\Users\\corli\\Source\\Repos\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
       "projectName": "BricksMeatballs",
-      "projectPath": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
-      "packagesPath": "C:\\Users\\DuanKai\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\obj\\",
+      "projectPath": "C:\\Users\\corli\\Source\\Repos\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
+      "packagesPath": "C:\\Users\\corli\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\corli\\Source\\Repos\\Bricks\\BricksMeatballs\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\DuanKai\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\corli\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -8893,7 +8898,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
   }
