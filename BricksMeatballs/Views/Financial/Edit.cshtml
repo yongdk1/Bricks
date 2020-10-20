@@ -5,43 +5,28 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .FinancialCal {
-        background-position: 0% 50%;
-        background-image: url('../../images/background.jpg');
-        background-repeat: no-repeat;
-        background-size: cover;
-        height: 250px;
-        width: 111%;
-        position: relative;
-        left: -5.5%;
-        opacity: 0.7;
-        padding: 7%;
-        color: white;
-        font-size: 40px;
-        margin-bottom: 40px;
-    }
+<h1>Edit</h1>
 
-</style>
-<div class="FinancialCal">Financial Calculator</div>
+<h4>FinancialModel</h4>
+<hr />
 <div class="row">
-    <div class="col-md-4">  
+    <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="ApplicantStatus" /> @Html.DisplayNameFor(model => model.ApplicantStatus)
-                </label>
+            <div class="form-group">
+                <label asp-for="ApplicantStatus" class="control-label"></label>
+                <input asp-for="ApplicantStatus" class="form-control" />
+                <span asp-validation-for="ApplicantStatus" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Age" class="control-label"></label>
                 <input asp-for="Age" class="form-control" />
                 <span asp-validation-for="Age" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Residency" /> @Html.DisplayNameFor(model => model.Residency)
-                </label>
+            <div class="form-group">
+                <label asp-for="Residency" class="control-label"></label>
+                <input asp-for="Residency" class="form-control" />
+                <span asp-validation-for="Residency" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumProperties" class="control-label"></label>
@@ -64,19 +49,19 @@
                 <span asp-validation-for="MonthlyVariableIncome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CashTowardsDownPayment" class="control-label"></label>
-                <input asp-for="CashTowardsDownPayment" class="form-control" />
-                <span asp-validation-for="CashTowardsDownPayment" class="text-danger"></span>
+                <label asp-for="Cash" class="control-label"></label>
+                <input asp-for="Cash" class="form-control" />
+                <span asp-validation-for="Cash" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CpfOrdinaryAccount" class="control-label"></label>
-                <input asp-for="CpfOrdinaryAccount" class="form-control" />
-                <span asp-validation-for="CpfOrdinaryAccount" class="text-danger"></span>
+                <label asp-for="Cpf" class="control-label"></label>
+                <input asp-for="Cpf" class="form-control" />
+                <span asp-validation-for="Cpf" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CreditMinPayments" class="control-label"></label>
-                <input asp-for="CreditMinPayments" class="form-control" />
-                <span asp-validation-for="CreditMinPayments" class="text-danger"></span>
+                <label asp-for="Credit" class="control-label"></label>
+                <input asp-for="Credit" class="form-control" />
+                <span asp-validation-for="Credit" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CarLoan" class="control-label"></label>
@@ -119,6 +104,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

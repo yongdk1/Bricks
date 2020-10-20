@@ -12,9 +12,10 @@ namespace BricksMeatballs.Controllers
     public class FinancialController : Controller
     {
         // GET: FinancialController
-        public ActionResult Index()
+        public ActionResult Index(FinancialModel fmodel)
         {
-            return View(ViewBag.fmodel);
+            ViewBag.TDSRLimit = 3000;
+            return View(fmodel);
         }
 
         // GET: FinancialController/Create
@@ -32,8 +33,7 @@ namespace BricksMeatballs.Controllers
         {
             try
             {
-                ViewBag.fmodel = fmodel;
-                return RedirectToAction(nameof(Index));
+                return View("Index", fmodel);
             }
             catch
             {
@@ -42,7 +42,7 @@ namespace BricksMeatballs.Controllers
         }
 
         // GET: FinancialController/Edit/
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
             return View();
         }
@@ -50,11 +50,11 @@ namespace BricksMeatballs.Controllers
         // POST: FinancialController/Edit/
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(FinancialModel fmodel)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return View("Index", fmodel);
             }
             catch
             {
