@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "Buyer";
+}
+@*<h1>@ViewData["Title"]</h1>*@
+
+<style>
+    body {
+        background: url('../../images/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .panel {
+        border-color: rgba(65, 65, 65, 0.8);
+    }
+
+    .panel-body {
+        color: white;
+    }
+
+    .panel-transparent {
+        background: none;
+    }
+
+        .panel-transparent .panel-body {
+            background: rgba(65, 65, 65, 0.8) !important;
+        }
+
+    .container-fluid {
+        margin-top: 10%;
+    }
+
+    select option[disabled]:first-child {
+        display: none;
+    }
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <br />
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            <div class="panel panel-primary panel-transparent">
+                <div class="panel-body">
+                    <div class='panel-heading text-center panel-relative'>
+                        <h3>Search</h3>
+                        <br />
+                        <form>
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <center>
+                                        <select class="form-control">
+                                            <option value="" selected disabled> Location </option>
+                                            <option value="01">01 - Raffles Place, Cecil, Marina, People's Park</option>
+                                            <option value="02">02 - Anson, Tangong Pagar</option>
+                                            <option value="03">03 - Queenstown, Tiong Bahru</option>
+                                            <option value="04">04 - Telok Blangah, Harbourfront</option>
+                                            <option value="05">05 - Pasir Panjang, Hong Leong Garden, Clementi New Town</option>
+                                            <option value="06">06 - High Street, Beach Road (part)</option>
+                                            <option value="07">07 - Middle Road, Golden Mile</option>
+                                            <option value="08">08 - Little India</option>
+                                            <option value="09">09 - Orchard, Cairnhill, River Valley</option>
+                                            <option value="10">10 - Ardmore, Bukit Timah, Holland Road, Tanglin</option>
+                                            <option value="11">11 - Watten Estate, Novena, Thomson</option>
+                                            <option value="12">12 - Balestier, Toa Payoh, Serangoon</option>
+                                            <option value="13">13 - Macpherson, Braddell</option>
+                                            <option value="14">14 - Geylang, Eunos</option>
+                                            <option value="15">15 - Katong, Joo Chiat, Amber Road</option>
+                                            <option value="16">16 - Bedok, Upper East Coast, Eastwood, Kew Drive</option>
+                                            <option value="17">17 - Loyang, Changi</option>
+                                            <option value="18">18 - Tampines, Pasir Ris</option>
+                                            <option value="19">19 - Serangoon Garden, Hougang, Ponggol</option>
+                                            <option value="20">20 - Bishan, Ang Mo Kio</option>
+                                            <option value="21">21 - Upper Bukit Timah, Clementi Park, Ulu Pandan</option>
+                                            <option value="22">22 - Jurong</option>
+                                            <option value="23">23 - Hillview, Dairy Farm, Bukit Panjang, Choa Chu Kang</option>
+                                            <option value="24">24 - Lim Chu Kang, Tengah</option>
+                                            <option value="25">25 - Kranji, Woodgrove</option>
+                                            <option value="26">26 - Upper Thomson, Springleaf</option>
+                                            <option value="27">27 - Yishun, Sembawang</option>
+                                            <option value="28">28 - Seletar</option>
+                                        </select>
+                                    </center>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <center>
+                                        <select class="form-control">
+                                            <option value="" selected disabled>Property Type</option>
+                                            <option value="Strata Detached">Strata Detached</option>
+                                            <option value="Strata Semidetached">Strata Semidetached</option>
+                                            <option value="Strata Terrace">Strata Terrace</option>
+                                            <option value="Detached">Detached</option>
+                                            <option value="Semi-detached">Semi-detached</option>
+                                            <option value="Terrace">Terrace</option>
+                                            <option value="Apartment">Apartment</option>
+                                            <option value="Condominium">Condominium</option>
+                                            <option value="Executive Condominium">Executive Condominium</option>
+                                        </select>
+                                    </center>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <center>
+                                        <select class="form-control">
+                                            <option value="" selected disabled> Price Range</option>
+                                            <option value="1">New Sale</option>
+                                            <option value="2">Sub Sale</option>
+                                            <option value="3">Resale</option>
+                                        </select>
+                                    </center>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-4">
+                                    <center>
+                                        <select class="form-control">
+                                            <option value="" selected disabled> Sale Type</option>
+                                            <option value="1" name="New Sale">New Sale</option>
+                                            <option value="2" name="Sub Sale">Sub Sale</option>
+                                            <option value="3" name="Resale">Resale</option>
+                                        </select>
+                                    </center>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <center>
+                                        <select class="form-control">
+                                            <option value="" selected disabled> Land Area</option>
+                                            <option value="1">New Sale</option>
+                                            <option value="2">Sub Sale</option>
+                                            <option value="3">Resale</option>
+                                        </select>
+                                    </center>
+                                </div>
+                                <div class="form-group col-sm-4">
+                                    <center>
+                                        <select class="form-control">
+                                            <option value="" selected disabled> Floor Range</option>
+                                            <option value="1">-</option>
+                                            <option value="2">B1-B5</option>
+                                            <option value="3">B6-B10</option>
+                                        </select>
+                                    </center>
+                                </div>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+</div>
+
+
