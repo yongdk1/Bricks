@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Sripriya\\Source\\Repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj": {}
+    "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Sripriya\\Source\\Repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj": {
+    "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sripriya\\Source\\Repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
+        "projectUniqueName": "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
         "projectName": "BricksMeatballs",
-        "projectPath": "C:\\Users\\Sripriya\\Source\\Repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
+        "projectPath": "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\BricksMeatballs.csproj",
         "packagesPath": "C:\\Users\\Sripriya\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sripriya\\Source\\Repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\obj\\",
+        "outputPath": "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\BricksMeatballs\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Sripriya\\AppData\\Roaming\\NuGet\\NuGet.Config",
