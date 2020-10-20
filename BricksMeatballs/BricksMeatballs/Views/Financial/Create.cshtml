@@ -11,16 +11,22 @@
         background-repeat: no-repeat;
         background-size: cover;
         height: 250px;
-        width: 111%;
+        width: 110%;
         position: relative;
-        left: -5.5%;
+
         opacity: 0.7;
         padding: 7%;
         color: white;
         font-size: 40px;
         margin-bottom: 40px;
     }
-
+    .row{
+        margin: 20px; 
+    }
+    .button{
+        margin-left: 30px;
+    }
+    
 </style>
 
 
@@ -110,13 +116,13 @@
             </div>  
         </div>
         
-        <div class="form-group">
+        <div class="form-group button">
             <input type="submit" value="Create" class="btn btn-primary" />
         </div>
     </form>
 </div>
 
-<div>
+<div class="row">
     <a asp-action="Index">Back to List</a>
 </div>
 
