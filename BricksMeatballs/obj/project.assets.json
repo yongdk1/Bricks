@@ -2,66 +2,6 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
-      "ChartJS/20.1.8": {
-        "type": "package",
-        "dependencies": {
-          "jQuery": "3.5.1",
-          "jquery-globalize": "1.1.1"
-        }
-      },
-      "cldrjs/0.4.4": {
-        "type": "package"
-      },
-      "jQuery/3.5.1": {
-        "type": "package"
-      },
-      "jquery-globalize/1.1.1": {
-        "type": "package",
-        "dependencies": {
-          "cldrjs": "0.4.4"
-        }
-      },
-      "Microsoft.AspNet.Mvc/5.2.7": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
-          "Microsoft.AspNet.WebPages": "[3.2.7, 3.3.0)"
-        },
-        "compile": {
-          "lib/net45/System.Web.Mvc.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.Web.Mvc.dll": {}
-        }
-      },
-      "Microsoft.AspNet.Razor/3.2.7": {
-        "type": "package",
-        "compile": {
-          "lib/net45/System.Web.Razor.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.Web.Razor.dll": {}
-        }
-      },
-      "Microsoft.AspNet.WebPages/3.2.7": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
-          "Microsoft.Web.Infrastructure": "1.0.0"
-        },
-        "compile": {
-          "lib/net45/System.Web.Helpers.dll": {},
-          "lib/net45/System.Web.WebPages.Deployment.dll": {},
-          "lib/net45/System.Web.WebPages.Razor.dll": {},
-          "lib/net45/System.Web.WebPages.dll": {}
-        },
-        "runtime": {
-          "lib/net45/System.Web.Helpers.dll": {},
-          "lib/net45/System.Web.WebPages.Deployment.dll": {},
-          "lib/net45/System.Web.WebPages.Razor.dll": {},
-          "lib/net45/System.Web.WebPages.dll": {}
-        }
-      },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -893,15 +833,6 @@
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll": {}
-        }
-      },
-      "Microsoft.Web.Infrastructure/1.0.0": {
-        "type": "package",
-        "compile": {
-          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
-        },
-        "runtime": {
-          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
         }
       },
       "Microsoft.Win32.Primitives/4.3.0": {
@@ -2816,147 +2747,6 @@
     }
   },
   "libraries": {
-    "ChartJS/20.1.8": {
-      "sha512": "PICSAgGC5fGgtsZ5NARskFjnMJLF+AWHIWBrGo1lnHLZLiqZ4E27rV33pYGL1mS6AnkB1dVgr2heaU8PUtzuVg==",
-      "type": "package",
-      "path": "chartjs/20.1.8",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "chartjs.20.1.8.nupkg.sha512",
-        "chartjs.nuspec",
-        "content/net/Scripts/dx.viz.debug.js",
-        "content/net/Scripts/dx.viz.js",
-        "content/net/Scripts/vectormap-data/africa.js",
-        "content/net/Scripts/vectormap-data/canada.js",
-        "content/net/Scripts/vectormap-data/eurasia.js",
-        "content/net/Scripts/vectormap-data/europe.js",
-        "content/net/Scripts/vectormap-data/usa.js",
-        "content/net/Scripts/vectormap-data/world.js",
-        "content/net/Scripts/vectormap-utils/dx.vectormaputils.debug.js",
-        "content/net/Scripts/vectormap-utils/dx.vectormaputils.js",
-        "content/net/Scripts/vectormap-utils/dx.vectormaputils.node.js",
-        "content/netcore/js/dx.viz.debug.js",
-        "content/netcore/js/dx.viz.js",
-        "content/netcore/js/vectormap-data/africa.js",
-        "content/netcore/js/vectormap-data/canada.js",
-        "content/netcore/js/vectormap-data/eurasia.js",
-        "content/netcore/js/vectormap-data/europe.js",
-        "content/netcore/js/vectormap-data/usa.js",
-        "content/netcore/js/vectormap-data/world.js",
-        "content/netcore/js/vectormap-utils/dx.vectormaputils.debug.js",
-        "content/netcore/js/vectormap-utils/dx.vectormaputils.js",
-        "content/netcore/js/vectormap-utils/dx.vectormaputils.node.js",
-        "tools/install.ps1"
-      ]
-    },
-    "cldrjs/0.4.4": {
-      "sha512": "QTJ2r9FpA1XOFPRguhHAFjJZZJVil5TFOUCTLpN02BjQtgXgVDpt5VFyxQp/uNwEh0InNWLdIugl2Ls1IBqfXg==",
-      "type": "package",
-      "path": "cldrjs/0.4.4",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "cldrjs.0.4.4.nupkg.sha512",
-        "cldrjs.nuspec",
-        "content/Scripts/cldr.js",
-        "content/Scripts/cldr/event.js",
-        "content/Scripts/cldr/supplemental.js",
-        "content/Scripts/cldr/unresolved.js"
-      ]
-    },
-    "jQuery/3.5.1": {
-      "sha512": "ji6sm/AI0vjASXAA/AG9Yf5ypALAqIDXFFKPHMAnFL8kp3xqULIWhACjg/OXZP88C56frYlIej2nrdBnhTMYQQ==",
-      "type": "package",
-      "path": "jquery/3.5.1",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Content/Scripts/jquery-3.5.1-vsdoc.js",
-        "Content/Scripts/jquery-3.5.1.js",
-        "Content/Scripts/jquery-3.5.1.min.js",
-        "Content/Scripts/jquery-3.5.1.min.map",
-        "Content/Scripts/jquery-3.5.1.slim.js",
-        "Content/Scripts/jquery-3.5.1.slim.min.js",
-        "Content/Scripts/jquery-3.5.1.slim.min.map",
-        "Tools/common.ps1",
-        "Tools/install.ps1",
-        "Tools/jquery-3.5.1.intellisense.js",
-        "Tools/uninstall.ps1",
-        "jquery.3.5.1.nupkg.sha512",
-        "jquery.nuspec"
-      ]
-    },
-    "jquery-globalize/1.1.1": {
-      "sha512": "tkRqYLIONjwamztg1rG+xyh2asA0ARLOPorfF3N9JW8fWr+srtPAeUNLFHF6NZAQ7Avnkzgi2OC505lK5avFag==",
-      "type": "package",
-      "path": "jquery-globalize/1.1.1",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "content/Scripts/globalize.js",
-        "content/Scripts/globalize/currency.js",
-        "content/Scripts/globalize/date.js",
-        "content/Scripts/globalize/message.js",
-        "content/Scripts/globalize/number.js",
-        "content/Scripts/globalize/plural.js",
-        "content/Scripts/globalize/relative-time.js",
-        "content/Scripts/globalize/unit.js",
-        "jquery-globalize.1.1.1.nupkg.sha512",
-        "jquery-globalize.nuspec"
-      ]
-    },
-    "Microsoft.AspNet.Mvc/5.2.7": {
-      "sha512": "m3hUsn48k6Qb5El9A8naTwGTLCdSQKGSpGweqIfiVKltGJzAJJxuXvhhaQQtLCGg3i5V88iGjz0JG72/tlFKlg==",
-      "type": "package",
-      "path": "microsoft.aspnet.mvc/5.2.7",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Content/Web.config.install.xdt",
-        "Content/Web.config.uninstall.xdt",
-        "lib/net45/System.Web.Mvc.dll",
-        "lib/net45/System.Web.Mvc.xml",
-        "microsoft.aspnet.mvc.5.2.7.nupkg.sha512",
-        "microsoft.aspnet.mvc.nuspec"
-      ]
-    },
-    "Microsoft.AspNet.Razor/3.2.7": {
-      "sha512": "BpWEZ+Ys7g9VAkbAfpG5jr5A1fKcmadCCXv3fYfps5YfTVABJIGV4uc9yvmXKxsNsjL+BzDld2gs+xtgT2gg1g==",
-      "type": "package",
-      "path": "microsoft.aspnet.razor/3.2.7",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net45/System.Web.Razor.dll",
-        "lib/net45/System.Web.Razor.xml",
-        "microsoft.aspnet.razor.3.2.7.nupkg.sha512",
-        "microsoft.aspnet.razor.nuspec"
-      ]
-    },
-    "Microsoft.AspNet.WebPages/3.2.7": {
-      "sha512": "2jwZFB7PvY+tbdz0ZP4iEo7gMrJxkCQUzoGLh6swUc6ZXl6DoKyDslmGcC/j9PFmJXCRMVIqtRorlPSMU2DuRA==",
-      "type": "package",
-      "path": "microsoft.aspnet.webpages/3.2.7",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "Content/Web.config.install.xdt",
-        "Content/Web.config.uninstall.xdt",
-        "lib/net45/System.Web.Helpers.dll",
-        "lib/net45/System.Web.Helpers.xml",
-        "lib/net45/System.Web.WebPages.Deployment.dll",
-        "lib/net45/System.Web.WebPages.Deployment.xml",
-        "lib/net45/System.Web.WebPages.Razor.dll",
-        "lib/net45/System.Web.WebPages.Razor.xml",
-        "lib/net45/System.Web.WebPages.dll",
-        "lib/net45/System.Web.WebPages.xml",
-        "microsoft.aspnet.webpages.3.2.7.nupkg.sha512",
-        "microsoft.aspnet.webpages.nuspec"
-      ]
-    },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
       "sha512": "Y4rs5aMEXY8G7wJo5S3EEt6ltqyOTr/qOeZzfn+hw/fuQj5GppGckMY5psGLETo1U9hcT5MmAhaT5xtusM1b5g==",
       "type": "package",
@@ -4331,18 +4121,6 @@
         "lib/netstandard2.0/bootstrap4_identitygeneratorfilesconfig.json",
         "microsoft.visualstudio.web.codegenerators.mvc.3.1.4.nupkg.sha512",
         "microsoft.visualstudio.web.codegenerators.mvc.nuspec"
-      ]
-    },
-    "Microsoft.Web.Infrastructure/1.0.0": {
-      "sha512": "FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
-      "type": "package",
-      "path": "microsoft.web.infrastructure/1.0.0",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "lib/net40/Microsoft.Web.Infrastructure.dll",
-        "microsoft.web.infrastructure.1.0.0.nupkg.sha512",
-        "microsoft.web.infrastructure.nuspec"
       ]
     },
     "Microsoft.Win32.Primitives/4.3.0": {
@@ -9035,9 +8813,6 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "ChartJS >= 20.1.8",
-      "Microsoft.AspNet.Mvc >= 5.2.7",
-      "Microsoft.AspNet.WebPages >= 3.2.7",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.8",
       "Microsoft.EntityFrameworkCore.Sqlite >= 3.1.8",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.8",
@@ -9045,24 +8820,26 @@
     ]
   },
   "packageFolders": {
-    "/Users/ruiyang/.nuget/packages/": {}
+    "C:\\Users\\DuanKai\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ruiyang/Downloads/Bricks-master 2/BricksMeatballs/BricksMeatballs/BricksMeatballs.csproj",
+      "projectUniqueName": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
       "projectName": "BricksMeatballs",
-      "projectPath": "/Users/ruiyang/Downloads/Bricks-master 2/BricksMeatballs/BricksMeatballs/BricksMeatballs.csproj",
-      "packagesPath": "/Users/ruiyang/.nuget/packages/",
-      "outputPath": "/Users/ruiyang/Downloads/Bricks-master 2/BricksMeatballs/BricksMeatballs/obj/",
+      "projectPath": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
+      "packagesPath": "C:\\Users\\DuanKai\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/ruiyang/.config/NuGet/NuGet.Config"
+        "C:\\Users\\DuanKai\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -9079,18 +8856,6 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
-          "ChartJS": {
-            "target": "Package",
-            "version": "[20.1.8, )"
-          },
-          "Microsoft.AspNet.Mvc": {
-            "target": "Package",
-            "version": "[5.2.7, )"
-          },
-          "Microsoft.AspNet.WebPages": {
-            "target": "Package",
-            "version": "[3.2.7, )"
-          },
           "Microsoft.EntityFrameworkCore.SqlServer": {
             "target": "Package",
             "version": "[3.1.8, )"
@@ -9128,50 +8893,8 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.402/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.Mvc 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.Mvc",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.Razor 3.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.Razor",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.AspNet.WebPages 3.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.AspNet.WebPages",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "Microsoft.Web.Infrastructure",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  }
 }

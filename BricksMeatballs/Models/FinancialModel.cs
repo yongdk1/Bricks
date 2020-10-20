@@ -66,16 +66,19 @@ namespace BricksMeatballs.Models
         //Maximum LTV Ratio 55% (ends >65YO, >25 tenure) or 75%
         //BSD: 1% on first 180,000; 2% on second 180,000; 3% on third 640,000; 4% on rest
         //ABSD: SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
+        
+        //Calculate maximum bank loan via: TDSR/MSR -> Max Monthly Repayment -> Max Bank Loan
         public double TDSRLimit() //60%TDSR Private
         {
             return 0.6 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7); 
         }
+        
         public double MSRLimit() //30%MSR HDB/EC
         {
             return 0.3 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7); 
         }
         
-        public double MaxMonthlyPayment() //monthlyRepayment to pay off loan
+        public double MaxMonthlyPayment() //Monthly Repayment to pay off loan
         {
             double monthlyDebt = this.CreditMinPayments + this.CarLoan + this.OtherHomeLoan + this.OtherLoan; //Add all (4) sources of debt
             double limitAfterExpenses = this.TDSRLimit() - monthlyDebt;
@@ -93,16 +96,17 @@ namespace BricksMeatballs.Models
 
         public double MaxBankLoan()
         {
-            return this.MaxMonthlyPayment() * ((Math.Pow((1 + this.InterestRate / 1200), (this.LoanTenure * 12)) - 1) /
-                ((this.InterestRate / 1200) * (Math.Pow((1 + this.InterestRate / 1200), (this.LoanTenure * 12)))));
+            double monthlyIR = this.InterestRate / 1200;
+            double LoanTenureMonths = this.LoanTenure * 12;
+            return this.MaxMonthlyPayment() * ((Math.Pow((1 + monthlyIR), LoanTenureMonths) - 1) /
+                (monthlyIR * Math.Pow((1 + monthlyIR), LoanTenureMonths)));
         }
         
-        public double CalculateBudget()
+        // Calculate maximum price of property via: CashCPF/Cash Downpayment -> BSD/ABSD Calculation ->  
+        public double MaxDownpaymentWithoutBSD()
         {
-            
-            double minDownpaymentCashCPF = 4 * (this.CashTowardsDownPayment + this.CpfOrdinaryAccount); //25%
-            double minDownpaymentCash = 20 * this.CashTowardsDownPayment; //5%
-
+            double cashMax = 20 * this.CashTowardsDownPayment;
+            double cashCpfMax = 4 * (this.CashTowardsDownPayment + this.CpfOrdinaryAccount);
 
             return 0;
         }

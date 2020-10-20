@@ -5,12 +5,27 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
+<style>
+    .FinancialCal {
+        background-position: 0% 50%;
+        background-image: url('../../images/background.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 250px;
+        width: 111%;
+        position: relative;
+        left: -5.5%;
+        opacity: 0.7;
+        padding: 7%;
+        color: white;
+        font-size: 40px;
+        margin-bottom: 40px;
+    }
 
-<h4>FinancialModel</h4>
-<hr />
+</style>
+<div class="FinancialCal">Financial Calculator</div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4">  
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group form-check">

@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ruiyang/Downloads/Bricks-master 2/BricksMeatballs/BricksMeatballs/BricksMeatballs.csproj": {}
+    "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj": {}
   },
   "projects": {
-    "/Users/ruiyang/Downloads/Bricks-master 2/BricksMeatballs/BricksMeatballs/BricksMeatballs.csproj": {
+    "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ruiyang/Downloads/Bricks-master 2/BricksMeatballs/BricksMeatballs/BricksMeatballs.csproj",
+        "projectUniqueName": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
         "projectName": "BricksMeatballs",
-        "projectPath": "/Users/ruiyang/Downloads/Bricks-master 2/BricksMeatballs/BricksMeatballs/BricksMeatballs.csproj",
-        "packagesPath": "/Users/ruiyang/.nuget/packages/",
-        "outputPath": "/Users/ruiyang/Downloads/Bricks-master 2/BricksMeatballs/BricksMeatballs/obj/",
+        "projectPath": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
+        "packagesPath": "C:\\Users\\DuanKai\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/ruiyang/.config/NuGet/NuGet.Config"
+          "C:\\Users\\DuanKai\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -36,18 +38,6 @@
       "frameworks": {
         "netcoreapp3.1": {
           "dependencies": {
-            "ChartJS": {
-              "target": "Package",
-              "version": "[20.1.8, )"
-            },
-            "Microsoft.AspNet.Mvc": {
-              "target": "Package",
-              "version": "[5.2.7, )"
-            },
-            "Microsoft.AspNet.WebPages": {
-              "target": "Package",
-              "version": "[3.2.7, )"
-            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[3.1.8, )"
@@ -85,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.402/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
