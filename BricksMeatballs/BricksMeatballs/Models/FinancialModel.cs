@@ -8,63 +8,105 @@ using System.ComponentModel;
 
 namespace BricksMeatballs.Models
 {
+    public enum PropertyType { HDB, EC, Private }
+
     public class FinancialModel
     {
         //User input information
         //Applicant Information
         [DisplayName("Applicant Status")]
-        public bool applicantStatus { get; set; } //Single or Joint application
+        public bool ApplicantStatus { get; set; } //Single or Joint application
         [DisplayName("Age")]
-        public int age { get; set; } //Affects LTV Ratio
+        public int Age { get; set; } //Affects LTV Ratio
         [DisplayName("Residency")]
-        public bool residency { get; set; } //Not entirely sure what this affects
+        public bool Residency { get; set; } //Not entirely sure what this affects
 
         //Property Information
         [DisplayName("Number of Properties")]
-        public int numProperties { get; set; }
+        public int NumProperties { get; set; }
         [DisplayName("Number of Home Loans")]
-        public int numLoans { get; set; }
+        public int NumLoans { get; set; }
 
         //Income Information
   
         [DisplayName("Monthly Fixed Income")]
-        public double monthlyFixedIncome { get; set; } //monthly fixed income
+        public double MonthlyFixedIncome { get; set; } //monthly fixed income
         [DisplayName("Monthly Variable Income")]
-        public double monthlyVariableIncome { get; set; } //monthly variable income w 30% discount
+        public double MonthlyVariableIncome { get; set; } //monthly variable income w 30% discount
 
         //Funds Information
         [DisplayName("Cash on Hand")]
-        public double cashTowardsDownPayment { get; set; } //cash on hand, 5% min
+        public double CashTowardsDownPayment { get; set; } //cash on hand, 5% min
         [DisplayName("CPF ")]
-        public double cpfOrdinaryAccount { get; set; } //cpf, cash+cpf 25% min
+        public double CpfOrdinaryAccount { get; set; } //cpf, cash+cpf 25% min
 
         //Debt Information
         [DisplayName("Credit Card Minimum Payments")]
-        public double creditMinPayments { get; set; }
+        public double CreditMinPayments { get; set; }
         [DisplayName("Car Loan(s) Payments")]
-        public double carLoan { get; set; }
+        public double CarLoan { get; set; }
         [DisplayName("House Loan(s) Payments")]
-        public double otherHomeLoan { get; set; }
+        public double OtherHomeLoan { get; set; }
         [DisplayName("Other Loan(s) Payments")]
-        public double otherLoan { get; set; }
+        public double OtherLoan { get; set; }
 
         //Other Information
         [DisplayName("Property Type")]
-        public double propertyType { get; set; } //HDB, EC, Private
+        public PropertyType PropertyType { get; set; } //HDB, EC, Private
         [DisplayName("Loan Tenure")]
-        public double loanTenure { get; set; } //4 - 35 yrs
+        public double LoanTenure { get; set; } //4 - 35 yrs
+        [DisplayName("Interest Rate")]
+        public double InterestRate { get; set; } //0.1 - 4%
         
         //Calculate house budget for user based on a 
         //60% total debt servicing ratio,
-        //35% MSR limit on HDB/EC
+        //30% MSR limit on HDB/EC
         //25% minimum down payment,
         //5% minimum cash payment
         //Maximum LTV Ratio 55% (ends >65YO, >25 tenure) or 75%
-        public double CalculateBudget()
+        //BSD: 1% on first 180,000; 2% on second 180,000; 3% on third 640,000; 4% on rest
+        //ABSD: SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
+        
+        //Calculate maximum bank loan via: TDSR/MSR -> Max Monthly Repayment -> Max Bank Loan
+        public double TDSRLimit() //60%TDSR Private
         {
-            double maxDebtCommitment = 0.6 * (this.monthlyFixedIncome + this.monthlyVariableIncome * 0.7); //60%TDSR, 30%MSR HDB/EC
-            double minDownpayment = 4 * (this.cashTowardsDownPayment + this.cpfOrdinaryAccount); //25%
-            double minCashDownpayment = this.cashTowardsDownPayment; //5%
+            return 0.6 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7); 
+        }
+        
+        public double MSRLimit() //30%MSR HDB/EC
+        {
+            return 0.3 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7); 
+        }
+        
+        public double MaxMonthlyPayment() //Monthly Repayment to pay off loan
+        {
+            double monthlyDebt = this.CreditMinPayments + this.CarLoan + this.OtherHomeLoan + this.OtherLoan; //Add all (4) sources of debt
+            double limitAfterExpenses = this.TDSRLimit() - monthlyDebt;
+            if (limitAfterExpenses < 0) limitAfterExpenses = 0;
+            if (this.PropertyType == PropertyType.Private) //60%
+            {
+                return limitAfterExpenses;
+            }
+            else //30%
+            {
+                if (limitAfterExpenses < this.MSRLimit()) return limitAfterExpenses;
+                return this.MSRLimit();
+            }
+        }
+
+        public double MaxBankLoan()
+        {
+            double monthlyIR = this.InterestRate / 1200;
+            double LoanTenureMonths = this.LoanTenure * 12;
+            return this.MaxMonthlyPayment() * ((Math.Pow((1 + monthlyIR), LoanTenureMonths) - 1) /
+                (monthlyIR * Math.Pow((1 + monthlyIR), LoanTenureMonths)));
+        }
+        
+        // Calculate maximum price of property via: CashCPF/Cash Downpayment -> BSD/ABSD Calculation ->  
+        public double MaxDownpaymentWithoutBSD()
+        {
+            double cashMax = 20 * this.CashTowardsDownPayment;
+            double cashCpfMax = 4 * (this.CashTowardsDownPayment + this.CpfOrdinaryAccount);
 
             return 0;
         }

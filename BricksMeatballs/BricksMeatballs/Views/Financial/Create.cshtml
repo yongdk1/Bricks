@@ -4,102 +4,127 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .FinancialCal {
+        background-position: 0% 50%;
+        background-image: url('../../images/background.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 250px;
+        width: 111%;
+        position: relative;
+        left: -5.5%;
+        opacity: 0.7;
+        padding: 7%;
+        color: white;
+        font-size: 40px;
+        margin-bottom: 40px;
+    }
 
-<head>
-    <style>
-        /* CSS TAGGING */
-    </style>
-</head>
+</style>
 
 
-<h1>Create</h1>
-
-<h4>FinancialModel</h4>
-<hr />
+<div class="FinancialCal">Financial Calculator</div>
 <div class="row">
-    <div class="col-md-6">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group form-check">
+    <form asp-action="Create">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class=" row">
+
+            <div class="form-group col-md-3">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check col-md-3">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="applicantStatus" /> @Html.DisplayNameFor(model => model.applicantStatus)
+                    <input class="form-check-input" asp-for="Residency" /> @Html.DisplayNameFor(model => model.Residency)
                 </label>
             </div>
-            <div class="form-group">
-                <label asp-for="age" class="control-label"></label>
-                <input asp-for="age" class="form-control" />
-                <span asp-validation-for="age" class="text-danger"></span>
+            <div class="form-group col-md-3">
+                <label asp-for="NumProperties" class="control-label"></label>
+                <input asp-for="NumProperties" class="form-control" placeholder="Number of Properties" value="0" />
+                <span asp-validation-for="NumProperties" class="text-danger"></span>
             </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="residency" /> @Html.DisplayNameFor(model => model.residency)
-                </label>
+            <div class="form-group col-md-3">
+                <label asp-for="NumLoans" class="control-label"></label>
+                <input asp-for="NumLoans" class="form-control" value="0" />
+                <span asp-validation-for="NumLoans" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="numProperties" class="control-label"></label>
-                <input asp-for="numProperties" class="form-control" placeholder="Number of Properties" value="0"/>
-                <span asp-validation-for="numProperties" class="text-danger"></span>
+        </div>
+        <div class="form-group form-check">
+            <label class="form-check-label">
+                <input class="form-check-input" asp-for="ApplicantStatus" /> @Html.DisplayNameFor(model => model.ApplicantStatus)
+            </label>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label asp-for="MonthlyFixedIncome" class="control-label"></label>
+                <input asp-for="MonthlyFixedIncome" placeholder="Monthly Fixed Income" class="form-control" />
+                <span asp-validation-for="MonthlyFixedIncome" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="numLoans" class="control-label"></label>
-                <input asp-for="numLoans" class="form-control" value="0" />
-                <span asp-validation-for="numLoans" class="text-danger"></span>
+            <div class="form-group col-md-6">
+                <label asp-for="MonthlyVariableIncome" class="control-label"></label>
+                <input asp-for="MonthlyVariableIncome" placeholder="Monthly Variable Income" class="form-control" />
+                <span asp-validation-for="MonthlyVariableIncome" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="monthlyFixedIncome" class="control-label"></label>
-                <input asp-for="monthlyFixedIncome" class="form-control" />
-                <span asp-validation-for="monthlyFixedIncome" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label asp-for="CashTowardsDownPayment" class="control-label"></label>
+                <input asp-for="CashTowardsDownPayment" placeholder="Cash Towards Down Payment" class="form-control" />
+                <span asp-validation-for="CashTowardsDownPayment" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="monthlyVariableIncome" class="control-label"></label>
-                <input asp-for="monthlyVariableIncome" class="form-control" />
-                <span asp-validation-for="monthlyVariableIncome" class="text-danger"></span>
+            <div class="form-group col-md-4">
+                <label asp-for="CpfOrdinaryAccount" class="control-label"></label>
+                <input asp-for="CpfOrdinaryAccount" placeholder="CPF Ordinary Account" class="form-control" />
+                <span asp-validation-for="CpfOrdinaryAccount" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="cashTowardsDownPayment" class="control-label"></label>
-                <input asp-for="cashTowardsDownPayment" class="form-control" />
-                <span asp-validation-for="cashTowardsDownPayment" class="text-danger"></span>
+            <div class="form-group col-md-4">
+                <label asp-for="CreditMinPayments" class="control-label"></label>
+                <input asp-for="CreditMinPayments" placeholder="Minimum Credit Payments" class="form-control" />
+                <span asp-validation-for="CreditMinPayments" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="cpfOrdinaryAccount" class="control-label"></label>
-                <input asp-for="cpfOrdinaryAccount" class="form-control" />
-                <span asp-validation-for="cpfOrdinaryAccount" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label asp-for="CarLoan" class="control-label"></label>
+                <input asp-for="CarLoan" placeholder="Car Loan" class="form-control" />
+                <span asp-validation-for="CarLoan" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="creditMinPayments" class="control-label"></label>
-                <input asp-for="creditMinPayments" class="form-control" />
-                <span asp-validation-for="creditMinPayments" class="text-danger"></span>
+            <div class="form-group  col-md-4">
+                <label asp-for="OtherHomeLoan" class="control-label"></label>
+                <input asp-for="OtherHomeLoan" placeholder="Other Home Loan" class="form-control" />
+                <span asp-validation-for="OtherHomeLoan" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="carLoan" class="control-label"></label>
-                <input asp-for="carLoan" class="form-control" />
-                <span asp-validation-for="carLoan" class="text-danger"></span>
+            <div class="form-group  col-md-4">
+                <label asp-for="OtherLoan" class="control-label"></label>
+                <input asp-for="OtherLoan" placeholder="Other Loans" class="form-control" />
+                <span asp-validation-for="OtherLoan" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="otherHomeLoan" class="control-label"></label>
-                <input asp-for="otherHomeLoan" class="form-control" />
-                <span asp-validation-for="otherHomeLoan" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="form-group  col-md-4">
+                <label asp-for="PropertyType" class="control-label"></label>
+                <input asp-for="PropertyType" placeholder="Property Type" class="form-control" />
+                <span asp-validation-for="PropertyType" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="otherLoan" class="control-label"></label>
-                <input asp-for="otherLoan" class="form-control" />
-                <span asp-validation-for="otherLoan" class="text-danger"></span>
+            <div class="form-group  col-md-4">
+                <label asp-for="LoanTenure" class="control-label"></label>
+                <input asp-for="LoanTenure" class="form-control" placeholder="Loan Tenure" />
+                <span asp-validation-for="LoanTenure" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="propertyType" class="control-label"></label>
-                <input asp-for="propertyType" class="form-control" />
-                <span asp-validation-for="propertyType" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="loanTenure" class="control-label"></label>
-                <input asp-for="loanTenure" class="form-control" />
-                <span asp-validation-for="loanTenure" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+            <div class="form-group  col-md-4">
+                <label asp-for="InterestRate" class="control-label"></label>
+                <input asp-for="InterestRate" placeholder="Interest Rate" class="form-control" />
+                <span asp-validation-for="InterestRate" class="text-danger"></span>
+            </div>  
+        </div>
+        
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
 
 <div>
