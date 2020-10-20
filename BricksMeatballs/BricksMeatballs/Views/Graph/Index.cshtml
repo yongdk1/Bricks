@@ -1,0 +1,54 @@
+﻿@{ ViewData["Title"] = "Index";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<div id="chart_div"></div>
+<script type="text/javascript">google.charts.load('current', {
+        packages: ['corechart', 'bar']
+    });
+    google.charts.setOnLoadCallback(LoadData);
+
+    function LoadData() {
+        $.ajax({
+
+            url: 'Graph/GraphChart',
+            dataType: "json",
+            type: "GET",
+            error: function (xhr, status, error) {
+                var err = eval("(" + xhr.responseText + ")");
+                toastr.error(err.message);
+            },
+            success: function (data) {
+                GraphChart(data);
+                return false;
+            }
+        });
+        return false;
+    }
+
+    function GraphChart(data) {
+        var tdata = new google.visualization.DataTable();
+        tdata.addColumn('number', 'saleTime');
+        tdata.addColumn('number', 'averagePrice');
+        for (var i = 0; i < data.length; i++) {
+            tdata.addRow([data[i].saleTime, data[i].averagePrice]);
+        }
+
+        var options = {
+            title: 'Average Price of Housing',
+            chartArea: {
+                width: '50%'
+            },
+            colors: ['#e0440e'],
+            hAxis: {
+                title: 'Date'
+            },
+            vAxis: {
+                title: 'Average Price'
+            }
+        };
+        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        chart.draw(tdata, options);
+        return false;
+    }</script>

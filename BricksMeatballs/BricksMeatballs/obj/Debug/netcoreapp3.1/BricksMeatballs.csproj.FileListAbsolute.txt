@@ -387,3 +387,4 @@ C:\Users\corli\Source\Repos\Bricks\BricksMeatballs\BricksMeatballs\obj\Debug\net
 C:\Users\corli\Source\Repos\Bricks\BricksMeatballs\BricksMeatballs\obj\Debug\netcoreapp3.1\BricksMeatballs.dll
 C:\Users\corli\Source\Repos\Bricks\BricksMeatballs\BricksMeatballs\obj\Debug\netcoreapp3.1\BricksMeatballs.pdb
 C:\Users\corli\Source\Repos\Bricks\BricksMeatballs\BricksMeatballs\obj\Debug\netcoreapp3.1\BricksMeatballs.genruntimeconfig.cache
+C:\Users\corli\Source\Repos\Bricks\BricksMeatballs\BricksMeatballs\obj\Debug\netcoreapp3.1\Razor\Views\Graph\Index.cshtml.g.cs
