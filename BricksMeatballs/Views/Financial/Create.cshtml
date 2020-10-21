@@ -34,110 +34,121 @@
 <div class="row">
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class=" row">
-            <div class="form-group col-md-4">
-                <label asp-for="ApplicantStatus" class="control-label"></label>
-                <select asp-for="ApplicantStatus" class="form-control">
-                    <option value="Single">Single</option>
-                    <option value="Joint">Joint</option>
-                </select>
-                <span asp-validation-for="ApplicantStatus" class="text-danger"></span>
+        <fieldset>
+            <div class=" row">
+                <div class="form-group col-md-4">
+                    <label asp-for="ApplicantStatus" class="control-label"></label>
+                    <select asp-for="ApplicantStatus" class="form-control">
+                        <option value="Single">Single</option>
+                        <option value="Joint">Joint</option>
+                    </select>
+                    <span asp-validation-for="ApplicantStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="Age" class="control-label"></label>
+                    <input asp-for="Age" class="form-control" type="number" min="0"/>
+                    <span asp-validation-for="Age" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-4">
+                    <label asp-for="Residency " class="control-label"></label>
+                    <select asp-for="Residency" class="form-control">
+                        <option value="Singaporean">Singaporean</option>
+                        <option value="PR">Permanent Resident</option>
+                        <option value="Foreigner">Foreigner</option>
+                    </select>
+                    <span asp-validation-for="Residency" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group col-md-4">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
+        </fieldset>
+        <fieldset>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="NumProperties" class="control-label"></label>
+                    <input asp-for="NumProperties" class="form-control" placeholder="Number of Properties" value="0" type="number" min="0"/>
+                    <span asp-validation-for="NumProperties" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="NumLoans" class="control-label"></label>
+                    <input asp-for="NumLoans" class="form-control" value="0" type="number" min="0"/>
+                    <span asp-validation-for="NumLoans" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group col-md-4">
-                <label asp-for="Residency " class="control-label"></label>
-                <select asp-for="Residency" class="form-control">
-                    <option value="Singaporean">Singaporean</option>
-                    <option value="PR">Permanent Resident</option>
-                    <option value="Foreigner">Foreigner</option>
-                </select>
-                <span asp-validation-for="Residency" class="text-danger"></span>
+        </fieldset>
+        <fieldset>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="MonthlyFixedIncome" class="control-label"></label>
+                    <input asp-for="MonthlyFixedIncome" placeholder="Monthly Fixed Income" class="form-control" value="5000" type="number" min="0"/>
+                    <span asp-validation-for="MonthlyFixedIncome" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="MonthlyVariableIncome" class="control-label"></label>
+                    <input asp-for="MonthlyVariableIncome" placeholder="Monthly Variable Income" class="form-control" value="5000" type="number" min="0"/>
+                    <span asp-validation-for="MonthlyVariableIncome" class="text-danger"></span>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label asp-for="NumProperties" class="control-label"></label>
-                <input asp-for="NumProperties" class="form-control" placeholder="Number of Properties" value="0" />
-                <span asp-validation-for="NumProperties" class="text-danger"></span>
+        </fieldset>
+        <fieldset>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Cash" class="control-label"></label>
+                    <input asp-for="Cash" placeholder="Cash Towards Down Payment" class="form-control" value="10000" type="number" min="0"/>
+                    <span asp-validation-for="Cash" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="Cpf" class="control-label"></label>
+                    <input asp-for="Cpf" placeholder="CPF Ordinary Account" class="form-control" value="40000" type="number" min="0"/>
+                    <span asp-validation-for="Cpf" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <label asp-for="NumLoans" class="control-label"></label>
-                <input asp-for="NumLoans" class="form-control" value="0" />
-                <span asp-validation-for="NumLoans" class="text-danger"></span>
+        </fieldset>
+        <fieldset>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label asp-for="Credit" class="control-label"></label>
+                    <input asp-for="Credit" placeholder="Minimum Credit Payments" class="form-control" value="500" type="number" min="0"/>
+                    <span asp-validation-for="Credit" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="CarLoan" class="control-label"></label>
+                    <input asp-for="CarLoan" placeholder="Car Loan" class="form-control" value="250" type="number" min="0"/>
+                    <span asp-validation-for="CarLoan" class="text-danger"></span>
+                </div>
+                <div class="form-group  col-md-3">
+                    <label asp-for="OtherHomeLoan" class="control-label"></label>
+                    <input asp-for="OtherHomeLoan" placeholder="Other Home Loan" class="form-control" value="100" type="number" min="0"/>
+                    <span asp-validation-for="OtherHomeLoan" class="text-danger"></span>
+                </div>
+                <div class="form-group  col-md-3">
+                    <label asp-for="OtherLoan" class="control-label"></label>
+                    <input asp-for="OtherLoan" placeholder="Other Loans" class="form-control" value="50" type="number" min="0"/>
+                    <span asp-validation-for="OtherLoan" class="text-danger"></span>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label asp-for="MonthlyFixedIncome" class="control-label"></label>
-                <input asp-for="MonthlyFixedIncome" placeholder="Monthly Fixed Income" class="form-control" value="5000" />
-                <span asp-validation-for="MonthlyFixedIncome" class="text-danger"></span>
+        </fieldset>
+        <fieldset>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label asp-for="PropertyType" class="control-label"></label>
+                    <select asp-for="PropertyType" class="form-control">
+                        <option value="HDB">HDB</option>
+                        <option value="EC">Executive Condominium</option>
+                        <option value="Private">Private</option>
+                    </select>
+                    <span asp-validation-for="PropertyType" class="text-danger"></span>
+                </div>
+                <div class="form-group  col-md-4">
+                    <label asp-for="LoanTenure" class="control-label"></label>
+                    <input asp-for="LoanTenure" class="form-control" placeholder="Loan Tenure" value="30" type="number" min="4" max="35"/>
+                    <span asp-validation-for="LoanTenure" class="text-danger"></span>
+                </div>
+                <div class="form-group  col-md-4">
+                    <label asp-for="InterestRate" class="control-label"></label>
+                    <input asp-for="InterestRate" placeholder="Interest Rate" class="form-control" value="3" type="number" min="0.1" max="4"/>
+                    <span asp-validation-for="InterestRate" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <label asp-for="MonthlyVariableIncome" class="control-label"></label>
-                <input asp-for="MonthlyVariableIncome" placeholder="Monthly Variable Income" class="form-control" value="5000" />
-                <span asp-validation-for="MonthlyVariableIncome" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-6">
-                <label asp-for="Cash" class="control-label"></label>
-                <input asp-for="Cash" placeholder="Cash Towards Down Payment" class="form-control" value="10000" />
-                <span asp-validation-for="Cash" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-6">
-                <label asp-for="Cpf" class="control-label"></label>
-                <input asp-for="Cpf" placeholder="CPF Ordinary Account" class="form-control" value="40000" />
-                <span asp-validation-for="Cpf" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-3">
-                <label asp-for="Credit" class="control-label"></label>
-                <input asp-for="Credit" placeholder="Minimum Credit Payments" class="form-control" value="500" />
-                <span asp-validation-for="Credit" class="text-danger"></span>
-            </div>
-            <div class="form-group col-md-3">
-                <label asp-for="CarLoan" class="control-label"></label>
-                <input asp-for="CarLoan" placeholder="Car Loan" class="form-control" value="250" />
-                <span asp-validation-for="CarLoan" class="text-danger"></span>
-            </div>
-            <div class="form-group  col-md-3">
-                <label asp-for="OtherHomeLoan" class="control-label"></label>
-                <input asp-for="OtherHomeLoan" placeholder="Other Home Loan" class="form-control" value="100" />
-                <span asp-validation-for="OtherHomeLoan" class="text-danger"></span>
-            </div>
-            <div class="form-group  col-md-3">
-                <label asp-for="OtherLoan" class="control-label"></label>
-                <input asp-for="OtherLoan" placeholder="Other Loans" class="form-control" value="50" />
-                <span asp-validation-for="OtherLoan" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-4">
-                <label asp-for="PropertyType" class="control-label"></label>
-                <select asp-for="PropertyType" class="form-control">
-                    <option value="HDB">HDB</option>
-                    <option value="EC">Executive Condominium</option>
-                    <option value="Private">Private</option>
-                </select>
-                <span asp-validation-for="PropertyType" class="text-danger"></span>
-            </div>
-            <div class="form-group  col-md-4">
-                <label asp-for="LoanTenure" class="control-label"></label>
-                <input asp-for="LoanTenure" class="form-control" placeholder="Loan Tenure" value="30" />
-                <span asp-validation-for="LoanTenure" class="text-danger"></span>
-            </div>
-            <div class="form-group  col-md-4">
-                <label asp-for="InterestRate" class="control-label"></label>
-                <input asp-for="InterestRate" placeholder="Interest Rate" class="form-control" value="3" />
-                <span asp-validation-for="InterestRate" class="text-danger"></span>
-            </div>  
-        </div>
-        
+        </fieldset>
         <div class="form-group button">
             <input type="submit" value="Create" class="btn btn-primary" />
         </div>

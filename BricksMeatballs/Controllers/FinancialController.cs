@@ -14,7 +14,6 @@ namespace BricksMeatballs.Controllers
         // GET: FinancialController
         public ActionResult Index(FinancialModel fmodel)
         {
-            ViewBag.TDSRLimit = 3000;
             return View(fmodel);
         }
 

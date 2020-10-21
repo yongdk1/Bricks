@@ -44,6 +44,38 @@
             @Model.MaxBankLoanDisplay()
         </dd>
     </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            LTV
+        </dt>
+        <dd class="col-sm-2">
+            @Model.LTVDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            True Max
+        </dt>
+        <dd class="col-sm-2">
+            @Model.TrueMaxDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            BSD
+        </dt>
+        <dd class="col-sm-2">
+            @Model.BSDDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            ABSD (if any)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.ABSDDisplay()
+        </dd>
+    </dl>
 </div>
 <div>
     <hr />
@@ -180,6 +212,6 @@
 
 </div>
 <div>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Edit", "Edit", @Model) |
     <a asp-action="Index">Back to List</a>
 </div>

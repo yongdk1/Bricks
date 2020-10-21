@@ -7,18 +7,20 @@ using System.ComponentModel.Design;
 using System.ComponentModel;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Globalization;
+using System.Threading;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BricksMeatballs.Models
 {
     public enum ApplicantStatus { Single, Joint }
     public enum Residency { Singaporean, PR, Foreigner }
     public enum PropertyType { HDB, EC, Private }
-   
+
 
     public class FinancialModel
     {
-        string specifier = "C0";
-        CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
+        readonly string specifier = "C0";
+        readonly CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
 
         //User input information
         //Applicant Information
@@ -36,7 +38,7 @@ namespace BricksMeatballs.Models
         public int NumLoans { get; set; }
 
         //Income Information
-  
+
         [DisplayName("Monthly Fixed Income")]
         public double MonthlyFixedIncome { get; set; } //monthly fixed income
         public string MonthlyFixedIncomeDisplay()
@@ -104,6 +106,7 @@ namespace BricksMeatballs.Models
         public double InterestRate { get; set; } //0.1 - 4%
         public string InterestRateDisplay()
         {
+
             double temp = InterestRate / 100;
             return temp.ToString("P0", CultureInfo.InvariantCulture);
         }
@@ -120,7 +123,7 @@ namespace BricksMeatballs.Models
         //Calculate maximum bank loan via: TDSR/MSR -> Max Monthly Repayment -> Max Bank Loan
         public double TDSRLimit() //60%TDSR Private
         {
-            return 0.6 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7); 
+            return 0.6 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7);
         }
 
         public string TDSRLimitDisplay()
@@ -130,9 +133,9 @@ namespace BricksMeatballs.Models
 
         public double MSRLimit() //30%MSR HDB/EC
         {
-            return 0.3 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7); 
+            return 0.3 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7);
         }
-        
+
         public string MSRLimitDisplay()
         {
             if (this.PropertyType == PropertyType.HDB)
@@ -180,12 +183,302 @@ namespace BricksMeatballs.Models
 
 
         // Calculate maximum price of property via: CashCPF/Cash Downpayment -> BSD/ABSD Calculation ->  
-        public double MaxDownpaymentWithoutBSD()
+        
+        public double CalculateSoftMax(double Money)
         {
-            double cashMax = 20 * this.Cash;
-            double cashCpfMax = 4 * (this.Cash + this.Cpf);
+            double SoftMax = Money * 20;
+            return SoftMax;
+        }
 
-            return 0;
+        public double CalculateBSD(double Price)
+        {
+            double BSD = 0;
+
+            // 1% for first 180,000
+            if (Price > 180000)
+            {
+                BSD += 1800;
+                Price -= 180000;
+
+                // 2% for next 180,000
+                if (Price > 180000)
+                {
+                    BSD += 3600;
+                    Price -= 180000;
+
+                    // 3% for next 640,000
+                    if (Price > 640000)
+                    {
+                        BSD += 19200;
+                        Price -= 640000;
+
+                        // 4% for remaining amount
+                        BSD += Price * 0.04;
+                    }
+                    else
+                    {
+                        BSD += Price * 0.03;
+                    }
+                }
+                else
+                {
+                    BSD += Price * 0.02;
+                }
+
+            }
+            else
+            {
+                BSD += Price * 0.01;
+            }
+
+            return BSD;
+        }
+
+        public double CalculateABSD(double Price)
+        {
+            {
+                if (this.Residency == Residency.Singaporean) // 0% first, 12% 2nd, 15% rest
+                {
+                    if (this.NumProperties == 0)
+                    {
+                        return 0 * Price;
+                    }
+                    else if (this.NumProperties == 1)
+                    {
+                        return 0.12 * Price;
+                    }
+                    else
+                    {
+                        return 0.15 * Price;
+                    }
+                }
+                else if (this.Residency == Residency.PR) // 5% first, 15% rest
+                {
+                    if (this.NumProperties == 0)
+                    {
+                        return 0.05 * Price;
+                    }
+                    else
+                    {
+                        return 0.15 * Price;
+                    }
+                }
+                else //20% everything for foreigners 
+                {
+                    return 0.2 * Price;
+                }
+            }
+        }
+
+        public double ABSDPercentage() //SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
+        {
+            if (this.Residency == Residency.Singaporean) // 0% first, 12% 2nd, 15% rest
+            {
+                if (this.NumProperties == 0)
+                {
+                    return 0;
+                }
+                else if (this.NumProperties == 1)
+                {
+                    return 0.12;
+                }
+                else
+                {
+                    return 0.15;
+                }
+            }
+            else if (this.Residency == Residency.PR) // 5% first, 15% rest
+            {
+                if (this.NumProperties == 0)
+                {
+                    return 0.05;
+                }
+                else
+                {
+                    return 0.15;
+                }
+            }
+            else //20% everything for foreigners 
+            {
+                return 0.2;
+            }
+        }
+
+        public double CalculateLTV()
+        {
+            if (((this.Age + this.LoanTenure) > 65 || this.LoanTenure > 25) && (this.PropertyType == PropertyType.HDB || this.PropertyType == PropertyType.EC))
+            {
+                return 0.55;
+            }
+            else
+            {
+                return 0.75;
+            }
+        }
+
+        public string LTVDisplay()
+        {
+            return this.CalculateLTV().ToString("P0", CultureInfo.InvariantCulture);
+        }
+
+        public double CalculateTrueMax()
+        {
+            double TrueMax;
+            double ABSDPercent = this.ABSDPercentage();
+            
+
+
+
+            if (((this.Age + this.LoanTenure) > 65 || this.LoanTenure > 25) && (this.PropertyType == PropertyType.HDB || this.PropertyType == PropertyType.EC))
+            {
+                // If Cash is limiting factor
+                if ((this.Cash / (0.11 + ABSDPercent)) < 180000)
+                {
+                    TrueMax = this.Cash / (0.11 + ABSDPercent);
+                }
+                else if ((this.Cash + 1800) / (0.12 + ABSDPercent) < 360000)
+                {
+                    TrueMax = (this.Cash + 1800) / (0.12 + ABSDPercent);
+                }
+                else if ((this.Cash + 5400) / (0.13 + ABSDPercent) < 1000000)
+                {
+                    TrueMax = (this.Cash + 5400) / (0.13 + ABSDPercent);
+                }
+                else
+                {
+                    TrueMax = (this.Cash + 15400) / (0.14 + ABSDPercent);
+                }
+
+                // If Cpf is limiting factor
+                double both = this.Cash + this.Cpf;
+                if (both < 0.25 * TrueMax)
+                {
+                    if ((both / (0.46 + ABSDPercent)) < 180000)
+                    {
+                        TrueMax = both / (0.46 + ABSDPercent);
+                    }
+                    else if ((both + 1800) / (0.47 + ABSDPercent) < 360000)
+                    {
+                        TrueMax = (both + 1800) / (0.47 + ABSDPercent);
+                    }
+                    else if ((both + 5400) / (0.48 + ABSDPercent) < 1000000)
+                    {
+                        TrueMax = (both + 5400) / (0.48 + ABSDPercent);
+                    }
+                    else
+                    {
+                        TrueMax = (both + 15400) / (0.49 + ABSDPercent);
+                    }
+                }
+
+                // If Loan is limiting factor
+                double loan = this.MaxBankLoan();
+                if ((both - CalculateBSD(TrueMax) - CalculateABSD(TrueMax)) < TrueMax - loan)
+                {
+                    double total = loan + both;
+
+                    if ((total / (1.01 + ABSDPercent)) < 180000)
+                    {
+                        TrueMax = total / (1.01 + ABSDPercent);
+                    }
+                    else if ((total + 1800) / (1.02 + ABSDPercent) < 360000)
+                    {
+                        TrueMax = (total + 1800) / (1.02 + ABSDPercent);
+                    }
+                    else if ((total + 5400) / (1.03 + ABSDPercent) < 1000000)
+                    {
+                        TrueMax = (total + 5400) / (1.03 + ABSDPercent);
+                    }
+                    else
+                    {
+                        TrueMax = (total + 15400) / (1.04 + ABSDPercent);
+                    }
+                }
+            }
+            else
+            {
+                // If Cash is limiting factor
+                if ((this.Cash / (0.06 + ABSDPercent)) < 180000)
+                {
+                    TrueMax = this.Cash / (0.06 + ABSDPercent);
+                }
+                else if ((this.Cash + 1800) / (0.07 + ABSDPercent) < 360000)
+                {
+                    TrueMax = (this.Cash + 1800) / (0.07 + ABSDPercent);
+                }
+                else if ((this.Cash + 5400) / (0.08 + ABSDPercent) < 1000000)
+                {
+                    TrueMax = (this.Cash + 5400) / (0.08 + ABSDPercent);
+                }
+                else
+                {
+                    TrueMax = (this.Cash + 15400) / (0.09 + ABSDPercent);
+                }
+
+                // If Cpf is limiting factor
+                double both = this.Cash + this.Cpf;
+                if (both < 0.25 * TrueMax)
+                {
+                    if ((both / (0.26 + ABSDPercent)) < 180000)
+                    {
+                        TrueMax = both / (0.26 + ABSDPercent);
+                    }
+                    else if ((both + 1800) / (0.27 + ABSDPercent) < 360000)
+                    {
+                        TrueMax = (both + 1800) / (0.27 + ABSDPercent);
+                    }
+                    else if ((both + 5400) / (0.28 + ABSDPercent) < 1000000)
+                    {
+                        TrueMax = (both + 5400) / (0.28 + ABSDPercent);
+                    }
+                    else
+                    {
+                        TrueMax = (both + 15400) / (0.29 + ABSDPercent);
+                    }
+                }
+
+                // If Loan is limiting factor
+                double loan = this.MaxBankLoan();
+                if ((both - CalculateBSD(TrueMax) - CalculateABSD(TrueMax)) < TrueMax - loan)
+                {
+                    double total = loan + both;
+
+                    if ((total / (1.01 + ABSDPercent)) < 180000)
+                    {
+                        TrueMax = total / (1.01 + ABSDPercent);
+                    }
+                    else if ((total + 1800) / (1.02 + ABSDPercent) < 360000)
+                    {
+                        TrueMax = (total + 1800) / (1.02 + ABSDPercent);
+                    }
+                    else if ((total + 5400) / (1.03 + ABSDPercent) < 1000000)
+                    {
+                        TrueMax = (total + 5400) / (1.03 + ABSDPercent);
+                    }
+                    else
+                    {
+                        TrueMax = (total + 15400) / (1.04 + ABSDPercent);
+                    }
+                }
+            }
+            return TrueMax;
+        }
+        
+        public string TrueMaxDisplay()
+        {
+            return this.CalculateTrueMax().ToString(this.specifier, this.culture);
+        }
+        
+        public string BSDDisplay()
+        {
+            double BSD = CalculateBSD(this.CalculateTrueMax());
+            return BSD.ToString(this.specifier, this.culture);
+        }
+
+        public string ABSDDisplay()
+        {
+            double ABSD = CalculateABSD(this.CalculateTrueMax());
+            return ABSD.ToString(this.specifier, this.culture);
         }
     }
 }
