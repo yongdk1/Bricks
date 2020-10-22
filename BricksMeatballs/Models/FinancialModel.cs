@@ -96,7 +96,7 @@ namespace BricksMeatballs.Models
         [DisplayName("Property Type")]
         public PropertyType PropertyType { get; set; } //HDB, EC, Private
         [DisplayName("Loan Tenure")]
-        public double LoanTenure { get; set; } //4 - 35 yrs
+        public int LoanTenure { get; set; } //4 - 35 yrs
         public string LoanTenureDisplay()
         {
             string temp = this.LoanTenure.ToString("F0", CultureInfo.InvariantCulture);
@@ -182,12 +182,6 @@ namespace BricksMeatballs.Models
 
 
         // Calculate maximum price of property via: CashCPF/Cash Downpayment -> BSD/ABSD Calculation ->  
-        
-        public double CalculateSoftMax(double Money)
-        {
-            double SoftMax = Money * 20;
-            return SoftMax;
-        }
 
         public double CalculateBSD(double Price)
         {
@@ -269,7 +263,7 @@ namespace BricksMeatballs.Models
             }
         }
 
-        public double ABSDPercentage() //SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
+        public double CalculateABSDPercentage() //SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
         {
             if (this.Residency == Residency.Singaporean) // 0% first, 12% 2nd, 15% rest
             {
@@ -303,15 +297,42 @@ namespace BricksMeatballs.Models
             }
         }
 
-        public double CalculateLTV()
+        public double CalculateLTV() 
         {
-            if (((this.Age + this.LoanTenure) > 65 || this.LoanTenure > 25) && (this.PropertyType == PropertyType.HDB || this.PropertyType == PropertyType.EC))
+            int both = this.Age + this.LoanTenure;
+
+            //HDB: 0 loan: (5%)75% < 65, < 25, (10%)55% otherwise; 1 loan: (25%)45% < 65, < 30, (25%)25% otherwise; 2+ loan: (25%)35% < 65, < 30, (25%)15% otherwise
+            if (this.PropertyType == PropertyType.HDB)
             {
-                return 0.55;
+                switch (this.NumLoans)
+                {
+                    case 0:
+                        if (both < 65 && this.LoanTenure <= 25) return 0.75;
+                        else return 0.55;
+                    case 1:
+                        if (both < 65 && this.LoanTenure <= 25) return 0.45;
+                        else return 0.25;
+                    default:
+                        if (both < 65 && this.LoanTenure <= 25) return 0.35;
+                        else return 0.15;
+                }
             }
+
+            //Private, EC: 0 loan: (5%)75% < 65, < 30, (10%)55% otherwise; 1 loan: (25%)45% < 65, <30, (25%)25% otherwise; 2+ loan: (25%)35% < 65, < 30, (25%)15% otherwise
             else
             {
-                return 0.75;
+                switch (this.NumLoans)
+                {
+                    case 0:
+                        if (both < 65 && this.LoanTenure <= 30) return 0.75;
+                        else return 0.55;
+                    case 1:
+                        if (both < 65 && this.LoanTenure <= 30) return 0.45;
+                        else return 0.25;
+                    default:
+                        if (both < 65 && this.LoanTenure <= 30) return 0.35;
+                        else return 0.15;
+                }
             }
         }
 
@@ -323,78 +344,12 @@ namespace BricksMeatballs.Models
         public double CalculateTrueMax()
         {
             double TrueMax;
-            double ABSDPercent = this.ABSDPercentage();
-            
+            double ABSDPercent = this.CalculateABSDPercentage();
+            double LTV = this.CalculateLTV();
+            double both = this.Cash + this.Cpf;
 
-
-
-            if (((this.Age + this.LoanTenure) > 65 || this.LoanTenure > 25) && (this.PropertyType == PropertyType.HDB || this.PropertyType == PropertyType.EC))
-            {
-                // If Cash is limiting factor
-                if ((this.Cash / (0.11 + ABSDPercent)) < 180000)
-                {
-                    TrueMax = this.Cash / (0.11 + ABSDPercent);
-                }
-                else if ((this.Cash + 1800) / (0.12 + ABSDPercent) < 360000)
-                {
-                    TrueMax = (this.Cash + 1800) / (0.12 + ABSDPercent);
-                }
-                else if ((this.Cash + 5400) / (0.13 + ABSDPercent) < 1000000)
-                {
-                    TrueMax = (this.Cash + 5400) / (0.13 + ABSDPercent);
-                }
-                else
-                {
-                    TrueMax = (this.Cash + 15400) / (0.14 + ABSDPercent);
-                }
-
-                // If Cpf is limiting factor
-                double both = this.Cash + this.Cpf;
-                if (both < 0.25 * TrueMax)
-                {
-                    if ((both / (0.46 + ABSDPercent)) < 180000)
-                    {
-                        TrueMax = both / (0.46 + ABSDPercent);
-                    }
-                    else if ((both + 1800) / (0.47 + ABSDPercent) < 360000)
-                    {
-                        TrueMax = (both + 1800) / (0.47 + ABSDPercent);
-                    }
-                    else if ((both + 5400) / (0.48 + ABSDPercent) < 1000000)
-                    {
-                        TrueMax = (both + 5400) / (0.48 + ABSDPercent);
-                    }
-                    else
-                    {
-                        TrueMax = (both + 15400) / (0.49 + ABSDPercent);
-                    }
-                }
-
-                // If Loan is limiting factor
-                double loan = this.MaxBankLoan();
-                if ((both - CalculateBSD(TrueMax) - CalculateABSD(TrueMax)) < TrueMax - loan)
-                {
-                    double total = loan + both;
-
-                    if ((total / (1.01 + ABSDPercent)) < 180000)
-                    {
-                        TrueMax = total / (1.01 + ABSDPercent);
-                    }
-                    else if ((total + 1800) / (1.02 + ABSDPercent) < 360000)
-                    {
-                        TrueMax = (total + 1800) / (1.02 + ABSDPercent);
-                    }
-                    else if ((total + 5400) / (1.03 + ABSDPercent) < 1000000)
-                    {
-                        TrueMax = (total + 5400) / (1.03 + ABSDPercent);
-                    }
-                    else
-                    {
-                        TrueMax = (total + 15400) / (1.04 + ABSDPercent);
-                    }
-                }
-            }
-            else
+            //done
+            if (LTV == 0.75)
             {
                 // If Cash is limiting factor
                 if ((this.Cash / (0.06 + ABSDPercent)) < 180000)
@@ -415,7 +370,6 @@ namespace BricksMeatballs.Models
                 }
 
                 // If Cpf is limiting factor
-                double both = this.Cash + this.Cpf;
                 if (both < 0.25 * TrueMax)
                 {
                     if ((both / (0.26 + ABSDPercent)) < 180000)
@@ -435,31 +389,215 @@ namespace BricksMeatballs.Models
                         TrueMax = (both + 15400) / (0.29 + ABSDPercent);
                     }
                 }
-
-                // If Loan is limiting factor
-                double loan = this.MaxBankLoan();
-                if ((both - CalculateBSD(TrueMax) - CalculateABSD(TrueMax)) < TrueMax - loan)
+            }
+            //done
+            else if (LTV == 0.55)
+            {
+                // If Cash is limiting factor
+                if ((this.Cash / (0.11 + ABSDPercent)) < 180000)
                 {
-                    double total = loan + both;
+                    TrueMax = this.Cash / (0.11 + ABSDPercent);
+                }
+                else if ((this.Cash + 1800) / (0.12 + ABSDPercent) < 360000)
+                {
+                    TrueMax = (this.Cash + 1800) / (0.12 + ABSDPercent);
+                }
+                else if ((this.Cash + 5400) / (0.13 + ABSDPercent) < 1000000)
+                {
+                    TrueMax = (this.Cash + 5400) / (0.13 + ABSDPercent);
+                }
+                else
+                {
+                    TrueMax = (this.Cash + 15400) / (0.14 + ABSDPercent);
+                }
 
-                    if ((total / (1.01 + ABSDPercent)) < 180000)
+                // If Cpf is limiting factor
+                if (both < 0.45 * TrueMax)
+                {
+                    if ((both / (0.46 + ABSDPercent)) < 180000)
                     {
-                        TrueMax = total / (1.01 + ABSDPercent);
+                        TrueMax = both / (0.46 + ABSDPercent);
                     }
-                    else if ((total + 1800) / (1.02 + ABSDPercent) < 360000)
+                    else if ((both + 1800) / (0.47 + ABSDPercent) < 360000)
                     {
-                        TrueMax = (total + 1800) / (1.02 + ABSDPercent);
+                        TrueMax = (both + 1800) / (0.47 + ABSDPercent);
                     }
-                    else if ((total + 5400) / (1.03 + ABSDPercent) < 1000000)
+                    else if ((both + 5400) / (0.48 + ABSDPercent) < 1000000)
                     {
-                        TrueMax = (total + 5400) / (1.03 + ABSDPercent);
+                        TrueMax = (both + 5400) / (0.48 + ABSDPercent);
                     }
                     else
                     {
-                        TrueMax = (total + 15400) / (1.04 + ABSDPercent);
+                        TrueMax = (both + 15400) / (0.49 + ABSDPercent);
                     }
                 }
             }
+            //
+            else if (LTV == 0.45)
+            {
+                // If Cash is limiting factor
+                if ((this.Cash / (0.26 + ABSDPercent)) < 180000)
+                {
+                    TrueMax = this.Cash / (0.26 + ABSDPercent);
+                }
+                else if ((this.Cash + 1800) / (0.27 + ABSDPercent) < 360000)
+                {
+                    TrueMax = (this.Cash + 1800) / (0.27 + ABSDPercent);
+                }
+                else if ((this.Cash + 5400) / (0.28 + ABSDPercent) < 1000000)
+                {
+                    TrueMax = (this.Cash + 5400) / (0.28 + ABSDPercent);
+                }
+                else
+                {
+                    TrueMax = (this.Cash + 15400) / (0.29 + ABSDPercent);
+                }
+
+                // If Cpf is limiting factor
+                if (both < 0.55 * TrueMax)
+                {
+                    if ((both / (0.56 + ABSDPercent)) < 180000)
+                    {
+                        TrueMax = both / (0.56 + ABSDPercent);
+                    }
+                    else if ((both + 1800) / (0.57 + ABSDPercent) < 360000)
+                    {
+                        TrueMax = (both + 1800) / (0.57 + ABSDPercent);
+                    }
+                    else if ((both + 5400) / (0.58 + ABSDPercent) < 1000000)
+                    {
+                        TrueMax = (both + 5400) / (0.58 + ABSDPercent);
+                    }
+                    else
+                    {
+                        TrueMax = (both + 15400) / (0.59 + ABSDPercent);
+                    }
+                }
+            }
+            else if (LTV == 0.35)
+            {
+                // If Cash is limiting factor
+                if ((this.Cash / (0.26 + ABSDPercent)) < 180000)
+                {
+                    TrueMax = this.Cash / (0.26 + ABSDPercent);
+                }
+                else if ((this.Cash + 1800) / (0.27 + ABSDPercent) < 360000)
+                {
+                    TrueMax = (this.Cash + 1800) / (0.27 + ABSDPercent);
+                }
+                else if ((this.Cash + 5400) / (0.28 + ABSDPercent) < 1000000)
+                {
+                    TrueMax = (this.Cash + 5400) / (0.28 + ABSDPercent);
+                }
+                else
+                {
+                    TrueMax = (this.Cash + 15400) / (0.29 + ABSDPercent);
+                }
+
+                // If Cpf is limiting factor
+                if (both < 0.65 * TrueMax)
+                {
+                    if ((both / (0.66 + ABSDPercent)) < 180000)
+                    {
+                        TrueMax = both / (0.66 + ABSDPercent);
+                    }
+                    else if ((both + 1800) / (0.67 + ABSDPercent) < 360000)
+                    {
+                        TrueMax = (both + 1800) / (0.67 + ABSDPercent);
+                    }
+                    else if ((both + 5400) / (0.68 + ABSDPercent) < 1000000)
+                    {
+                        TrueMax = (both + 5400) / (0.68 + ABSDPercent);
+                    }
+                    else
+                    {
+                        TrueMax = (both + 15400) / (0.69 + ABSDPercent);
+                    }
+                }
+            }
+            else if (LTV == 0.25)
+            {
+                // If Cash is limiting factor
+                if ((this.Cash / (0.26 + ABSDPercent)) < 180000)
+                {
+                    TrueMax = this.Cash / (0.26 + ABSDPercent);
+                }
+                else if ((this.Cash + 1800) / (0.27 + ABSDPercent) < 360000)
+                {
+                    TrueMax = (this.Cash + 1800) / (0.27 + ABSDPercent);
+                }
+                else if ((this.Cash + 5400) / (0.28 + ABSDPercent) < 1000000)
+                {
+                    TrueMax = (this.Cash + 5400) / (0.28 + ABSDPercent);
+                }
+                else
+                {
+                    TrueMax = (this.Cash + 15400) / (0.29 + ABSDPercent);
+                }
+
+                // If Cpf is limiting factor
+                if (both < 0.75 * TrueMax)
+                {
+                    if ((both / (0.76 + ABSDPercent)) < 180000)
+                    {
+                        TrueMax = both / (0.76 + ABSDPercent);
+                    }
+                    else if ((both + 1800) / (0.77 + ABSDPercent) < 360000)
+                    {
+                        TrueMax = (both + 1800) / (0.77 + ABSDPercent);
+                    }
+                    else if ((both + 5400) / (0.78 + ABSDPercent) < 1000000)
+                    {
+                        TrueMax = (both + 5400) / (0.78 + ABSDPercent);
+                    }
+                    else
+                    {
+                        TrueMax = (both + 15400) / (0.79 + ABSDPercent);
+                    }
+                }
+            }
+            else
+            {
+                // If Cash is limiting factor
+                if ((this.Cash / (0.26 + ABSDPercent)) < 180000)
+                {
+                    TrueMax = this.Cash / (0.26 + ABSDPercent);
+                }
+                else if ((this.Cash + 1800) / (0.27 + ABSDPercent) < 360000)
+                {
+                    TrueMax = (this.Cash + 1800) / (0.27 + ABSDPercent);
+                }
+                else if ((this.Cash + 5400) / (0.28 + ABSDPercent) < 1000000)
+                {
+                    TrueMax = (this.Cash + 5400) / (0.28 + ABSDPercent);
+                }
+                else
+                {
+                    TrueMax = (this.Cash + 15400) / (0.29 + ABSDPercent);
+                }
+
+                // If Cpf is limiting factor
+                if (both < 0.85 * TrueMax)
+                {
+                    if ((both / (0.86 + ABSDPercent)) < 180000)
+                    {
+                        TrueMax = both / (0.86 + ABSDPercent);
+                    }
+                    else if ((both + 1800) / (0.87 + ABSDPercent) < 360000)
+                    {
+                        TrueMax = (both + 1800) / (0.87 + ABSDPercent);
+                    }
+                    else if ((both + 5400) / (0.88 + ABSDPercent) < 1000000)
+                    {
+                        TrueMax = (both + 5400) / (0.88 + ABSDPercent);
+                    }
+                    else
+                    {
+                        TrueMax = (both + 15400) / (0.89 + ABSDPercent);
+                    }
+                }
+            }
+
             return TrueMax;
         }
         
