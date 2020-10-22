@@ -106,7 +106,6 @@ namespace BricksMeatballs.Models
         public double InterestRate { get; set; } //0.1 - 4%
         public string InterestRateDisplay()
         {
-
             double temp = InterestRate / 100;
             return temp.ToString("P0", CultureInfo.InvariantCulture);
         }
