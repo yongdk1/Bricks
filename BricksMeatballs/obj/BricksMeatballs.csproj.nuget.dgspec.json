@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj": {}
+    "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj": {}
   },
   "projects": {
-    "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj": {
+    "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
+        "projectUniqueName": "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
         "projectName": "BricksMeatballs",
-        "projectPath": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
-        "packagesPath": "C:\\Users\\DuanKai\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\DuanKai\\source\\repos\\peiyan-lim\\Bricks\\BricksMeatballs\\obj\\",
+        "projectPath": "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\BricksMeatballs.csproj",
+        "packagesPath": "C:\\Users\\Sripriya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Sripriya\\source\\repos\\Bricks\\BricksMeatballs\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\DuanKai\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sripriya\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -75,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
         }
       }
     }
