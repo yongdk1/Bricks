@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using BricksMeatballs.Services;
+using BricksMeatballs.BackgroundServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace BricksMeatballs
 {
@@ -24,6 +27,14 @@ namespace BricksMeatballs
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddHttpClient<UraService>();
+
+            services.AddDbContextPool<AppDBContext>(options =>
+                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            UraService.ConectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            services.AddHostedService<TimedHostedService>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
