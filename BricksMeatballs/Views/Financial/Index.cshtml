@@ -1,120 +1,217 @@
-﻿@model IEnumerable<BricksMeatballs.Models.FinancialModel>
+﻿@model BricksMeatballs.Models.FinancialModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
-<h1>Index</h1>
+<h1>Financial Calculator</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicantStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Age)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Residency)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumProperties)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NumLoans)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MonthlyFixedIncome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MonthlyVariableIncome)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CashTowardsDownPayment)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CpfOrdinaryAccount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreditMinPayments)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CarLoan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OtherHomeLoan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OtherLoan)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PropertyType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoanTenure)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicantStatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Residency)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumProperties)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumLoans)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MonthlyFixedIncome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MonthlyVariableIncome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CashTowardsDownPayment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CpfOrdinaryAccount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreditMinPayments)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CarLoan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OtherHomeLoan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OtherLoan)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PropertyType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LoanTenure)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div>
+    <hr />
+    <h4>Calculated Results</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            TDSR Limit
+        </dt>
+        <dd class="col-sm-2">
+            @Model.TDSRLimitDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            MSR Limit
+        </dt>
+        <dd class="col-sm-2">
+            @Model.MSRLimitDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            Limit After Expenses
+        </dt>
+        <dd class="col-sm-2">
+            @Model.MaxMonthlyPaymentDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            Maximum Bank Loan
+        </dt>
+        <dd class="col-sm-2">
+            @Model.MaxBankLoanDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            LTV
+        </dt>
+        <dd class="col-sm-2">
+            @Model.LTVDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            True Max
+        </dt>
+        <dd class="col-sm-2">
+            @Model.TrueMaxDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            BSD
+        </dt>
+        <dd class="col-sm-2">
+            @Model.BSDDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            ABSD (if any)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.ABSDDisplay()
+        </dd>
+    </dl>
+</div>
+<div>
+    <hr />
+    <h4>Entered Details</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.ApplicantStatus)
+        </dt>
+        <dd class="col-sm-2">
+            @Html.DisplayFor(model => model.ApplicantStatus)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd class="col-sm-2">
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Residency)
+        </dt>
+        <dd class="col-sm-2">
+            @Html.DisplayFor(model => model.Residency)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.NumProperties)
+        </dt>
+        <dd class="col-sm-2">
+            @Html.DisplayFor(model => model.NumProperties)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.NumLoans)
+        </dt>
+        <dd class="col-sm-2">
+            @Html.DisplayFor(model => model.NumLoans)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.MonthlyFixedIncome)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.MonthlyFixedIncomeDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.MonthlyVariableIncome)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.MonthlyVariableIncomeDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Cash)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.CashDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Cpf)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.CpfDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Credit)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.CreditDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.CarLoan)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.CarLoanDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.OtherHomeLoan)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.OtherHomeLoanDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.OtherLoan)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.OtherLoanDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.PropertyType)
+        </dt>
+        <dd class="col-sm-2">
+            @Html.DisplayFor(model => model.PropertyType)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.LoanTenure)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.LoanTenureDisplay()
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.InterestRate)
+        </dt>
+        <dd class="col-sm-2">
+            @Model.InterestRateDisplay()
+        </dd>
+    </dl>
+
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", @Model) |
+    <a asp-action="Index">Back to List</a>
+</div>
