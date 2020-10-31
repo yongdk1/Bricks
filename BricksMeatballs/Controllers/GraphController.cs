@@ -50,7 +50,8 @@ namespace BricksMeatballs.Controllers
         [HttpGet]
         public JsonResult GraphChart()
         {
-            var graphData = ChartDataAcess.GetAvgPriceList();
+            //String to be placed in GetAvgPriceList
+            var graphData = ChartDataAcess.GetAvgPriceList("04");
             return Json(graphData);
         }
     }
