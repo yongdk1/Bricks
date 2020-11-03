@@ -17,7 +17,7 @@
             TDSR Limit
         </dt>
         <dd class="col-sm-2">
-            @Model.TDSRLimitDisplay()
+            @Model.DoubleDisplay(Model.TDSRLimit())
         </dd>
     </dl>
     <dl class="row">
@@ -25,7 +25,7 @@
             MSR Limit
         </dt>
         <dd class="col-sm-2">
-            @Model.MSRLimitDisplay()
+            @Model.MSRLimitDisplay())
         </dd>
     </dl>
     <dl class="row">
@@ -33,7 +33,7 @@
             Limit After Expenses
         </dt>
         <dd class="col-sm-2">
-            @Model.MaxMonthlyPaymentDisplay()
+            @Model.DoubleDisplay(Model.MaxMonthlyPayment())
         </dd>
     </dl>
     <dl class="row">
@@ -41,7 +41,7 @@
             Maximum Bank Loan
         </dt>
         <dd class="col-sm-2">
-            @Model.MaxBankLoanDisplay()
+            @Model.DoubleDisplay(Model.MaxBankLoan())
         </dd>
     </dl>
     <dl class="row">
@@ -57,7 +57,7 @@
             True Max
         </dt>
         <dd class="col-sm-2">
-            @Model.TrueMaxDisplay()
+            @Model.DoubleDisplay(Model.CalculateTrueMax())
         </dd>
     </dl>
     <dl class="row">
@@ -65,7 +65,7 @@
             BSD
         </dt>
         <dd class="col-sm-2">
-            @Model.BSDDisplay()
+            @Model.DoubleDisplay(Model.BSD())
         </dd>
     </dl>
     <dl class="row">
@@ -73,7 +73,7 @@
             ABSD (if any)
         </dt>
         <dd class="col-sm-2">
-            @Model.ABSDDisplay()
+            @Model.DoubleDisplay(Model.ABSD())
         </dd>
     </dl>
 </div>
@@ -126,7 +126,7 @@
             @Html.DisplayNameFor(model => model.MonthlyFixedIncome)
         </dt>
         <dd class="col-sm-2">
-            @Model.MonthlyFixedIncomeDisplay()
+            @Model.DoubleDisplay(Model.MonthlyFixedIncome)
         </dd>
     </dl>
     <dl class="row">
@@ -134,7 +134,7 @@
             @Html.DisplayNameFor(model => model.MonthlyVariableIncome)
         </dt>
         <dd class="col-sm-2">
-            @Model.MonthlyVariableIncomeDisplay()
+            @Model.DoubleDisplay(Model.MonthlyVariableIncome)
         </dd>
     </dl>
     <dl class="row">
@@ -142,7 +142,7 @@
             @Html.DisplayNameFor(model => model.Cash)
         </dt>
         <dd class="col-sm-2">
-            @Model.CashDisplay()
+            @Model.DoubleDisplay(Model.Cash)
         </dd>
     </dl>
     <dl class="row">
@@ -150,7 +150,7 @@
             @Html.DisplayNameFor(model => model.Cpf)
         </dt>
         <dd class="col-sm-2">
-            @Model.CpfDisplay()
+            @Model.DoubleDisplay(Model.Cpf)
         </dd>
     </dl>
     <dl class="row">
@@ -158,7 +158,7 @@
             @Html.DisplayNameFor(model => model.Credit)
         </dt>
         <dd class="col-sm-2">
-            @Model.CreditDisplay()
+            @Model.DoubleDisplay(Model.Credit)
         </dd>
     </dl>
     <dl class="row">
@@ -166,7 +166,7 @@
             @Html.DisplayNameFor(model => model.CarLoan)
         </dt>
         <dd class="col-sm-2">
-            @Model.CarLoanDisplay()
+            @Model.DoubleDisplay(Model.CarLoan)
         </dd>
     </dl>
     <dl class="row">
@@ -174,7 +174,7 @@
             @Html.DisplayNameFor(model => model.OtherHomeLoan)
         </dt>
         <dd class="col-sm-2">
-            @Model.OtherHomeLoanDisplay()
+            @Model.DoubleDisplay(Model.OtherHomeLoan)
         </dd>
     </dl>
     <dl class="row">
@@ -182,7 +182,7 @@
             @Html.DisplayNameFor(model => model.OtherLoan)
         </dt>
         <dd class="col-sm-2">
-            @Model.OtherLoanDisplay()
+            @Model.DoubleDisplay(Model.OtherLoan)
         </dd>
     </dl>
     <dl class="row">

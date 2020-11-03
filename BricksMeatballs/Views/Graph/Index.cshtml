@@ -28,10 +28,10 @@
 
     function GraphChart(data) {
         var tdata = new google.visualization.DataTable();
-        tdata.addColumn('number', 'saleTime');
-        tdata.addColumn('number', 'averagePrice');
+        tdata.addColumn('date', 'saleTime');
+        tdata.addColumn('number', 'dataPoint');
         for (var i = 0; i < data.length; i++) {
-            tdata.addRow([data[i].saleTime, data[i].averagePrice]);
+            tdata.addRow([new Date(data[i].saleTime), data[i].dataPoint]);
         }
 
         var options = {
@@ -41,14 +41,16 @@
             },
             colors: ['#e0440e'],
             hAxis: {
-                title: 'Date'
+                title: 'Time',
+                format: 'MMM/yyyy' 
             },
             vAxis: {
                 title: 'Average Price'
             }
         };
+        var dateFormatter = new google.visualization.DateFormat({ pattern: "MMM/yyyy" });
+        dateFormatter.format(tdata, 0);
         var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-
         chart.draw(tdata, options);
         return false;
     }</script>
