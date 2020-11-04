@@ -21,7 +21,7 @@ namespace BricksMeatballs.Services
         {
             httpClient.BaseAddress = new Uri("https://www.ura.gov.sg/uraDataService/invokeUraDS");
             httpClient.DefaultRequestHeaders.Add("AccessKey", "c28f758a-2fe4-401a-b7ad-715396a73048");
-            httpClient.DefaultRequestHeaders.Add("Token", "Sz6j49Z-2fecAcUsPnz5Rkb0fH88wfjksp581-716T92uTs6-qee2f2hf076z@heQNbDd7Sv42qb-Mu+64Y8k534C396P0X-5d7Y");
+            httpClient.DefaultRequestHeaders.Add("Token", "46W3mvx8p0-DymS54BafkR8Bz2J5ME@Az4ck0tg64vGh4KkxS7bGp-0bHasT3NC4-wdp4pzgyaPavg6400s6PXEV3HaWk8+8pXY7");
 
             _httpClient = httpClient;
 
