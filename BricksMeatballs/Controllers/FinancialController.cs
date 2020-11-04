@@ -11,7 +11,7 @@ namespace BricksMeatballs.Controllers
 {
     public class FinancialController : Controller
     {
-        // GET: FinancialController
+        // GET: FinancialController/Index
         public ActionResult Index(FinancialModel fmodel)
         {
             return View(fmodel);
@@ -41,24 +41,9 @@ namespace BricksMeatballs.Controllers
         }
 
         // GET: FinancialController/Edit/
-        public ActionResult Edit()
-        {
-            return View();
-        }
-
-        // POST: FinancialController/Edit/
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(FinancialModel fmodel)
         {
-            try
-            {
-                return View("Index", fmodel);
-            }
-            catch
-            {
-                return View();
-            }
+            return View(fmodel);
         }
     }
 }

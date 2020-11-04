@@ -77,11 +77,9 @@ namespace BricksMeatballs.Models
 
 
         //Displays for user input attributes
-        readonly string specifier = "C0";
-        readonly CultureInfo culture = CultureInfo.CreateSpecificCulture("en-US");
         public string DoubleDisplay(double d)
         {
-            return d.ToString(this.specifier, this.culture); 
+            return d.ToString("C0", CultureInfo.CreateSpecificCulture("en-US")); 
         }
         public string LoanTenureDisplay()
         {
@@ -91,7 +89,7 @@ namespace BricksMeatballs.Models
         public string InterestRateDisplay()
         {
             double temp = InterestRate / 100;
-            return temp.ToString("P0", CultureInfo.InvariantCulture);
+            return temp.ToString("P1", CultureInfo.InvariantCulture);
         }
 
 
@@ -127,7 +125,6 @@ namespace BricksMeatballs.Models
             }
         }
         
-
         public double MaxBankLoan()
         {
             double monthlyIR = this.InterestRate / 1200;
@@ -143,7 +140,7 @@ namespace BricksMeatballs.Models
             }
             else
             {
-                return this.MSRLimit().ToString(this.specifier, this.culture);
+                return this.DoubleDisplay(this.MSRLimit());
             }
         }
         public double CalculateBSD(double Price)
@@ -189,43 +186,6 @@ namespace BricksMeatballs.Models
 
             return BSD;
         }
-
-        public double CalculateABSD(double Price)
-        {
-            {
-                if (this.Residency == Residency.Singaporean) // 0% first, 12% 2nd, 15% rest
-                {
-                    if (this.NumProperties == 0)
-                    {
-                        return 0 * Price;
-                    }
-                    else if (this.NumProperties == 1)
-                    {
-                        return 0.12 * Price;
-                    }
-                    else
-                    {
-                        return 0.15 * Price;
-                    }
-                }
-                else if (this.Residency == Residency.PR) // 5% first, 15% rest
-                {
-                    if (this.NumProperties == 0)
-                    {
-                        return 0.05 * Price;
-                    }
-                    else
-                    {
-                        return 0.15 * Price;
-                    }
-                }
-                else //20% everything for foreigners 
-                {
-                    return 0.2 * Price;
-                }
-            }
-        }
-
         public double CalculateABSDPercentage() //SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
         {
             if (this.Residency == Residency.Singaporean) // 0% first, 12% 2nd, 15% rest
@@ -258,6 +218,10 @@ namespace BricksMeatballs.Models
             {
                 return 0.2;
             }
+        }
+        public double CalculateABSD(double Price)
+        {
+            return this.CalculateABSDPercentage() * Price;
         }
 
         public double CalculateLTV() 
@@ -296,6 +260,22 @@ namespace BricksMeatballs.Models
                         if (both < 65 && this.LoanTenure <= 30) return 0.35;
                         else return 0.15;
                 }
+            }
+        }
+
+        public double CalculateCashDownpayment()
+        {
+            if (this.CalculateLTV() == 0.75)
+            {
+                return 0.05;
+            } 
+            else if (this.CalculateLTV() == 0.55)
+            {
+                return 0.10;
+            }
+            else
+            {
+                return 0.25;
             }
         }
 
@@ -570,13 +550,6 @@ namespace BricksMeatballs.Models
             return TrueMax;
         }
 
-        
-        public string TrueMaxDisplay()
-        {
-            return this.CalculateTrueMax().ToString(this.specifier, this.culture);
-        }
-
-        
         public double BSD()
         {
             return CalculateBSD(this.CalculateTrueMax());
@@ -585,6 +558,15 @@ namespace BricksMeatballs.Models
         public double ABSD()
         {
             return CalculateABSD(this.CalculateTrueMax());
+        }
+        
+        public double CashDownpayment()
+        {
+            return this.CalculateTrueMax() * this.CalculateCashDownpayment();
+        }
+        public double CashCpfDownpayment()
+        {
+            return this.CalculateTrueMax() * (1 - this.CalculateLTV());
         }
     }
 }
