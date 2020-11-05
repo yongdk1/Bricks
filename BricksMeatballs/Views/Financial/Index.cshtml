@@ -33,7 +33,6 @@
     }
 
     h4 {
-        padding-bottom: 10px;
         font-weight: 700;
     }
 
@@ -41,12 +40,21 @@
         border: hidden;
     }
 
+    hr {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .row {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
     
 </style>
 
 
 <div class="FinancialCal">Financial Calculator</div>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: -50px">
     <div class="row">
         <br />
         <div class="col-sm-2"></div>
@@ -56,30 +64,14 @@
                     <div class='panel-heading panel-relative'>
                         <div class="results">
                             <hr />
-                            <h4>Calculated Results</h4>
+                            <h4>Your Results</h4>
                             <hr />
                             <dl class="row">
                                 <dt class="col-sm-6">
-                                    TDSR Limit
+                                    Maximum House Price
                                 </dt>
                                 <dd class="col-sm-6">
-                                    @Model.DoubleDisplay(Model.TDSRLimit())
-                                </dd>
-                            </dl>
-                            <dl class="row">
-                                <dt class="col-sm-6">
-                                    MSR Limit
-                                </dt>
-                                <dd class="col-sm-6">
-                                    @Model.MSRLimitDisplay()
-                                </dd>
-                            </dl>
-                            <dl class="row">
-                                <dt class="col-sm-6">
-                                    Limit After Expenses
-                                </dt>
-                                <dd class="col-sm-6">
-                                    @Model.DoubleDisplay(Model.MaxMonthlyPayment())
+                                    @Model.DoubleDisplay(Model.CalculateTrueMax())
                                 </dd>
                             </dl>
                             <dl class="row">
@@ -90,9 +82,38 @@
                                     @Model.DoubleDisplay(Model.MaxBankLoan())
                                 </dd>
                             </dl>
+                        </div>
+                        <div class="results">
+                            <hr />
+                            <h4>Financial Details</h4>
+                            <hr />
                             <dl class="row">
                                 <dt class="col-sm-6">
-                                    LTV
+                                    Monthly Cash Available for Mortgage
+                                </dt>
+                                <dd class="col-sm-6">
+                                    @Model.DoubleDisplay(Model.MaxMonthlyPayment())
+                                </dd>
+                            </dl>
+                            <dl class="row" style="margin-top: -20px">
+                                <dt class="col-sm-6" style="font-weight: 400">
+                                    TDSR Limit
+                                </dt>
+                                <dd class="col-sm-6">
+                                    @Model.DoubleDisplay(Model.TDSRLimit())
+                                </dd>
+                            </dl>
+                            <dl class="row" style="margin-top: -20px">
+                                <dt class="col-sm-6" style="font-weight: 400">
+                                    MSR Limit (if applicable)
+                                </dt>
+                                <dd class="col-sm-6">
+                                    @Model.MSRLimitDisplay()
+                                </dd>
+                            </dl>
+                            <dl class="row">
+                                <dt class="col-sm-6">
+                                    Maximum Loan-To-Value (LTV) Ratio
                                 </dt>
                                 <dd class="col-sm-6">
                                     @Model.LTVDisplay()
@@ -100,14 +121,14 @@
                             </dl>
                             <dl class="row">
                                 <dt class="col-sm-6">
-                                    True Max
+                                    Deposit Required
                                 </dt>
                                 <dd class="col-sm-6">
-                                    @Model.DoubleDisplay(Model.CalculateTrueMax())
+                                    @Model.DoubleDisplay(Model.CashCpfDownpayment())
                                 </dd>
                             </dl>
-                            <dl class="row">
-                                <dt class="col-sm-6">
+                            <dl class="row" style="margin-top: -20px">
+                                <dt class="col-sm-6" style="font-weight: 400">
                                     Minimum Cash Downpayment
                                 </dt>
                                 <dd class="col-sm-6">
@@ -116,23 +137,15 @@
                             </dl>
                             <dl class="row">
                                 <dt class="col-sm-6">
-                                    Minimum Cash + CPF Downpayment
-                                </dt>
-                                <dd class="col-sm-6">
-                                    @Model.DoubleDisplay(Model.CashCpfDownpayment())
-                                </dd>
-                            </dl>
-                            <dl class="row">
-                                <dt class="col-sm-6">
-                                    BSD
+                                    Buyer Stamp Duty (BSD)
                                 </dt>
                                 <dd class="col-sm-6">
                                     @Model.DoubleDisplay(Model.BSD())
                                 </dd>
                             </dl>
-                            <dl class="row">
+                            <dl class="row" style="margin-top: -20px">
                                 <dt class="col-sm-6">
-                                    ABSD (if any)
+                                    Additional Buyer Stamp Duty (ABSD) (if any)
                                 </dt>
                                 <dd class="col-sm-6">
                                     @Model.DoubleDisplay(Model.ABSD())
@@ -143,14 +156,6 @@
                             <hr />
                             <h4>Your Details</h4>
                             <hr />
-                            <dl class="row">
-                                <dt class="col-sm-6">
-                                    @Html.DisplayNameFor(model => model.ApplicantStatus)
-                                </dt>
-                                <dd class="col-sm-6">
-                                    @Html.DisplayFor(model => model.ApplicantStatus)
-                                </dd>
-                            </dl>
                             <dl class="row">
                                 <dt class="col-sm-6">
                                     @Html.DisplayNameFor(model => model.Age)
@@ -274,7 +279,6 @@
                         </div>
                         <div class="results">
                             <form asp-action="Edit">
-                                @Html.HiddenFor(model => model.ApplicantStatus, new { Value = @Model.ApplicantStatus })
                                 @Html.HiddenFor(model => model.Age, new { Value = @Model.Age })
                                 @Html.HiddenFor(model => model.Residency, new { Value = @Model.Residency })
                                 @Html.HiddenFor(model => model.NumProperties, new { Value = @Model.NumProperties })

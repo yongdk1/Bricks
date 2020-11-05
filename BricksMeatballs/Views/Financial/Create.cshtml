@@ -50,7 +50,7 @@
 
 
 <div class="FinancialCal">Financial Calculator</div>
-<div class="container-fluid">
+<div class="container-fluid" style="margin-top: -40px">
     <div class="row">
         <br />
         <div class="col-sm-2"></div>
@@ -63,20 +63,12 @@
                             <h4>Applicant Information</h4>
                             <fieldset>
                                 <div class="row">
-                                    <div class="form-group col-md-4">
-                                        <label asp-for="ApplicantStatus" class="control-label"></label>
-                                        <select asp-for="ApplicantStatus" class="form-control">
-                                            <option value="Single">Single</option>
-                                            <option value="Joint">Joint</option>
-                                        </select>
-                                        <span asp-validation-for="ApplicantStatus" class="text-danger"></span>
-                                    </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <label asp-for="Age" class="control-label"></label>
-                                        <input asp-for="Age" class="form-control" type="number" min="0" />
+                                        <input asp-for="Age" class="form-control" placeholder="Age" type="number" min="0" value="30"/>
                                         <span asp-validation-for="Age" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group col-md-4">
+                                    <div class="form-group col-md-6">
                                         <label asp-for="Residency " class="control-label"></label>
                                         <select asp-for="Residency" class="form-control">
                                             <option value="Singaporean">Singaporean</option>
@@ -112,7 +104,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label asp-for="MonthlyVariableIncome" class="control-label"></label>
-                                        <input asp-for="MonthlyVariableIncome" placeholder="Monthly Variable Income" class="form-control" type="number" min="0" value="5000" />
+                                        <input asp-for="MonthlyVariableIncome" placeholder="Monthly Variable Income" class="form-control" type="number" min="0" value="0" />
                                         <span asp-validation-for="MonthlyVariableIncome" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -122,12 +114,12 @@
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label asp-for="Cash" class="control-label"></label>
-                                        <input asp-for="Cash" placeholder="Cash Towards Down Payment" class="form-control" type="number" min="0" value="10000" />
+                                        <input asp-for="Cash" placeholder="Cash Towards Down Payment" class="form-control" type="number" min="0" value="0" />
                                         <span asp-validation-for="Cash" class="text-danger"></span>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label asp-for="Cpf" class="control-label"></label>
-                                        <input asp-for="Cpf" placeholder="CPF Ordinary Account" class="form-control" type="number" min="0" value="40000" />
+                                        <input asp-for="Cpf" placeholder="CPF Ordinary Account" class="form-control" type="number" min="0" value="0" />
                                         <span asp-validation-for="Cpf" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -137,12 +129,12 @@
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <label asp-for="Credit" class="control-label"></label>
-                                        <input asp-for="Credit" placeholder="Minimum Credit Payments" class="form-control" type="number" min="0" value="500" />
+                                        <input asp-for="Credit" placeholder="Minimum Credit Payments" class="form-control" type="number" min="0" value="0" />
                                         <span asp-validation-for="Credit" class="text-danger"></span>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label asp-for="CarLoan" class="control-label"></label>
-                                        <input asp-for="CarLoan" placeholder="Car Loan" class="form-control" type="number" min="0" value="250" />
+                                        <input asp-for="CarLoan" placeholder="Car Loan" class="form-control" type="number" min="0" value="0" />
                                         <span asp-validation-for="CarLoan" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -156,7 +148,7 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label asp-for="OtherLoan" class="control-label"></label>
-                                        <input asp-for="OtherLoan" placeholder="Car Loan" class="form-control" type="number" min="0" value="0" />
+                                        <input asp-for="OtherLoan" placeholder="All Other Loans" class="form-control" type="number" min="0" value="0" />
                                         <span asp-validation-for="OtherLoan" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -180,7 +172,7 @@
                                     </div>
                                     <div class="form-group  col-md-4">
                                         <label asp-for="InterestRate" class="control-label"></label>
-                                        <input asp-for="InterestRate" class="form-control" placeholder="Interest Rate" type="number" min="0.1" max="4" step="0.1" value="3" />
+                                        <input asp-for="InterestRate" class="form-control" placeholder="Interest Rate" type="number" min="0.1" max="4" step="0.1" value="3.5" />
                                         <span asp-validation-for="InterestRate" class="text-danger"></span>
                                     </div>
                                 </div>
