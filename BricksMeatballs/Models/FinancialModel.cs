@@ -1,24 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.Design;
 using System.ComponentModel;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Globalization;
-using System.Threading;
-using System.Reflection.Metadata.Ecma335;
 
 namespace BricksMeatballs.Models
 {
-    public enum ApplicantStatus { Single, Joint }
-    /// <summary>
-    /// 
-    /// </summary>
     public enum Residency { Singaporean, PR, Foreigner }
     public enum PropertyType { HDB, EC, Private }
-
 
     /// <summary>
     /// The main Financial class
@@ -28,87 +15,168 @@ namespace BricksMeatballs.Models
     /// </summary>
     public class FinancialModel
     {
+        /// <summary>
+        /// User input information used to calculate factors affecting house affordability
+        /// </summary>
+
         //User input information
         //Applicant Information
-        [DisplayName("Applicant Status")]
-        public ApplicantStatus ApplicantStatus { get; set; } //Single or Joint application
-        [DisplayName("Age")]
+        /// <summary>
+        /// Instance variable <c>Age</c> represents the user's age in years
+        /// Used to determine LTV ratio, and affects maximum house price.
+        /// </summary>
+        [DisplayName("Age (Years Old)")]
         public int Age { get; set; } //Affects LTV Ratio
+        /// <summary>
+        /// Instance variable <c>Residency</c> represents the user's citizenship status with respect to Singapore.
+        /// Used to determine BSD and ABSD values.
+        /// </summary>
         [DisplayName("Residency")]
         public Residency Residency { get; set; } //Affects BSD and ABSD
 
         //Property Information
+        /// <summary>
+        /// Instance variable <c>NumProperties</c> represents the user's total number of properties owned.
+        /// Used to determine BSD and ABSD values.
+        /// </summary>
         [DisplayName("Number of Properties")]
         public int NumProperties { get; set; } //Affects BSD and ABSD
+        /// <summary>
+        /// Instance variable <c>NumLoans</c> represents the user's current number of outstanding housing loans.
+        /// Used to determine LTV ratio, and affects maximum house price.
+        /// </summary>
         [DisplayName("Number of Home Loans")]
         public int NumLoans { get; set; } //Affects LTV
 
         //Income Information
+        /// <summary>
+        /// Instance variable <c>MonthlyFixedIncome</c> represents the user's monthly fixed income.
+        /// Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+        /// </summary>
         [DisplayName("Monthly Fixed Income")]
         public double MonthlyFixedIncome { get; set; } //monthly fixed income
+        /// <summary>
+        /// Instance variable <c>VariableFixedIncome</c> represents the user's variable fixed income. Discounted by 30% when used for computation.
+        /// Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+        /// </summary>
         [DisplayName("Monthly Variable Income")]
         public double MonthlyVariableIncome { get; set; } //monthly variable income w 30% discount
 
         //Funds Information
+        /// <summary>
+        /// Instance variable <c>Cash</c> represents the user's currently available cash for a house downpayment.
+        /// Used to determine maximum house price, minimally at either 5%, 10% or 25% of maximum house price.
+        /// </summary>
         [DisplayName("Cash on Hand")]
         public double Cash { get; set; } //cash on hand
-        
-        [DisplayName("CPF Ordinary Account")]
+        /// <summary>
+        /// Instance variable <c>Cpf</c> represents the user's currently available cpf (ordinary account) for a house downpayment.
+        /// Used to determine maximum house price, between 20% to 60%
+        /// </summary>
+        [DisplayName("CPF")]
         public double Cpf { get; set; } //cpf
-        
 
         //Debt Information
+        /// <summary>
+        /// Instance variable <c>Credit</c> represents the user's credit card minimum payments.
+        /// Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+        /// </summary>
         [DisplayName("Credit Card Minimum Payments")]
         public double Credit { get; set; }
+        /// <summary>
+        /// Instance variable <c>CarLoan</c> represents the user's payments on car loan(s).
+        /// Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+        /// </summary>
         [DisplayName("Car Loan(s) Payments")]
         public double CarLoan { get; set; }
+        /// <summary>
+        /// Instance variable <c>OtherHomeLoan</c> represents the user's payments on other home loan(s).
+        /// Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+        /// </summary>
         [DisplayName("House Loan(s) Payments")]
         public double OtherHomeLoan { get; set; }
+        /// <summary>
+        /// Instance variable <c>OtherLoan</c> represents the user's payments on all other loan(s).
+        /// Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+        /// </summary>
         [DisplayName("Other Loan(s) Payments")]
         public double OtherLoan { get; set; }
 
         //Other Information
+        /// <summary>
+        /// Instance variable <c>PropertyType</c> represents the user's desired housing type to be purchased.
+        /// Used to determine if MSR is applicable (HDB or EC) or not applicable (Private).
+        /// Used to determine LTV value, and affects maximum house price.
+        /// </summary>
         [DisplayName("Property Type")]
         public PropertyType PropertyType { get; set; } //HDB, EC, Private, Affects LTV
-        [DisplayName("Loan Tenure")]
+        /// <summary>
+        /// Instance variable <c>LoanTenure</c> represents the user's desired duration of repayment for their home loan.
+        /// Used to determine maximum bank loan.
+        /// </summary>
+        [DisplayName("Loan Tenure (4 Years - 35 Years)")]
         public int LoanTenure { get; set; } //4 - 35 yrs, Affects LTV
-        [DisplayName("Interest Rate")]
+        /// <summary>
+        /// Instance variable <c>InterestRate</c> represents the anticipated interest rate of their home loan.
+        /// Used to determine maximum bank loan.
+        /// </summary>
+        [DisplayName("Interest Rate (0.1% - 4%)")]
         public double InterestRate { get; set; } //0.1 - 4%, Affects maximum bank loan
 
-
-        //Displays for user input attributes
+        //Display methods
+        /// <summary>
+        /// Instance Method <c>DoubleDisplay</c> displays user's data in monetary format to 0 d.p.
+        /// </summary>
         public string DoubleDisplay(double d)
         {
             return d.ToString("C0", CultureInfo.CreateSpecificCulture("en-US")); 
         }
+        /// <summary>
+        /// Instance Method <c>LoanTenureDisplay</c> displays user's desired loan tenure in years
+        /// </summary>
         public string LoanTenureDisplay()
         {
             string temp = this.LoanTenure.ToString("F0", CultureInfo.InvariantCulture);
             return (temp + " Years");
         }
+        /// <summary>
+        /// Instance Method <c>MSRLimitDisplay</c> displays interest rate in percentage format to 1 d.p.
+        /// </summary>
         public string InterestRateDisplay()
         {
             double temp = InterestRate / 100;
             return temp.ToString("P1", CultureInfo.InvariantCulture);
         }
 
+        //Calculate financial results
 
-        //Calculate house budget for user based on a 
-        //60% total debt servicing ratio,
-        //30% MSR limit on HDB/EC
-        //25% minimum down payment,
-        //5% minimum cash payment
-        //BSD: 1% on first 180,000; 2% on second 180,000; 3% on third 640,000; 4% on rest
-        //ABSD: SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
-
+        /// <summary>
+        /// Instance Method <c>TDSRLimit</c> returns the user's maximum monthly repayment for their home loan for Private homes.
+        /// Set at 60% of the sum of their monthly fixed income and their monthly variable income (discounted by 30%).
+        /// Used to determine maximum bank loan.
+        /// </summary>
         public double TDSRLimit() //60%TDSR Private
         {
             return 0.6 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7);
         }
+
+        /// <summary>
+        /// Instance Method <c>MSRLimit</c> returns the user's maximum monthly repayment for their home loan for HDBs and ECs.
+        /// Set at 30% of the sum of their monthly fixed income and their monthly variable income (discounted by 30%).
+        /// Used to determine maximum bank loan.
+        /// </summary>
         public double MSRLimit() //30%MSR HDB/EC
         {
             return 0.3 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7);
         }
+
+        /// <summary>
+        /// Instance Method <c>MaxMonthlyPayment</c> returns the user's maximum monthly repayment for their home loan after taking into account expenses.
+        /// If the house being bought is private, then it is
+        /// Set at TDSR Limit minus total value of debts (Credit Card Minimum Payments, Car Loan(s), Other Home Loan(s), & Other Loan(s))
+        /// Otherwise, set at the lower of the calculated value and the MSR Limit.
+        /// Used to determine maximum bank loan.
+        /// </summary>
         public double MaxMonthlyPayment() //Monthly Repayment to pay off loan
         {
             double monthlyDebt = this.Credit + this.CarLoan + this.OtherHomeLoan + this.OtherLoan; //Add all (4) sources of debt
@@ -124,7 +192,11 @@ namespace BricksMeatballs.Models
                 return this.MSRLimit();
             }
         }
-        
+
+        /// <summary>
+        /// Instance Method <c>MaxBankLoan</c> returns the user's maximum bank loan for their home.
+        /// Determined by the maximum monthly payment, loan tenure, and interest rate.
+        /// </summary>
         public double MaxBankLoan()
         {
             double monthlyIR = this.InterestRate / 1200;
@@ -132,6 +204,10 @@ namespace BricksMeatballs.Models
             return Math.Round(this.MaxMonthlyPayment() * ((Math.Pow((1 + monthlyIR), LoanTenureMonths) - 1) /
                 (monthlyIR * Math.Pow((1 + monthlyIR), LoanTenureMonths))));
         }
+
+        /// <summary>
+        /// Instance Method <c>MSRLimitDisplay</c> displays user's MSR Limit in monetary format to 0 d.p.
+        /// </summary>
         public string MSRLimitDisplay()
         {
             if (this.PropertyType == PropertyType.Private)
@@ -143,6 +219,12 @@ namespace BricksMeatballs.Models
                 return this.DoubleDisplay(this.MSRLimit());
             }
         }
+
+        /// <summary>
+        /// Instance Method <c>CalculateBSD</c> returns payable buyer stamp duty given a house price.
+        /// Determined via charging:
+        /// 1% on first 180,000; 2% on second 180,000; 3% on third 640,000; 4% on rest of house price
+        /// </summary>
         public double CalculateBSD(double Price)
         {
             double BSD = 0;
@@ -186,6 +268,14 @@ namespace BricksMeatballs.Models
 
             return BSD;
         }
+
+        /// <summary>
+        /// Instance Method <c>CalculateABSDPercentage</c> returns payable additional buyer stamp duty as a percentage of maximum house price.
+        /// Determined from number of properties already owned.
+        /// Singaporeans are charged 0% for their 1st house, 12% on their 2nd, and 15% on any additional houses.
+        /// PRs are charged 5% for their 1st house, and 15% on any additional houses.
+        /// Foreigners 20% on all houses.
+        /// </summary>
         public double CalculateABSDPercentage() //SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
         {
             if (this.Residency == Residency.Singaporean) // 0% first, 12% 2nd, 15% rest
@@ -219,11 +309,35 @@ namespace BricksMeatballs.Models
                 return 0.2;
             }
         }
+        
+        /// <summary>
+        /// Instance Method <c>CalculateABSDPercentage</c> returns payable additional buyer stamp duty given a house price.
+        /// Calculated by multiplying ABSD percentage by house price.
+        /// </summary>
         public double CalculateABSD(double Price)
         {
             return this.CalculateABSDPercentage() * Price;
         }
 
+        /// <summary>
+        /// Instance Method <c>CalculateLTV</c> returns user's maximum loan-to-value ratio.
+        /// Dependent upon number of current home loans outstanding, the property type desired, the loan tenure, and the age of the user.
+        /// Determined via:
+        ///     If HDB, 
+        ///         if 0 loan:
+        ///             if loan tenure and age do not exceed 65 years and loan tenure does not exceed 25 years, LTV is 75%. Otherwise, it is 55%.
+        ///         if 1 loan:
+        ///             if loan tenure and age do not exceed 65 years and loan tenure does not exceed 25 years, LTV is 45%. Otherwise, it is 25%.
+        ///         if 2 loans or more:
+        ///             if loan tenure and age do not exceed 65 years and loan tenure does not exceed 25 years, LTV is 35%. Otherwise, it is 15%.
+        ///     If EC or Private, 
+        ///         if 0 loan:
+        ///             if loan tenure and age do not exceed 65 years and loan tenure does not exceed 30 years, LTV is 75%. Otherwise, it is 55%.
+        ///         if 1 loan:
+        ///             if loan tenure and age do not exceed 65 years and loan tenure does not exceed 30 years, LTV is 45%. Otherwise, it is 25%.
+        ///         if 2 loans or more:
+        ///             if loan tenure and age do not exceed 65 years and loan tenure does not exceed 30 years, LTV is 35%. Otherwise, it is 15%.
+        /// </summary>
         public double CalculateLTV() 
         {
             int both = this.Age + this.LoanTenure;
@@ -263,7 +377,15 @@ namespace BricksMeatballs.Models
             }
         }
 
-        public double CalculateCashDownpayment()
+        /// <summary>
+        /// Instance Method <c>CalculateCashDownpaymentPercentage</c> returns user's minimum required cash downpayment as a percentage of total house price.
+        /// Determined by maximum loan-to-value ratio.
+        /// Determined via:
+        ///     If LTV is 0.75, cash downpayment is 5%
+        ///     If LTV is 0.55, cash downpayment is 10%
+        ///     If LTV is any other value, cash downpayment is 25%
+        /// </summary>
+        public double CalculateCashDownpaymentPercentage()
         {
             if (this.CalculateLTV() == 0.75)
             {
@@ -279,265 +401,62 @@ namespace BricksMeatballs.Models
             }
         }
 
+        /// <summary>
+        /// Instance Method <c>LTVDisplay</c> displays user's maximum loan-to-value ratio in percentage format to 1 d.p.
+        /// </summary>
         public string LTVDisplay()
         {
             return this.CalculateLTV().ToString("P0", CultureInfo.InvariantCulture);
         }
 
+        /// <summary>
+        /// Instance Method <c>MSRLimitDisplay</c> displays user's maximum affordable house price.
+        /// Dependent upon LTV, cash available, cpf available, ABSD, and maximum bank loan.
+        /// </summary>
         public double CalculateTrueMax()
         {
             double TrueMax;
             double ABSDPercent = this.CalculateABSDPercentage();
             double LTV = this.CalculateLTV();
+            double CashPercent = this.CalculateCashDownpaymentPercentage();
             double both = this.Cash + this.Cpf;
 
-            //done
-            if (LTV == 0.75)
+            // If Cash is limiting factor
+            if ((this.Cash / (0.01 + CashPercent + ABSDPercent)) < 180000)
             {
-                // If Cash is limiting factor
-                if ((this.Cash / (0.06 + ABSDPercent)) < 180000)
-                {
-                    TrueMax = this.Cash / (0.06 + ABSDPercent);
-                }
-                else if ((this.Cash + 1800) / (0.07 + ABSDPercent) < 360000)
-                {
-                    TrueMax = (this.Cash + 1800) / (0.07 + ABSDPercent);
-                }
-                else if ((this.Cash + 5400) / (0.08 + ABSDPercent) < 1000000)
-                {
-                    TrueMax = (this.Cash + 5400) / (0.08 + ABSDPercent);
-                }
-                else
-                {
-                    TrueMax = (this.Cash + 15400) / (0.09 + ABSDPercent);
-                }
-
-                // If Cpf is limiting factor
-                if (both < 0.25 * TrueMax)
-                {
-                    if ((both / (0.26 + ABSDPercent)) < 180000)
-                    {
-                        TrueMax = both / (0.26 + ABSDPercent);
-                    }
-                    else if ((both + 1800) / (0.27 + ABSDPercent) < 360000)
-                    {
-                        TrueMax = (both + 1800) / (0.27 + ABSDPercent);
-                    }
-                    else if ((both + 5400) / (0.28 + ABSDPercent) < 1000000)
-                    {
-                        TrueMax = (both + 5400) / (0.28 + ABSDPercent);
-                    }
-                    else
-                    {
-                        TrueMax = (both + 15400) / (0.29 + ABSDPercent);
-                    }
-                }
+                TrueMax = this.Cash / (0.01 + CashPercent + ABSDPercent);
             }
-            //done
-            else if (LTV == 0.55)
+            else if ((this.Cash + 1800) / (0.02 + CashPercent + ABSDPercent) < 360000)
             {
-                // If Cash is limiting factor
-                if ((this.Cash / (0.11 + ABSDPercent)) < 180000)
-                {
-                    TrueMax = this.Cash / (0.11 + ABSDPercent);
-                }
-                else if ((this.Cash + 1800) / (0.12 + ABSDPercent) < 360000)
-                {
-                    TrueMax = (this.Cash + 1800) / (0.12 + ABSDPercent);
-                }
-                else if ((this.Cash + 5400) / (0.13 + ABSDPercent) < 1000000)
-                {
-                    TrueMax = (this.Cash + 5400) / (0.13 + ABSDPercent);
-                }
-                else
-                {
-                    TrueMax = (this.Cash + 15400) / (0.14 + ABSDPercent);
-                }
-
-                // If Cpf is limiting factor
-                if (both < 0.45 * TrueMax)
-                {
-                    if ((both / (0.46 + ABSDPercent)) < 180000)
-                    {
-                        TrueMax = both / (0.46 + ABSDPercent);
-                    }
-                    else if ((both + 1800) / (0.47 + ABSDPercent) < 360000)
-                    {
-                        TrueMax = (both + 1800) / (0.47 + ABSDPercent);
-                    }
-                    else if ((both + 5400) / (0.48 + ABSDPercent) < 1000000)
-                    {
-                        TrueMax = (both + 5400) / (0.48 + ABSDPercent);
-                    }
-                    else
-                    {
-                        TrueMax = (both + 15400) / (0.49 + ABSDPercent);
-                    }
-                }
+                TrueMax = (this.Cash + 1800) / (0.02 + CashPercent + ABSDPercent);
             }
-            //
-            else if (LTV == 0.45)
+            else if ((this.Cash + 5400) / (0.03 + CashPercent + ABSDPercent) < 1000000)
             {
-                // If Cash is limiting factor
-                if ((this.Cash / (0.26 + ABSDPercent)) < 180000)
-                {
-                    TrueMax = this.Cash / (0.26 + ABSDPercent);
-                }
-                else if ((this.Cash + 1800) / (0.27 + ABSDPercent) < 360000)
-                {
-                    TrueMax = (this.Cash + 1800) / (0.27 + ABSDPercent);
-                }
-                else if ((this.Cash + 5400) / (0.28 + ABSDPercent) < 1000000)
-                {
-                    TrueMax = (this.Cash + 5400) / (0.28 + ABSDPercent);
-                }
-                else
-                {
-                    TrueMax = (this.Cash + 15400) / (0.29 + ABSDPercent);
-                }
-
-                // If Cpf is limiting factor
-                if (both < 0.55 * TrueMax)
-                {
-                    if ((both / (0.56 + ABSDPercent)) < 180000)
-                    {
-                        TrueMax = both / (0.56 + ABSDPercent);
-                    }
-                    else if ((both + 1800) / (0.57 + ABSDPercent) < 360000)
-                    {
-                        TrueMax = (both + 1800) / (0.57 + ABSDPercent);
-                    }
-                    else if ((both + 5400) / (0.58 + ABSDPercent) < 1000000)
-                    {
-                        TrueMax = (both + 5400) / (0.58 + ABSDPercent);
-                    }
-                    else
-                    {
-                        TrueMax = (both + 15400) / (0.59 + ABSDPercent);
-                    }
-                }
-            }
-            else if (LTV == 0.35)
-            {
-                // If Cash is limiting factor
-                if ((this.Cash / (0.26 + ABSDPercent)) < 180000)
-                {
-                    TrueMax = this.Cash / (0.26 + ABSDPercent);
-                }
-                else if ((this.Cash + 1800) / (0.27 + ABSDPercent) < 360000)
-                {
-                    TrueMax = (this.Cash + 1800) / (0.27 + ABSDPercent);
-                }
-                else if ((this.Cash + 5400) / (0.28 + ABSDPercent) < 1000000)
-                {
-                    TrueMax = (this.Cash + 5400) / (0.28 + ABSDPercent);
-                }
-                else
-                {
-                    TrueMax = (this.Cash + 15400) / (0.29 + ABSDPercent);
-                }
-
-                // If Cpf is limiting factor
-                if (both < 0.65 * TrueMax)
-                {
-                    if ((both / (0.66 + ABSDPercent)) < 180000)
-                    {
-                        TrueMax = both / (0.66 + ABSDPercent);
-                    }
-                    else if ((both + 1800) / (0.67 + ABSDPercent) < 360000)
-                    {
-                        TrueMax = (both + 1800) / (0.67 + ABSDPercent);
-                    }
-                    else if ((both + 5400) / (0.68 + ABSDPercent) < 1000000)
-                    {
-                        TrueMax = (both + 5400) / (0.68 + ABSDPercent);
-                    }
-                    else
-                    {
-                        TrueMax = (both + 15400) / (0.69 + ABSDPercent);
-                    }
-                }
-            }
-            else if (LTV == 0.25)
-            {
-                // If Cash is limiting factor
-                if ((this.Cash / (0.26 + ABSDPercent)) < 180000)
-                {
-                    TrueMax = this.Cash / (0.26 + ABSDPercent);
-                }
-                else if ((this.Cash + 1800) / (0.27 + ABSDPercent) < 360000)
-                {
-                    TrueMax = (this.Cash + 1800) / (0.27 + ABSDPercent);
-                }
-                else if ((this.Cash + 5400) / (0.28 + ABSDPercent) < 1000000)
-                {
-                    TrueMax = (this.Cash + 5400) / (0.28 + ABSDPercent);
-                }
-                else
-                {
-                    TrueMax = (this.Cash + 15400) / (0.29 + ABSDPercent);
-                }
-
-                // If Cpf is limiting factor
-                if (both < 0.75 * TrueMax)
-                {
-                    if ((both / (0.76 + ABSDPercent)) < 180000)
-                    {
-                        TrueMax = both / (0.76 + ABSDPercent);
-                    }
-                    else if ((both + 1800) / (0.77 + ABSDPercent) < 360000)
-                    {
-                        TrueMax = (both + 1800) / (0.77 + ABSDPercent);
-                    }
-                    else if ((both + 5400) / (0.78 + ABSDPercent) < 1000000)
-                    {
-                        TrueMax = (both + 5400) / (0.78 + ABSDPercent);
-                    }
-                    else
-                    {
-                        TrueMax = (both + 15400) / (0.79 + ABSDPercent);
-                    }
-                }
+                TrueMax = (this.Cash + 5400) / (0.03 + CashPercent + ABSDPercent);
             }
             else
             {
-                // If Cash is limiting factor
-                if ((this.Cash / (0.26 + ABSDPercent)) < 180000)
+                TrueMax = (this.Cash + 15400) / (0.04 + CashPercent + ABSDPercent);
+            }
+
+            // If Cpf is limiting factor
+            if (both < (1 - LTV) * TrueMax)
+            {
+                if ((both / (1.01 - LTV + ABSDPercent)) < 180000)
                 {
-                    TrueMax = this.Cash / (0.26 + ABSDPercent);
+                    TrueMax = both / (1.01 - LTV + ABSDPercent);
                 }
-                else if ((this.Cash + 1800) / (0.27 + ABSDPercent) < 360000)
+                else if ((both + 1800) / (1.02 - LTV + ABSDPercent) < 360000)
                 {
-                    TrueMax = (this.Cash + 1800) / (0.27 + ABSDPercent);
+                    TrueMax = (both + 1800) / (1.02 - LTV + ABSDPercent);
                 }
-                else if ((this.Cash + 5400) / (0.28 + ABSDPercent) < 1000000)
+                else if ((both + 5400) / (1.03 - LTV + ABSDPercent) < 1000000)
                 {
-                    TrueMax = (this.Cash + 5400) / (0.28 + ABSDPercent);
+                    TrueMax = (both + 5400) / (1.03 - LTV + ABSDPercent);
                 }
                 else
                 {
-                    TrueMax = (this.Cash + 15400) / (0.29 + ABSDPercent);
-                }
-
-                // If Cpf is limiting factor
-                if (both < 0.85 * TrueMax)
-                {
-                    if ((both / (0.86 + ABSDPercent)) < 180000)
-                    {
-                        TrueMax = both / (0.86 + ABSDPercent);
-                    }
-                    else if ((both + 1800) / (0.87 + ABSDPercent) < 360000)
-                    {
-                        TrueMax = (both + 1800) / (0.87 + ABSDPercent);
-                    }
-                    else if ((both + 5400) / (0.88 + ABSDPercent) < 1000000)
-                    {
-                        TrueMax = (both + 5400) / (0.88 + ABSDPercent);
-                    }
-                    else
-                    {
-                        TrueMax = (both + 15400) / (0.89 + ABSDPercent);
-                    }
+                    TrueMax = (both + 15400) / (1.04 - LTV + ABSDPercent);
                 }
             }
 
@@ -550,20 +469,37 @@ namespace BricksMeatballs.Models
             return TrueMax;
         }
 
+        /// <summary>
+        /// Instance Method <c>BSD</c> returns user's payable buyer stamp duty.
+        /// Calculated based on user's maximum house price.
+        /// </summary>
         public double BSD()
         {
             return CalculateBSD(this.CalculateTrueMax());
         }
 
+        /// <summary>
+        /// Instance Method <c>ABSD</c> returns user's payable additional buyer stamp duty.
+        /// Calculated based on user's maximum house price.
+        /// </summary>
         public double ABSD()
         {
             return CalculateABSD(this.CalculateTrueMax());
         }
-        
+
+        /// <summary>
+        /// Instance Method <c>CashDownpayment</c> returns user's payable cash downpayment.
+        /// Calculated based on user's maximum house price.
+        /// </summary>
         public double CashDownpayment()
         {
-            return this.CalculateTrueMax() * this.CalculateCashDownpayment();
+            return this.CalculateTrueMax() * this.CalculateCashDownpaymentPercentage();
         }
+
+        /// <summary>
+        /// Instance Method <c>CashCpfDownpayment</c> returns user's payable cash and cpf downpayment.
+        /// Calculated based on user's maximum house price.
+        /// </summary>
         public double CashCpfDownpayment()
         {
             return this.CalculateTrueMax() * (1 - this.CalculateLTV());
