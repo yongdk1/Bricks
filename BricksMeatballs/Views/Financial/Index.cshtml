@@ -95,7 +95,7 @@
                                     @Model.DoubleDisplay(Model.MaxMonthlyPayment())
                                 </dd>
                             </dl>
-                            <dl class="row" style="margin-top: -20px">
+                            <dl class="row" style="margin-top: -10px">
                                 <dt class="col-sm-6" style="font-weight: 400">
                                     TDSR Limit
                                 </dt>
@@ -103,7 +103,7 @@
                                     @Model.DoubleDisplay(Model.TDSRLimit())
                                 </dd>
                             </dl>
-                            <dl class="row" style="margin-top: -20px">
+                            <dl class="row" style="margin-top: -10px">
                                 <dt class="col-sm-6" style="font-weight: 400">
                                     MSR Limit (if applicable)
                                 </dt>
@@ -127,7 +127,7 @@
                                     @Model.DoubleDisplay(Model.CashCpfDownpayment())
                                 </dd>
                             </dl>
-                            <dl class="row" style="margin-top: -20px">
+                            <dl class="row" style="margin-top: -10px">
                                 <dt class="col-sm-6" style="font-weight: 400">
                                     Minimum Cash Downpayment
                                 </dt>
@@ -143,7 +143,7 @@
                                     @Model.DoubleDisplay(Model.BSD())
                                 </dd>
                             </dl>
-                            <dl class="row" style="margin-top: -20px">
+                            <dl class="row" style="margin-top: -10px">
                                 <dt class="col-sm-6">
                                     Additional Buyer Stamp Duty (ABSD) (if any)
                                 </dt>
@@ -295,7 +295,7 @@
                                 @Html.HiddenFor(model => model.LoanTenure, new { Value = @Model.LoanTenure })
                                 @Html.HiddenFor(model => model.InterestRate, new { Value = @Model.InterestRate })
                                 <div class="form-group button">
-                                    <input type="submit" value="Edit" class="btn btn-primary" />
+                                    <input type="submit" value="Make changes to my input" class="btn btn-primary" />
                                 </div>
                             </form>
                         </div>

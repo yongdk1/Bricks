@@ -87,19 +87,19 @@ namespace BricksMeatballs.Models
         /// Instance variable <c>CarLoan</c> represents the user's payments on car loan(s).
         /// Used to determine TDSR, MSR (if applicable), and maximum bank loan.
         /// </summary>
-        [DisplayName("Car Loan(s) Payments")]
+        [DisplayName("Car Loan Payments")]
         public double CarLoan { get; set; }
         /// <summary>
         /// Instance variable <c>OtherHomeLoan</c> represents the user's payments on other home loan(s).
         /// Used to determine TDSR, MSR (if applicable), and maximum bank loan.
         /// </summary>
-        [DisplayName("House Loan(s) Payments")]
+        [DisplayName("Other Home Loan Payments")]
         public double OtherHomeLoan { get; set; }
         /// <summary>
         /// Instance variable <c>OtherLoan</c> represents the user's payments on all other loan(s).
         /// Used to determine TDSR, MSR (if applicable), and maximum bank loan.
         /// </summary>
-        [DisplayName("Other Loan(s) Payments")]
+        [DisplayName("Other Loan Payments")]
         public double OtherLoan { get; set; }
 
         //Other Information
