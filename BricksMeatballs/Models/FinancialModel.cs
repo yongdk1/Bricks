@@ -127,6 +127,9 @@ namespace BricksMeatballs.Models
         /// <summary>
         /// Instance Method <c>DoubleDisplay</c> displays user's data in monetary format to 0 d.p.
         /// </summary>
+        /// <returns>
+        /// A string in the format $XXXX where XXXX is the input double rounded to 0 d.p.
+        /// </returns>
         public string DoubleDisplay(double d)
         {
             return d.ToString("C0", CultureInfo.CreateSpecificCulture("en-US")); 
@@ -134,6 +137,9 @@ namespace BricksMeatballs.Models
         /// <summary>
         /// Instance Method <c>LoanTenureDisplay</c> displays user's desired loan tenure in years
         /// </summary>
+        /// <returns>
+        /// A string in the format XX Years where XX is the user's input loan tenure.
+        /// </returns>
         public string LoanTenureDisplay()
         {
             string temp = this.LoanTenure.ToString("F0", CultureInfo.InvariantCulture);
@@ -142,6 +148,9 @@ namespace BricksMeatballs.Models
         /// <summary>
         /// Instance Method <c>MSRLimitDisplay</c> displays interest rate in percentage format to 1 d.p.
         /// </summary>
+        /// <returns>
+        /// A string in the format XX.X% where XX.X is the user's input interest rate rounded to 1 d.p.
+        /// </returns>
         public string InterestRateDisplay()
         {
             double temp = InterestRate / 100;
@@ -152,9 +161,14 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>TDSRLimit</c> returns the user's maximum monthly repayment for their home loan for Private homes.
+        /// </summary>
+        /// <remarks>
         /// Set at 60% of the sum of their monthly fixed income and their monthly variable income (discounted by 30%).
         /// Used to determine maximum bank loan.
-        /// </summary>
+        /// </remarks>
+        /// <returns>
+        /// The user's Total Debt Servicing Ratio.
+        /// </returns>
         public double TDSRLimit() //60%TDSR Private
         {
             return 0.6 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7);
@@ -162,9 +176,14 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>MSRLimit</c> returns the user's maximum monthly repayment for their home loan for HDBs and ECs.
+        /// </summary>
+        /// <remarks>
         /// Set at 30% of the sum of their monthly fixed income and their monthly variable income (discounted by 30%).
         /// Used to determine maximum bank loan.
-        /// </summary>
+        /// </remarks>
+        /// <returns>
+        /// The user's Mortgage Servicing Ratio.
+        /// </returns>
         public double MSRLimit() //30%MSR HDB/EC
         {
             return 0.3 * (this.MonthlyFixedIncome + this.MonthlyVariableIncome * 0.7);
@@ -172,11 +191,16 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>MaxMonthlyPayment</c> returns the user's maximum monthly repayment for their home loan after taking into account expenses.
+        /// </summary>
+        /// <remarks>
         /// If the house being bought is private, then it is
         /// Set at TDSR Limit minus total value of debts (Credit Card Minimum Payments, Car Loan(s), Other Home Loan(s), & Other Loan(s))
         /// Otherwise, set at the lower of the calculated value and the MSR Limit.
         /// Used to determine maximum bank loan.
-        /// </summary>
+        /// </remarks>
+        /// <returns>
+        /// The user's maximum monthly repayment for their home loan.
+        /// </returns>
         public double MaxMonthlyPayment() //Monthly Repayment to pay off loan
         {
             double monthlyDebt = this.Credit + this.CarLoan + this.OtherHomeLoan + this.OtherLoan; //Add all (4) sources of debt
@@ -195,8 +219,13 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>MaxBankLoan</c> returns the user's maximum bank loan for their home.
-        /// Determined by the maximum monthly payment, loan tenure, and interest rate.
         /// </summary>
+        /// <remarks>
+        /// Determined by the maximum monthly payment, loan tenure, and interest rate.
+        /// </remarks>
+        /// <returns>
+        /// The user's maximum bank loan for their home.
+        /// </returns>
         public double MaxBankLoan()
         {
             double monthlyIR = this.InterestRate / 1200;
@@ -208,6 +237,9 @@ namespace BricksMeatballs.Models
         /// <summary>
         /// Instance Method <c>MSRLimitDisplay</c> displays user's MSR Limit in monetary format to 0 d.p.
         /// </summary>
+        /// <returns>
+        /// A string in the format $XXXX where XXXX is the user's MSR Limit or '-' if MSR if not applicable.
+        /// </returns>
         public string MSRLimitDisplay()
         {
             if (this.PropertyType == PropertyType.Private)
@@ -222,9 +254,14 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>CalculateBSD</c> returns payable buyer stamp duty given a house price.
+        /// </summary>
+        /// <remarks>
         /// Determined via charging:
         /// 1% on first 180,000; 2% on second 180,000; 3% on third 640,000; 4% on rest of house price
-        /// </summary>
+        /// </remarks>
+        /// <returns>
+        /// Payable Buyer Stamp Duty on an input home price.
+        /// </returns>
         public double CalculateBSD(double Price)
         {
             double BSD = 0;
@@ -271,11 +308,16 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>CalculateABSDPercentage</c> returns payable additional buyer stamp duty as a percentage of maximum house price.
+        /// </summary>
+        /// <remarks>
         /// Determined from number of properties already owned.
         /// Singaporeans are charged 0% for their 1st house, 12% on their 2nd, and 15% on any additional houses.
         /// PRs are charged 5% for their 1st house, and 15% on any additional houses.
         /// Foreigners 20% on all houses.
-        /// </summary>
+        /// </remarks>
+        /// <returns>
+        /// The user's payable ABSD percentage in the form of a decimal.
+        /// </returns>
         public double CalculateABSDPercentage() //SGPOREAN 12% 2nd, 15% rest; PR 5% 1st, 15% rest; FOREIGN 20% rest
         {
             if (this.Residency == Residency.Singaporean) // 0% first, 12% 2nd, 15% rest
@@ -312,8 +354,13 @@ namespace BricksMeatballs.Models
         
         /// <summary>
         /// Instance Method <c>CalculateABSDPercentage</c> returns payable additional buyer stamp duty given a house price.
-        /// Calculated by multiplying ABSD percentage by house price.
         /// </summary>
+        /// <remarks>
+        /// Calculated by multiplying ABSD percentage by house price.
+        /// </remarks>
+        /// <returns>
+        /// Payable Additional Buyer Stamp Duty on an input home price.
+        /// </returns>
         public double CalculateABSD(double Price)
         {
             return this.CalculateABSDPercentage() * Price;
@@ -321,6 +368,8 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>CalculateLTV</c> returns user's maximum loan-to-value ratio.
+        /// </summary>
+        /// <remarks>
         /// Dependent upon number of current home loans outstanding, the property type desired, the loan tenure, and the age of the user.
         /// Determined via:
         ///     If HDB, 
@@ -337,7 +386,10 @@ namespace BricksMeatballs.Models
         ///             if loan tenure and age do not exceed 65 years and loan tenure does not exceed 30 years, LTV is 45%. Otherwise, it is 25%.
         ///         if 2 loans or more:
         ///             if loan tenure and age do not exceed 65 years and loan tenure does not exceed 30 years, LTV is 35%. Otherwise, it is 15%.
-        /// </summary>
+        /// </remarks>
+        /// <returns>
+        /// The user's maximum LTV ratio.
+        /// </returns>
         public double CalculateLTV() 
         {
             int both = this.Age + this.LoanTenure;
@@ -379,12 +431,17 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>CalculateCashDownpaymentPercentage</c> returns user's minimum required cash downpayment as a percentage of total house price.
+        /// </summary>
+        /// <remarks>
         /// Determined by maximum loan-to-value ratio.
         /// Determined via:
         ///     If LTV is 0.75, cash downpayment is 5%
         ///     If LTV is 0.55, cash downpayment is 10%
         ///     If LTV is any other value, cash downpayment is 25%
-        /// </summary>
+        /// </remarks>
+        /// <returns>
+        /// The user's minimum cash downpayment as a percentage of total house price.
+        /// </returns>
         public double CalculateCashDownpaymentPercentage()
         {
             if (this.CalculateLTV() == 0.75)
@@ -402,8 +459,11 @@ namespace BricksMeatballs.Models
         }
 
         /// <summary>
-        /// Instance Method <c>LTVDisplay</c> displays user's maximum loan-to-value ratio in percentage format to 1 d.p.
+        /// Instance Method <c>LTVDisplay</c> displays user's maximum loan-to-value ratio in percentage format to 0 d.p.
         /// </summary>
+        /// <returns>
+        /// A string in the format XX% where XX is the user's maximum LTV ratio.
+        /// </returns>
         public string LTVDisplay()
         {
             return this.CalculateLTV().ToString("P0", CultureInfo.InvariantCulture);
@@ -411,8 +471,13 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>MSRLimitDisplay</c> displays user's maximum affordable house price.
-        /// Dependent upon LTV, cash available, cpf available, ABSD, and maximum bank loan.
         /// </summary>
+        /// <remarks>
+        /// Dependent upon LTV, cash available, cpf available, ABSD, and maximum bank loan.
+        /// </remarks>
+        /// <returns>
+        /// The user's maximum affordable house price.
+        /// </returns>
         public double CalculateTrueMax()
         {
             double TrueMax;
@@ -471,8 +536,13 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>BSD</c> returns user's payable buyer stamp duty.
-        /// Calculated based on user's maximum house price.
         /// </summary>
+        /// <remarks>
+        /// Calculated based on user's maximum house price.
+        /// </remarks>
+        /// <returns>
+        /// The user's payable BSD.
+        /// </returns>
         public double BSD()
         {
             return CalculateBSD(this.CalculateTrueMax());
@@ -480,8 +550,13 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>ABSD</c> returns user's payable additional buyer stamp duty.
-        /// Calculated based on user's maximum house price.
         /// </summary>
+        /// <remarks>
+        /// Calculated based on user's maximum house price.
+        /// </remarks>
+        /// <returns>
+        /// The user's payable ABSD.
+        /// </returns>
         public double ABSD()
         {
             return CalculateABSD(this.CalculateTrueMax());
@@ -489,8 +564,13 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>CashDownpayment</c> returns user's payable cash downpayment.
-        /// Calculated based on user's maximum house price.
         /// </summary>
+        /// <remarks>
+        /// Calculated based on user's maximum house price.
+        /// </remarks>
+        /// <returns>
+        /// The user's payable cash downpayment.
+        /// </returns>
         public double CashDownpayment()
         {
             return this.CalculateTrueMax() * this.CalculateCashDownpaymentPercentage();
@@ -498,8 +578,13 @@ namespace BricksMeatballs.Models
 
         /// <summary>
         /// Instance Method <c>CashCpfDownpayment</c> returns user's payable cash and cpf downpayment.
-        /// Calculated based on user's maximum house price.
         /// </summary>
+        /// <remarks>
+        /// Calculated based on user's maximum house price.
+        /// </remarks>
+        /// <returns>
+        /// The user's payable deposit.
+        /// </returns>
         public double CashCpfDownpayment()
         {
             return this.CalculateTrueMax() * (1 - this.CalculateLTV());
