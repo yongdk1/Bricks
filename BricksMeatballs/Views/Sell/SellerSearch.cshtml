@@ -1,0 +1,297 @@
+﻿@*Author: Pei Yan, Chaoshan*@
+@{
+    ViewData["Title"] = "SellerSearch";
+}
+@*<h1>@ViewData["Title"]</h1>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<style>
+
+    #bgSet {
+        background: url('../../images/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .border {
+        border: 1px solid;
+        text-align: center;
+    }
+
+    .panel {
+        border-color: rgba(65, 65, 65, 0.8);
+    }
+
+    .panel-body {
+        color: white;
+    }
+
+    .panel-transparent {
+        background: none;
+    }
+
+        .panel-transparent .panel-body {
+            background: rgba(65, 65, 65, 0.8) !important;
+        }
+
+    .container-fluid {
+        margin-top: 10%;
+    }
+
+    select option[disabled]:first-child {
+        display: none;
+    }
+
+    .row {
+        margin: 20px;
+    }
+
+    .button {
+        margin-left: 30px;
+    }
+</style>
+<br />
+<div class="col-2" id="bgSet">
+    <div class="panel panel-primary panel-transparent">
+        <div class="panel-body">
+            <div class='panel-heading text-center panel-relative'>
+                <h3>Search</h3>
+                <br />
+                <form>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <center>
+                                @Html.DropDownList("Locations", (List<SelectListItem>)ViewBag.Location, new { @class = "form-control", id = "Locations" })
+                                @*<select class="form-control">
+                                        <option value="" selected disabled> Location </option>
+                                        <option value="01">01 - Raffles Place, Cecil, Marina, People's Park</option>
+                                        <option value="02">02 - Anson, Tangong Pagar</option>
+                                        <option value="03">03 - Queenstown, Tiong Bahru</option>
+                                        <option value="04">04 - Telok Blangah, Harbourfront</option>
+                                        <option value="05">05 - Pasir Panjang, Hong Leong Garden, Clementi New Town</option>
+                                        <option value="06">06 - High Street, Beach Road (part)</option>
+                                        <option value="07">07 - Middle Road, Golden Mile</option>
+                                        <option value="08">08 - Little India</option>
+                                        <option value="09">09 - Orchard, Cairnhill, River Valley</option>
+                                        <option value="10">10 - Ardmore, Bukit Timah, Holland Road, Tanglin</option>
+                                        <option value="11">11 - Watten Estate, Novena, Thomson</option>
+                                        <option value="12">12 - Balestier, Toa Payoh, Serangoon</option>
+                                        <option value="13">13 - Macpherson, Braddell</option>
+                                        <option value="14">14 - Geylang, Eunos</option>
+                                        <option value="15">15 - Katong, Joo Chiat, Amber Road</option>
+                                        <option value="16">16 - Bedok, Upper East Coast, Eastwood, Kew Drive</option>
+                                        <option value="17">17 - Loyang, Changi</option>
+                                        <option value="18">18 - Tampines, Pasir Ris</option>
+                                        <option value="19">19 - Serangoon Garden, Hougang, Ponggol</option>
+                                        <option value="20">20 - Bishan, Ang Mo Kio</option>
+                                        <option value="21">21 - Upper Bukit Timah, Clementi Park, Ulu Pandan</option>
+                                        <option value="22">22 - Jurong</option>
+                                        <option value="23">23 - Hillview, Dairy Farm, Bukit Panjang, Choa Chu Kang</option>
+                                        <option value="24">24 - Lim Chu Kang, Tengah</option>
+                                        <option value="25">25 - Kranji, Woodgrove</option>
+                                        <option value="26">26 - Upper Thomson, Springleaf</option>
+                                        <option value="27">27 - Yishun, Sembawang</option>
+                                        <option value="28">28 - Seletar</option>
+                                    </select>*@
+                            </center>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <center>
+                                @Html.DropDownList("propertyTypes", (List<SelectListItem>)ViewBag.propertyType, new { @class = "form-control", id = "propertyTypes" })
+                                @*<select class="form-control">
+                                        <option value="" selected disabled>Property Type</option>
+                                        <option value="Strata Detached">Strata Detached</option>
+                                        <option value="Strata Semidetached">Strata Semidetached</option>
+                                        <option value="Strata Terrace">Strata Terrace</option>
+                                        <option value="Detached">Detached</option>
+                                        <option value="Semi-detached">Semi-detached</option>
+                                        <option value="Terrace">Terrace</option>
+                                        <option value="Apartment">Apartment</option>
+                                        <option value="Condominium">Condominium</option>
+                                        <option value="Executive Condominium">Executive Condominium</option>
+                                    </select>*@
+                            </center>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <center>
+                                @Html.DropDownList("PriceRange", (List<SelectListItem>)ViewBag.Tenure, new { @class = "form-control", id = "PriceRange" })
+                            </center>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <center>
+                                <select id="SaleType" class="form-control">
+                                    <option value="" selected disabled> Sale Type</option>
+                                    <option value="1" name="New Sale">New Sale</option>
+                                    <option value="2" name="Sub Sale">Sub Sale</option>
+                                    <option value="3" name="Resale">Resale</option>
+                                </select>
+                            </center>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <center>
+                                <select id="LandArea" class="form-control">
+                                    <option value="" selected disabled> Land Area</option>
+                                    <option value="1"> < 100 </option>
+                                    <option value="2"> 100 - 200</option>
+                                    <option value="3"> 200 - 300</option>
+                                    <option value="4"> 300 - 400</option>
+                                    <option value="5"> 400 - 500</option>
+                                    <option value="6"> 500 - 600</option>
+                                </select>
+                            </center>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <center>
+                                <select class="form-control" id="FloorRange">
+                                    <option value="" selected disabled> Floor Range</option>
+                                    <option value="1">-</option>
+                                    <option value="B1-B5">B1-B5</option>
+                                    <option value="01-05">01-05</option>
+                                    <option value="06-10">06-10</option>
+                                    <option value="11-15">11-15</option>
+                                    <option value="16-20">16-20</option>
+                                    <option value="21-25">21-25</option>
+                                    <option value="26-30">26-30</option>
+                                    <option value="31-35">31-35</option>
+                                    <option value="36-40">36-40</option>
+                                    <option value="41-45">41-45</option>
+                                    <option value="46-50">46-50</option>
+                                    <option value="51-55">51-55</option>
+                                    <option value="56-60">56-60</option>
+                                    <option value="61-65">61-65</option>
+                                    <option value="66-70">66-70</option>
+                                    <option value="71-75">71-75</option>
+                                </select>
+                            </center>
+                        </div>
+                        <div class="row">
+                            <button style="display:none!important" type="submit" class="btn btn-primary" asp-controller="Buy" asp-action="BuyerSearch">Search</button>
+                            <button type="button" class="btn btn-primary" id="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-10" id="ListDiv">
+    <button onclick="return OpenGraph()" value="Graph" style="color:black;margin-left: 1000px;width: 201px;">View Graph Summary</button>
+    <div class="container">
+        @*<a asp-controller="Buy" asp-action="BuyerResult">*@
+        <div class="panel panel-default">
+
+            <div id="SellDatatable">
+
+            </div>
+
+        </div>
+        @*</a>*@
+    </div>
+    <br />
+
+</div>
+<script>
+
+    $(document).ready(function () {
+        //$('#tbNames').DataTable();
+
+        LoadSearchData();
+        $("#submit").click(function (e) {
+            LoadSearchData();
+        });
+    });
+    function OpenGraph() {
+
+        var Locations = document.getElementById("Locations").value;
+        // location.replace("../Graph/Index?Location=" + Locations)
+        //  window.location.href = "../Graph/Index?Location=" + Locations;
+        // alert(Locations);
+        window.location.href = "../Graph/Index?Location=" + Locations + "&IsSeller=1";
+        return false;
+    }
+    function LoadSearchData() {
+        var Locations = document.getElementById("Locations").value;
+        var propertyTypes = document.getElementById("propertyTypes").value;
+        var PriceRange = document.getElementById("PriceRange").value;
+        var SaleType = document.getElementById("SaleType").value;
+        var LandArea = document.getElementById("LandArea").value;
+        var FloorRange = document.getElementById("FloorRange").value;
+        var Data = {
+        };
+        $.ajax({
+            type: "GET",
+            url: "/Sell/AjaxFilter?Locations=" + Locations + "&propertyTypes=" + propertyTypes + "&PriceRange=" + PriceRange + "&SaleType=" + SaleType + "&LandArea=" + LandArea + "&FloorRange=" + FloorRange,
+            contentType: "application/json; charset=utf-8",
+            data: Data,
+            // params: {
+            //     Location:"1" ,
+            //     Property: "2",
+
+            //},
+            dataType: 'json',
+            success: function (result, status, xhr) {
+
+                var htmlApp = "<table id='tbNames'><thead id='TableHeader' ><tr><th style='text-align: center;'>Nims Garden</th><th style='text-align: center;'>Street</th><th style='text-align: center;'>Floor Range</th><th style='text-align: center;'>Land Area</th><th style='text-align: center;'>Type of Area</th><th style='text-align: center;'>Price</th><th style='text-align: center;'>Tenure</th><th style='text-align: center;'>Detail</th></tr></thead><tbody>";
+
+                $("#SellDatatable").empty();
+
+
+                // alert(result);
+                //console.clear();
+                //console.log(result);
+                //  document.getElementById("TableHeader").style = "none";
+                //for (let i = 0; i < result.length; i++) {
+                //    result[i]
+
+                //}
+                //   $("#tbNames tbody").empty();
+                for (var i = 0; i < result.length; i++) {
+                    //  document.getElementById("TableHeader").style = "";
+                    //alert('called')
+                    htmlApp += "<tr><td class='border'>Nims Garden</td><td class='border'>" + result[i]["street"] + "</td><td class='border'>" + result[i]["floorRange"] + "</td>";
+                    htmlApp += "<td class='border'>" + result[i]["area"] + "</td><td class='border'>" + result[i]["typeOfArea"] + "</td><td class='border'>" + result[i]["price"] + "</td><td class='border'>" + result[i]["tenure"] + "</td>";
+                    //  debugger;
+                    var streetArry = result[i]["street"].toString().split(" ");
+                    var tenureArry = result[i]["tenure"].toString().split(" ");
+                    var ProjectArry = result[i]["project"].toString().split(" ");
+
+
+                    //htmlApp+="<td><button onClick=ViewMore("+result[i]["area"]+','+result[i]["contractDate"]+','+result[i]["district"]+','+result[i]["floorRange"]+','+result[i]["idtransaction"]+','+result[i]["marketSegment"]+','+result[i]["noOfUnits"]+','+result[i]["price"]+','+result[i]["project"]+','+result[i]["propertyType"]+','+result[i]["street"]+','+result[i]["tenure"]+','+result[i]["typeOfArea"]+','+result[i]["typeOfSale"]+','+result[i]["x"]+','+result[i]["y"]+")>View More</button></td></tr > ";
+                    //htmlApp += "<td><button onClick=ViewMore('"+result[i]["floorRange"]+"','"+result[i]["area"] +"','"+result[i]["typeOfArea"]+"','"+result[i]["price"]+"',"+streetName+",'"+result[i]["price"]+"','"+result[i]["propertyType"]+"','"+result[i]["typeOfSale"]+"','"+result[i]["marketSegment"]+"')>View More</button></td></tr > ";
+
+                    htmlApp += '<td><button onClick=ViewMore("' + result[i]['floorRange'] + '","' + result[i]['area'] + '","' + result[i]['typeOfArea'] + '","' + result[i]['price'] + '","' + tenureArry + '","' + streetArry + '","' + result[i]['propertyType'] + '","' + result[i]['typeOfSale'] + '","' + result[i]['marketSegment'] + '","' + ProjectArry + '","' + result[i]['x'] + '","' + result[i]['y'] + '")>View More</button></td></tr > ';
+                    //$("#tbNames tbody").append(htmlApp);
+                }
+                htmlApp += "</tbody></table>";
+                $("#SellDatatable").append(htmlApp);
+
+                $('#tbNames').DataTable();
+
+
+                //  $("#dataDiv").html(result);
+            },
+            error: function (xhr, status, error) {
+                //$("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+            }
+        });
+
+        return false;
+    }
+    //function ViewMore(area,contractDate,district,floorRange,idtransaction,marketSegment,noOfUnits,price,project,propertyType,street,tenure,typeOfArea,typeOfSale,x,y) {
+    function ViewMore(FloorRange, LandArea, TypeofArea, Price, Tenure, Location, PropertyType, SaleType, MarketSegement, ProjectName, x, y) {
+        //debugger;
+        var LocationArry = Location.toString().split(",");
+        var TenureArry = Tenure.toString().split(",");
+        var ProjectArry = ProjectName.toString().split(",");
+        var LocationName = LocationArry.join(" ");
+        var TenureName = TenureArry.join(" ");
+        var projectName = ProjectArry.join(" ");
+        //  console.log(obj)
+        //   alert(Tenure.join(" "));
+        // alert(FloorRange + "-" + LandArea);
+
+        location.replace("../Sell/SellerResult?FloorRange=" + FloorRange + "&LandArea=" + LandArea + "&TypeofArea=" + TypeofArea + "&Price=" + Price + "&Tenure=" + TenureName + "&Location=" + LocationName + "&PropertyType=" + PropertyType + "&SaleType=" + SaleType + "&MarketSegement=" + MarketSegement + "&ProjectName=" + projectName + "&x=" + x + "&y=" + y)
+        //window.location.href = '/Buy/BuyerResult/?area="area"&contractDate="contractDate"';
+    }
+</script>
+

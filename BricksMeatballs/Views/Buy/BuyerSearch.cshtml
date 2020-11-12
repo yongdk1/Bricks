@@ -1,0 +1,250 @@
+﻿@*Author: Pei Yan, Chaoshan*@
+@{
+    ViewData["Title"] = "BuyerSearch";
+}
+@*<h1>@ViewData["Title"]</h1>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<style>
+
+    #bgSet {
+        background: url('../../images/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .border {
+        border: 1px solid;
+        text-align: center;
+    }
+
+    .panel {
+        border-color: rgba(65, 65, 65, 0.8);
+    }
+
+    .panel-body {
+        color: white;
+    }
+
+    .panel-transparent {
+        background: none;
+    }
+
+        .panel-transparent .panel-body {
+            background: rgba(65, 65, 65, 0.8) !important;
+        }
+
+    .container-fluid {
+        margin-top: 10%;
+    }
+
+    select option[disabled]:first-child {
+        display: none;
+    }
+
+    .row {
+        margin: 20px;
+    }
+
+    .button {
+        margin-left: 30px;
+    }
+</style>
+<br />
+<div class="col-2" id="bgSet">
+    <div class="panel panel-primary panel-transparent">
+        <div class="panel-body">
+            <div class='panel-heading text-center panel-relative'>
+                <h3>Search</h3>
+                <br />
+                <form>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <center>
+                                @Html.DropDownList("Locations", (List<SelectListItem>)ViewBag.Location, new { @class = "form-control", id = "Locations" })
+                            </center>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <center>
+                                @Html.DropDownList("propertyTypes", (List<SelectListItem>)ViewBag.propertyType, new { @class = "form-control", id = "propertyTypes" })
+                            </center>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <center>
+                                <select id="PriceRange" class="form-control">
+                                    <option value="" selected disabled> Price Range</option>
+                                    <option value="1">< 1,000,000</option>
+                                    <option value="2">1,000,000 - 2,000,000</option>
+                                    <option value="3">2,000,000 - 3,000,000</option>
+                                    <option value="4">3,000,000 - 4,000,000</option>
+                                    <option value="5">4,000,000 - 5,000,000</option>
+                                    <option value="6">5,000,000 - 6,000,000</option>
+                                    <option value="7">6,000,000 - 7,000,000</option>
+                                    <option value="8">7,000,000 - 8,000,000</option>
+                                    <option value="9">8,000,000 - 9,000,000</option>
+                                    <option value="10">9,000,000 - 10,000,000</option>
+                                    <option value="11">> 10,000,000</option>
+                                </select>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-sm-4">
+                            <center>
+                                <select id="SaleType" class="form-control">
+                                    <option value="" selected disabled> Sale Type</option>
+                                    <option value="1" name="New Sale">New Sale</option>
+                                    <option value="2" name="Sub Sale">Sub Sale</option>
+                                    <option value="3" name="Resale">Resale</option>
+                                </select>
+                            </center>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <center>
+                                <select id="LandArea" class="form-control">
+                                    <option value="" selected disabled> Land Area</option>
+                                    <option value="1"> < 100 </option>
+                                    <option value="2"> 100 - 200</option>
+                                    <option value="3"> 200 - 300</option>
+                                    <option value="4"> 300 - 400</option>
+                                    <option value="5"> 400 - 500</option>
+                                    <option value="6"> 500 - 600</option>
+                                </select>
+                            </center>
+                        </div>
+                        <div class="form-group col-sm-4">
+                            <center>
+                                <select class="form-control" id="FloorRange">
+                                    <option value="" selected disabled> Floor Range</option>
+                                    <option value="1">-</option>
+                                    <option value="B1-B5">B1-B5</option>
+                                    <option value="01-05">01-05</option>
+                                    <option value="06-10">06-10</option>
+                                    <option value="11-15">11-15</option>
+                                    <option value="16-20">16-20</option>
+                                    <option value="21-25">21-25</option>
+                                    <option value="26-30">26-30</option>
+                                    <option value="31-35">31-35</option>
+                                    <option value="36-40">36-40</option>
+                                    <option value="41-45">41-45</option>
+                                    <option value="46-50">46-50</option>
+                                    <option value="51-55">51-55</option>
+                                    <option value="56-60">56-60</option>
+                                    <option value="61-65">61-65</option>
+                                    <option value="66-70">66-70</option>
+                                    <option value="71-75">71-75</option>
+                                </select>
+                            </center>
+                        </div>
+                        <div class="row">
+                            <button style="display:none!important" type="submit" class="btn btn-primary" asp-controller="Buy" asp-action="BuyerSearch">Search</button>
+                            <button disabled type="button" class="btn btn-primary" id="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-10" id="ListDiv">
+    <button onclick="return OpenGraph()" value="Graph" style="color:black;margin-left: 1000px;width: 201px;">View Graph Summary</button>
+    <div class="container">
+        @*<a asp-controller="Buy" asp-action="BuyerResult">*@
+        <div class="panel panel-default">
+            <div id="BuyDatatable">
+
+            </div>
+        </div>
+    </div>
+    <br />
+</div>
+<script>
+
+    $(document).ready(function () {
+        //$('#tbNames').DataTable();
+        LoadSearchGrid();
+
+        $("#submit").click(function (e) {
+            LoadSearchGrid();
+        });
+    });
+
+    function LoadSearchGrid() {
+        var Locations = document.getElementById("Locations").value;
+        var propertyTypes = document.getElementById("propertyTypes").value;
+        var PriceRange = document.getElementById("PriceRange").value;
+        var SaleType = document.getElementById("SaleType").value;
+        var LandArea = document.getElementById("LandArea").value;
+        var FloorRange = document.getElementById("FloorRange").value;
+        var Data = {
+        };
+        $.ajax({
+            type: "GET",
+            url: "/Buy/AjaxFilter?Locations=" + Locations + "&propertyTypes=" + propertyTypes + "&PriceRange=" + PriceRange + "&SaleType=" + SaleType + "&LandArea=" + LandArea + "&FloorRange=" + FloorRange,
+            contentType: "application/json; charset=utf-8",
+            data: Data,
+            // params: {
+            //     Location:"1" ,
+            //     Property: "2",
+
+            //},
+            dataType: 'json',
+            success: function (result, status, xhr) {
+                document.getElementById("submit").disabled = true;
+
+                // alert(result);
+                console.clear();
+                console.log(result)
+                //for (let i = 0; i < result.length; i++) {
+                //    result[i]
+                //  document.getElementById("TableHeader").style = "none";
+                //}
+                var htmlApp = "<table id='tbNames'><thead id='TableHeader' ><tr><th style='text-align: center;'>Nims Garden</th><th style='text-align: center;'>Street</th><th style='text-align: center;'>Floor Range</th><th style='text-align: center;'>Land Area</th><th style='text-align: center;'>Type of Area</th><th style='text-align: center;'>Price</th><th style='text-align: center;'>Tenure</th><th style='text-align: center;'>Detail</th></tr></thead><tbody>";
+                $("#BuyDatatable").empty();
+                for (var i = 0; i < result.length; i++) {
+
+                    //alert('called')
+                    htmlApp += "<tr><td class='border'>Nims Garden</td><td class='border'>" + result[i]["street"] + "</td><td class='border'>" + result[i]["floorRange"] + "</td>";
+                    htmlApp += "<td class='border'>" + result[i]["area"] + "</td><td class='border'>" + result[i]["typeOfArea"] + "</td><td class='border'>" + result[i]["price"] + "</td><td class='border'>" + result[i]["tenure"] + "</td>";
+                    //  debugger;
+                    var streetArry = result[i]["street"].toString().split(" ");
+                    var tenureArry = result[i]["tenure"].toString().split(" ");
+                    var ProjectArry = result[i]["project"].toString().split(" ");
+
+
+                    htmlApp += '<td><button onClick=ViewMore("' + result[i]['floorRange'] + '","' + result[i]['area'] + '","' + result[i]['typeOfArea'] + '","' + result[i]['price'] + '","' + tenureArry + '","' + streetArry + '","' + result[i]['propertyType'] + '","' + result[i]['typeOfSale'] + '","' + result[i]['marketSegment'] + '","' + ProjectArry + '","' + result[i]['x'] + '","' + result[i]['y'] + '")>View More</button></td></tr > ';
+
+                    //  $("#tbNames tbody").append(htmlApp);
+
+                }
+                htmlApp += "</tbody></table>";
+                $("#BuyDatatable").append(htmlApp);
+                $('#tbNames').DataTable();
+                document.getElementById("submit").disabled = false;
+            },
+            error: function (xhr, status, error) {
+                //$("#dataDiv").html("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText)
+            }
+        });
+
+        return false;
+    }
+    function OpenGraph() {
+
+        var Locations = document.getElementById("Locations").value;
+        window.location.href = "../Graph/Index?Location=" + Locations;
+        return false;
+    }
+    //function ViewMore(area,contractDate,district,floorRange,idtransaction,marketSegment,noOfUnits,price,project,propertyType,street,tenure,typeOfArea,typeOfSale,x,y) {
+    function ViewMore(FloorRange, LandArea, TypeofArea, Price, Tenure, Location, PropertyType, SaleType, MarketSegement, ProjectName, x, y) {
+        //debugger;
+        var LocationArry = Location.toString().split(",");
+        var TenureArry = Tenure.toString().split(",");
+        var ProjectArry = ProjectName.toString().split(",");
+        var LocationName = LocationArry.join(" ");
+        var TenureName = TenureArry.join(" ");
+        var projectName = ProjectArry.join(" ");
+
+        location.replace("../Buy/BuyerResult?FloorRange=" + FloorRange + "&LandArea=" + LandArea + "&TypeofArea=" + TypeofArea + "&Price=" + Price + "&Tenure=" + TenureName + "&Location=" + LocationName + "&PropertyType=" + PropertyType + "&SaleType=" + SaleType + "&MarketSegement=" + MarketSegement + "&ProjectName=" + projectName + "&x=" + x + "&y=" + y)
+        //window.location.href = '/Buy/BuyerResult/?area="area"&contractDate="contractDate"';
+    }
+</script>
+
