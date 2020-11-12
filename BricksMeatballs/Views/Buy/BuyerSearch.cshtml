@@ -53,7 +53,7 @@
     <div class="panel panel-primary panel-transparent">
         <div class="panel-body">
             <div class='panel-heading text-center panel-relative'>
-                <h3>Search</h3>
+                <h3>Buyer Search</h3>
                 <br />
                 <form>
                     <div class="row">
@@ -70,7 +70,7 @@
                         <div class="form-group col-sm-4">
                             <center>
                                 <select id="PriceRange" class="form-control">
-                                    <option value="" selected disabled> Price Range</option>
+                                    <option value=""> Price Range (SGD)</option>
                                     <option value="1">< 1,000,000</option>
                                     <option value="2">1,000,000 - 2,000,000</option>
                                     <option value="3">2,000,000 - 3,000,000</option>
@@ -90,7 +90,7 @@
                         <div class="form-group col-sm-4">
                             <center>
                                 <select id="SaleType" class="form-control">
-                                    <option value="" selected disabled> Sale Type</option>
+                                    <option value=""> Sale Type</option>
                                     <option value="1" name="New Sale">New Sale</option>
                                     <option value="2" name="Sub Sale">Sub Sale</option>
                                     <option value="3" name="Resale">Resale</option>
@@ -100,7 +100,7 @@
                         <div class="form-group col-sm-4">
                             <center>
                                 <select id="LandArea" class="form-control">
-                                    <option value="" selected disabled> Land Area</option>
+                                    <option value=""> Land Area (in square metre)</option>
                                     <option value="1"> < 100 </option>
                                     <option value="2"> 100 - 200</option>
                                     <option value="3"> 200 - 300</option>
@@ -113,7 +113,7 @@
                         <div class="form-group col-sm-4">
                             <center>
                                 <select class="form-control" id="FloorRange">
-                                    <option value="" selected disabled> Floor Range</option>
+                                    <option value=""> Floor Range</option>
                                     <option value="1">-</option>
                                     <option value="B1-B5">B1-B5</option>
                                     <option value="01-05">01-05</option>
@@ -146,6 +146,7 @@
 </div>
 <div class="col-10" id="ListDiv">
     <button onclick="return OpenGraph()" value="Graph" style="color:black;margin-left: 1000px;width: 201px;">View Graph Summary</button>
+    <br />
     <div class="container">
         @*<a asp-controller="Buy" asp-action="BuyerResult">*@
         <div class="panel panel-default">
@@ -181,39 +182,21 @@
             url: "/Buy/AjaxFilter?Locations=" + Locations + "&propertyTypes=" + propertyTypes + "&PriceRange=" + PriceRange + "&SaleType=" + SaleType + "&LandArea=" + LandArea + "&FloorRange=" + FloorRange,
             contentType: "application/json; charset=utf-8",
             data: Data,
-            // params: {
-            //     Location:"1" ,
-            //     Property: "2",
-
-            //},
             dataType: 'json',
             success: function (result, status, xhr) {
                 document.getElementById("submit").disabled = true;
-
-                // alert(result);
                 console.clear();
                 console.log(result)
-                //for (let i = 0; i < result.length; i++) {
-                //    result[i]
-                //  document.getElementById("TableHeader").style = "none";
-                //}
-                var htmlApp = "<table id='tbNames'><thead id='TableHeader' ><tr><th style='text-align: center;'>Nims Garden</th><th style='text-align: center;'>Street</th><th style='text-align: center;'>Floor Range</th><th style='text-align: center;'>Land Area</th><th style='text-align: center;'>Type of Area</th><th style='text-align: center;'>Price</th><th style='text-align: center;'>Tenure</th><th style='text-align: center;'>Detail</th></tr></thead><tbody>";
+                var htmlApp = "<table id='tbNames'><thead id='TableHeader' ><tr><th style='text-align: center;'>Project</th><th style='text-align: center;'>Street</th><th style='text-align: center;'>Floor Range</th><th style='text-align: center;'>Land Area</th><th style='text-align: center;'>Type of Area</th><th style='text-align: center;'>Price</th><th style='text-align: center;'>Tenure</th><th style='text-align: center;'>Detail</th></tr></thead><tbody>";
                 $("#BuyDatatable").empty();
                 for (var i = 0; i < result.length; i++) {
-
-                    //alert('called')
-                    htmlApp += "<tr><td class='border'>Nims Garden</td><td class='border'>" + result[i]["street"] + "</td><td class='border'>" + result[i]["floorRange"] + "</td>";
+                    htmlApp += "<tr><td class='border'>" + result[i]["project"] + "</td><td class='border'>" + result[i]["street"] + "</td><td class='border'>" + result[i]["floorRange"] + "</td>";
                     htmlApp += "<td class='border'>" + result[i]["area"] + "</td><td class='border'>" + result[i]["typeOfArea"] + "</td><td class='border'>" + result[i]["price"] + "</td><td class='border'>" + result[i]["tenure"] + "</td>";
                     //  debugger;
                     var streetArry = result[i]["street"].toString().split(" ");
                     var tenureArry = result[i]["tenure"].toString().split(" ");
                     var ProjectArry = result[i]["project"].toString().split(" ");
-
-
                     htmlApp += '<td><button onClick=ViewMore("' + result[i]['floorRange'] + '","' + result[i]['area'] + '","' + result[i]['typeOfArea'] + '","' + result[i]['price'] + '","' + tenureArry + '","' + streetArry + '","' + result[i]['propertyType'] + '","' + result[i]['typeOfSale'] + '","' + result[i]['marketSegment'] + '","' + ProjectArry + '","' + result[i]['x'] + '","' + result[i]['y'] + '")>View More</button></td></tr > ';
-
-                    //  $("#tbNames tbody").append(htmlApp);
-
                 }
                 htmlApp += "</tbody></table>";
                 $("#BuyDatatable").append(htmlApp);
@@ -233,9 +216,8 @@
         window.location.href = "../Graph/Index?Location=" + Locations;
         return false;
     }
-    //function ViewMore(area,contractDate,district,floorRange,idtransaction,marketSegment,noOfUnits,price,project,propertyType,street,tenure,typeOfArea,typeOfSale,x,y) {
+
     function ViewMore(FloorRange, LandArea, TypeofArea, Price, Tenure, Location, PropertyType, SaleType, MarketSegement, ProjectName, x, y) {
-        //debugger;
         var LocationArry = Location.toString().split(",");
         var TenureArry = Tenure.toString().split(",");
         var ProjectArry = ProjectName.toString().split(",");
@@ -244,7 +226,6 @@
         var projectName = ProjectArry.join(" ");
 
         location.replace("../Buy/BuyerResult?FloorRange=" + FloorRange + "&LandArea=" + LandArea + "&TypeofArea=" + TypeofArea + "&Price=" + Price + "&Tenure=" + TenureName + "&Location=" + LocationName + "&PropertyType=" + PropertyType + "&SaleType=" + SaleType + "&MarketSegement=" + MarketSegement + "&ProjectName=" + projectName + "&x=" + x + "&y=" + y)
-        //window.location.href = '/Buy/BuyerResult/?area="area"&contractDate="contractDate"';
     }
 </script>
 
