@@ -1,0 +1,510 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BricksMeatballs</name>
+    </assembly>
+    <members>
+        <member name="T:BricksMeatballs.BackgroundServices.TimedHostedService">
+            <summary>
+            Author: Huang Chaoshan, Lim Pei Yan
+            The TimeHostedService class is a background services which will automatically call the URA API after 7 days
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.BackgroundServices.TimedHostedService.#ctor(Microsoft.Extensions.Logging.ILogger{BricksMeatballs.BackgroundServices.TimedHostedService},System.IServiceProvider,BricksMeatballs.Services.UraService)">
+            <summary>
+            The TimeHostedService method intialise the logger, serviceProvider and uraService
+            </summary>
+            <param name="logger"></param>
+            <param name="serviceProvider"></param>
+            <param name="uraService"></param>
+        </member>
+        <member name="M:BricksMeatballs.BackgroundServices.TimedHostedService.StartAsync(System.Threading.CancellationToken)">
+            <summary>
+            The StartAsync method will do the task of calling api method and reset the counter 
+            </summary>
+            <param name="stoppingToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BricksMeatballs.BackgroundServices.TimedHostedService.CallApiAndUpdateDb">
+            <summary>
+            The method CallApiAndUpdateDb will call the API services and fetch the transaction result
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:BricksMeatballs.BackgroundServices.TimedHostedService.TruncateTable">
+            <summary>
+            Use to trucate the table in database
+            </summary>
+            <returns>Returns if the table has been truncated sucessfully</returns>
+        </member>
+        <member name="M:BricksMeatballs.BackgroundServices.TimedHostedService.StopAsync(System.Threading.CancellationToken)">
+            <summary>
+            The StopAsync method is to track the log when task finished.
+            </summary>
+            <param name="stoppingToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:BricksMeatballs.Controllers.BuyController">
+            <summary>
+            Author: Lim Pei Yan, Huang Chaoshan
+            Buy Controller
+            Contains routings and an AjaxFilter to filter data
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Controllers.BuyController.BuyerSearch">
+            <summary>
+            Proceed to Buyer Page
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Controllers.BuyController.BuyerResult">
+            <summary>
+            Proceed to BuyerResult Page
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Controllers.BuyController.AjaxFilter(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Retrieve data based on filters
+            </summary>
+            <returns>
+            Return a string containing result from query
+            </returns>
+        </member>
+        <member name="T:BricksMeatballs.Controllers.SellController">
+            <summary>
+            Author: Lim Pei Yan, Huang Chaoshan
+            Sell Controller
+            Contains routings and an AjaxFilter to filter data
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Controllers.SellController.SellerSearch">
+            <summary>
+            Proceed to Seller Page
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Controllers.SellController.SellerResult">
+            <summary>
+            Proceed to SellerResult Page
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Controllers.SellController.AjaxFilter(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Retrieve data based on filters
+            </summary>
+            <returns>
+            Return a string containing result from query
+            </returns>
+        </member>
+        <member name="T:BricksMeatballs.Dtos.PmiResidenceTransactionDto">
+            <summary>
+            The PmiResidenceTransactionDto defines the get set method for the JSON Property fetched from the api call
+            </summary>
+        </member>
+        <member name="T:BricksMeatballs.Dtos.PmiResidenceResultDto">
+            <summary>
+            The PmiResidenceResultDto defines the get set method for the JSON Property fetched from the api call
+            </summary>
+        </member>
+        <member name="T:BricksMeatballs.Dtos.PmiResidenceTransactionResponseDto">
+            <summary>
+            The PmiResidenceTransactionResponseDto defines the get set method for the JSON Property fetched from the api call
+            </summary>
+        </member>
+        <member name="T:BricksMeatballs.BricksMeatballs.Models.DBConnection">
+            <summary>
+            Author:Huang Chaoshan, Lim Pei Yan
+            The DBConnection defines the database connection string
+            </summary>
+        </member>
+        <member name="T:BricksMeatballs.Services.UraService">
+            <summary>
+            Author: Huang Chaoshan, Lim Pei Yan
+            The URA services is to make HTTP requests using  IHttpClientFactory to fetch the past transaction data from the URA API 
+            and convert the result and stored into database.
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Services.UraService.#ctor(System.Net.Http.HttpClient)">
+            <summary>
+            This method defines the api address, access key and token. Using all these information call the api. 
+            </summary>
+            <param name="httpClient"></param>
+        </member>
+        <member name="M:BricksMeatballs.Services.UraService.GetPMI_Resi_Transaction(System.Int32)">
+            <summary>
+            This method is a asynchronous task that will run the batch and get the response from the URA API 
+            and deserialize them to string
+            </summary>
+            <param name="batch"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BricksMeatballs.Services.UraService.InsertRecord(BricksMeatballs.Dtos.PmiResidenceTransactionResponseDto)">
+            <summary>
+            This method will insert into MySQL after the transaction result is successfully fetched from the api call
+            </summary>
+            <param name="objData"></param>
+        </member>
+        <member name="T:BricksMeatballs.Models.ChartViewModel">
+            <summary>
+            All chart models inherit from this class
+            </summary>
+        </member>
+        <member name="T:BricksMeatballs.Models.ChartDataAcess">
+            <summary>
+            Retrieve data to plot graph
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Models.ChartDataAcess.GetAvgPriceList(System.String)">
+            <summary>
+            Uses the dictionary returned from GetAllPrices to create a list of chartmodels with appropriate values
+             </summary>
+            <returns>
+            List of chart models with calculated average for the month and moving average across 3 months
+             </returns>
+        </member>
+        <member name="T:BricksMeatballs.Models.FinancialModel">
+            <summary>
+            The main Financial class
+            Used to calculate maximum property price and its required prerequisites
+            Contains all attributes user is required to input for calculation
+            Contains all methods for calculating prerequisite information and maximum property price
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.Age">
+            <summary>
+            Instance variable <c>Age</c> represents the user's age in years
+            Used to determine LTV ratio, and affects maximum house price.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.Residency">
+            <summary>
+            Instance variable <c>Residency</c> represents the user's citizenship status with respect to Singapore.
+            Used to determine BSD and ABSD values.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.NumProperties">
+            <summary>
+            Instance variable <c>NumProperties</c> represents the user's total number of properties owned.
+            Used to determine BSD and ABSD values.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.NumLoans">
+            <summary>
+            Instance variable <c>NumLoans</c> represents the user's current number of outstanding housing loans.
+            Used to determine LTV ratio, and affects maximum house price.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.MonthlyFixedIncome">
+            <summary>
+            Instance variable <c>MonthlyFixedIncome</c> represents the user's monthly fixed income.
+            Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.MonthlyVariableIncome">
+            <summary>
+            Instance variable <c>VariableFixedIncome</c> represents the user's variable fixed income. Discounted by 30% when used for computation.
+            Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.Cash">
+            <summary>
+            Instance variable <c>Cash</c> represents the user's currently available cash for a house downpayment.
+            Used to determine maximum house price, minimally at either 5%, 10% or 25% of maximum house price.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.Cpf">
+            <summary>
+            Instance variable <c>Cpf</c> represents the user's currently available cpf (ordinary account) for a house downpayment.
+            Used to determine maximum house price, between 20% to 60%
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.Credit">
+            <summary>
+            Instance variable <c>Credit</c> represents the user's credit card minimum payments.
+            Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.CarLoan">
+            <summary>
+            Instance variable <c>CarLoan</c> represents the user's payments on car loan(s).
+            Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.OtherHomeLoan">
+            <summary>
+            Instance variable <c>OtherHomeLoan</c> represents the user's payments on other home loan(s).
+            Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.OtherLoan">
+            <summary>
+            Instance variable <c>OtherLoan</c> represents the user's payments on all other loan(s).
+            Used to determine TDSR, MSR (if applicable), and maximum bank loan.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.PropertyType">
+            <summary>
+            Instance variable <c>PropertyType</c> represents the user's desired housing type to be purchased.
+            Used to determine if MSR is applicable (HDB or EC) or not applicable (Private).
+            Used to determine LTV value, and affects maximum house price.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.LoanTenure">
+            <summary>
+            Instance variable <c>LoanTenure</c> represents the user's desired duration of repayment for their home loan.
+            Used to determine maximum bank loan.
+            </summary>
+        </member>
+        <member name="P:BricksMeatballs.Models.FinancialModel.InterestRate">
+            <summary>
+            Instance variable <c>InterestRate</c> represents the anticipated interest rate of their home loan.
+            Used to determine maximum bank loan.
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.DoubleDisplay(System.Double)">
+            <summary>
+            Instance Method <c>DoubleDisplay</c> displays user's data in monetary format to 0 d.p.
+            </summary>
+            <returns>
+            A string in the format $XXXX where XXXX is the input double rounded to 0 d.p.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.LoanTenureDisplay">
+            <summary>
+            Instance Method <c>LoanTenureDisplay</c> displays user's desired loan tenure in years
+            </summary>
+            <returns>
+            A string in the format XX Years where XX is the user's input loan tenure.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.InterestRateDisplay">
+            <summary>
+            Instance Method <c>MSRLimitDisplay</c> displays interest rate in percentage format to 1 d.p.
+            </summary>
+            <returns>
+            A string in the format XX.X% where XX.X is the user's input interest rate rounded to 1 d.p.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.TDSRLimit">
+            <summary>
+            Instance Method <c>TDSRLimit</c> returns the user's maximum monthly repayment for their home loan for Private homes.
+            </summary>
+            <remarks>
+            Set at 60% of the sum of their monthly fixed income and their monthly variable income (discounted by 30%).
+            Used to determine maximum bank loan.
+            </remarks>
+            <returns>
+            The user's Total Debt Servicing Ratio.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.MSRLimit">
+            <summary>
+            Instance Method <c>MSRLimit</c> returns the user's maximum monthly repayment for their home loan for HDBs and ECs.
+            </summary>
+            <remarks>
+            Set at 30% of the sum of their monthly fixed income and their monthly variable income (discounted by 30%).
+            Used to determine maximum bank loan.
+            </remarks>
+            <returns>
+            The user's Mortgage Servicing Ratio.
+            </returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:BricksMeatballs.Models.FinancialModel.MaxMonthlyPayment" -->
+        <member name="M:BricksMeatballs.Models.FinancialModel.MaxBankLoan">
+            <summary>
+            Instance Method <c>MaxBankLoan</c> returns the user's maximum bank loan for their home.
+            </summary>
+            <remarks>
+            Determined by the maximum monthly payment, loan tenure, and interest rate.
+            </remarks>
+            <returns>
+            The user's maximum bank loan for their home.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.MSRLimitDisplay">
+            <summary>
+            Instance Method <c>MSRLimitDisplay</c> displays user's MSR Limit in monetary format to 0 d.p.
+            </summary>
+            <returns>
+            A string in the format $XXXX where XXXX is the user's MSR Limit or '-' if MSR if not applicable.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.CalculateBSD(System.Double)">
+            <summary>
+            Instance Method <c>CalculateBSD</c> returns payable buyer stamp duty given a house price.
+            </summary>
+            <remarks>
+            Determined via charging:
+            1% on first 180,000; 2% on second 180,000; 3% on third 640,000; 4% on rest of house price
+            </remarks>
+            <returns>
+            Payable Buyer Stamp Duty on an input home price.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.CalculateABSDPercentage">
+            <summary>
+            Instance Method <c>CalculateABSDPercentage</c> returns payable additional buyer stamp duty as a percentage of maximum house price.
+            </summary>
+            <remarks>
+            Determined from number of properties already owned.
+            Singaporeans are charged 0% for their 1st house, 12% on their 2nd, and 15% on any additional houses.
+            PRs are charged 5% for their 1st house, and 15% on any additional houses.
+            Foreigners 20% on all houses.
+            </remarks>
+            <returns>
+            The user's payable ABSD percentage in the form of a decimal.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.CalculateABSD(System.Double)">
+            <summary>
+            Instance Method <c>CalculateABSDPercentage</c> returns payable additional buyer stamp duty given a house price.
+            </summary>
+            <remarks>
+            Calculated by multiplying ABSD percentage by house price.
+            </remarks>
+            <returns>
+            Payable Additional Buyer Stamp Duty on an input home price.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.CalculateLTV">
+            <summary>
+            Instance Method <c>CalculateLTV</c> returns user's maximum loan-to-value ratio.
+            </summary>
+            <remarks>
+            Dependent upon number of current home loans outstanding, the property type desired, the loan tenure, and the age of the user.
+            Determined via:
+                If HDB, 
+                    if 0 loan:
+                        if loan tenure and age do not exceed 65 years and loan tenure does not exceed 25 years, LTV is 75%. Otherwise, it is 55%.
+                    if 1 loan:
+                        if loan tenure and age do not exceed 65 years and loan tenure does not exceed 25 years, LTV is 45%. Otherwise, it is 25%.
+                    if 2 loans or more:
+                        if loan tenure and age do not exceed 65 years and loan tenure does not exceed 25 years, LTV is 35%. Otherwise, it is 15%.
+                If EC or Private, 
+                    if 0 loan:
+                        if loan tenure and age do not exceed 65 years and loan tenure does not exceed 30 years, LTV is 75%. Otherwise, it is 55%.
+                    if 1 loan:
+                        if loan tenure and age do not exceed 65 years and loan tenure does not exceed 30 years, LTV is 45%. Otherwise, it is 25%.
+                    if 2 loans or more:
+                        if loan tenure and age do not exceed 65 years and loan tenure does not exceed 30 years, LTV is 35%. Otherwise, it is 15%.
+            </remarks>
+            <returns>
+            The user's maximum LTV ratio.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.CalculateCashDownpaymentPercentage">
+            <summary>
+            Instance Method <c>CalculateCashDownpaymentPercentage</c> returns user's minimum required cash downpayment as a percentage of total house price.
+            </summary>
+            <remarks>
+            Determined by maximum loan-to-value ratio.
+            Determined via:
+                If LTV is 0.75, cash downpayment is 5%
+                If LTV is 0.55, cash downpayment is 10%
+                If LTV is any other value, cash downpayment is 25%
+            </remarks>
+            <returns>
+            The user's minimum cash downpayment as a percentage of total house price.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.LTVDisplay">
+            <summary>
+            Instance Method <c>LTVDisplay</c> displays user's maximum loan-to-value ratio in percentage format to 0 d.p.
+            </summary>
+            <returns>
+            A string in the format XX% where XX is the user's maximum LTV ratio.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.CalculateTrueMax">
+            <summary>
+            Instance Method <c>MSRLimitDisplay</c> displays user's maximum affordable house price.
+            </summary>
+            <remarks>
+            Dependent upon LTV, cash available, cpf available, ABSD, and maximum bank loan.
+            </remarks>
+            <returns>
+            The user's maximum affordable house price.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.BSD">
+            <summary>
+            Instance Method <c>BSD</c> returns user's payable buyer stamp duty.
+            </summary>
+            <remarks>
+            Calculated based on user's maximum house price.
+            </remarks>
+            <returns>
+            The user's payable BSD.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.ABSD">
+            <summary>
+            Instance Method <c>ABSD</c> returns user's payable additional buyer stamp duty.
+            </summary>
+            <remarks>
+            Calculated based on user's maximum house price.
+            </remarks>
+            <returns>
+            The user's payable ABSD.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.CashDownpayment">
+            <summary>
+            Instance Method <c>CashDownpayment</c> returns user's payable cash downpayment.
+            </summary>
+            <remarks>
+            Calculated based on user's maximum house price.
+            </remarks>
+            <returns>
+            The user's payable cash downpayment.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Models.FinancialModel.CashCpfDownpayment">
+            <summary>
+            Instance Method <c>CashCpfDownpayment</c> returns user's payable cash and cpf downpayment.
+            </summary>
+            <remarks>
+            Calculated based on user's maximum house price.
+            </remarks>
+            <returns>
+            The user's payable deposit.
+            </returns>
+        </member>
+        <member name="M:BricksMeatballs.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+        </member>
+        <member name="M:BricksMeatballs.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+        </member>
+        <member name="T:PullData">
+            <summary>
+            Author: Huang Chaoshan, Lim Pei Yan
+            The PullData class get the dataset from the local MySQL database
+            </summary>
+        </member>
+        <member name="M:PullData.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            This method define the configuration
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:PullData.LoadData(System.String,System.String)">
+            <summary>
+            The LoadData method is to pull data from database to datatable
+            </summary>
+            <param name="query"></param>
+            <param name="dsName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:PullData.BindDropDownListCustomer(System.String,System.String)">
+            <summary>
+            The method will get the dropdown data selected by user and bind them with the value inside the database
+            </summary>
+            <param name="query"></param>
+            <param name="ChooseName"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

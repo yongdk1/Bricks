@@ -1,0 +1,154 @@
+﻿@*Author: Pei Yan, Chaoshan*@
+@{
+    ViewData["Title"] = "SellerResult";
+}
+@*<h1>@ViewData["Title"]</h1>*@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<style>
+
+    #bgSet {
+        background: url('../../images/background.jpg') no-repeat center center fixed;
+        background-size: cover;
+    }
+
+    .panel {
+        border-color: rgba(65, 65, 65, 0.8);
+    }
+
+    .panel-body {
+        color: white;
+    }
+
+    .panel-transparent {
+        background: none;
+    }
+
+        .panel-transparent .panel-body {
+            background: rgba(65, 65, 65, 0.8) !important;
+        }
+
+    .container-fluid {
+        margin-top: 10%;
+    }
+
+    select option[disabled]:first-child {
+        display: none;
+    }
+
+    .row {
+        margin: 20px;
+    }
+
+    .button {
+        margin-left: 30px;
+    }
+</style>
+
+<br />
+<div class="col-2" id="bgSet" style="background-color:red;">
+    <div class="panel panel-primary panel-transparent">
+        <div class="panel-body">
+            <div class='panel-heading text-center panel-relative'>
+                <br />
+                <h1><span id="ProjectName"></span></h1>@*Project Name*@
+                <h1>Street: <span id="Location1"></span> </h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6">
+
+            <p><iframe id="iframejugar" style="width:400px;height:400px;" src="https://www.onemap.sg/minimap/mm.html?mapStyle=Default&zoomLevel=17&latLng=0,0&ewt=JTNDcCUzRSUzQ3N0cm9uZyUzRVBsZWFzZSUyMGVudGVyJTIweW91ciUyMFRleHQlMjBpbiUyMHRoZSUyMFBvcHVwJTIwQ3JlYXRvci4lM0MlMkZzdHJvbmclM0UlM0NiciUyMCUyRiUzRSUzQ2ltZyUyMHNyYyUzRCUyMmh0dHBzJTNBJTJGJTJGZG9jcy5vbmVtYXAuc2clMkZpbWFnZXMlMkZsb2dvLnBuZyUyMiUyMCUyRiUzRSUzQ2JyJTIwJTJGJTNFJTNDYnIlMjAlMkYlM0UlM0NhJTIwaHJlZiUzRCUyMmh0dHBzJTNBJTJGJTJGd3d3Lm9uZW1hcC5zZyUyRiUyMiUzRU5ldyUyME9uZU1hcCUzQyUyRmElM0UlM0MlMkZwJTNF&popupWidth=500&showPopup=false"></iframe></p>
+        </div>
+        <div class="col-sm-6">
+            <p>Floor Range: <span id="FloorRange"></span></p>
+            <p>Land Area: <span id="LandArea"></span></p>
+            <p>Type of Area: <span id="TypeOfArea"></span></p>
+            <p>Price: <span id="Price"></span></p>
+            <p>Tenure: <span id="Tenure"></span></p>
+            <p>Location: <span id="Location"></span></p>
+            <p>Property Type: <span id="PropertyType"></span></p>
+            <p>SaleType: <span id="SaleType"></span></p>
+            <p>Market Segement: <span id="MarketSegement"></span></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        SettingValues();
+        //GenerateTokenForMap();
+        function GenerateTokenForMap(x, y) {
+            //alert("GenerateTokenForMap");
+            var settings = {
+                "url": "https://developers.onemap.sg/privateapi/auth/post/getToken",
+                "data":
+                {
+                    "email": "2006bricks@gmail.com",
+                    "password": "Bricks2006"
+                },
+                "async": "true"
+            }
+
+            $.post(settings).done(function (response) {
+                var token = response.access_token;
+                console.log(token);
+                getMapList(x, y, token);
+
+            })
+                .fail(function (xhr, textStatus, errorThrown) {
+
+                    GenerateTokenForMap(x, y)
+                });
+        }
+        function getMapList(x, y, token) {
+            if (x == null || x == "" || y == null || y == "") {
+                document.getElementById('iframejugar').src = "../Home/MapNotAvailable";
+                return "";
+            }
+
+            $.ajax({
+
+
+                url: 'https://developers.onemap.sg/privateapi/commonsvc/revgeocodexy?location=' + x + ',' + y + '&token=' + token,
+                //url: 'https://developers.onemap.sg/privateapi/commonsvc/revgeocodexy?location=' + 24291.97788882387 + ',' + 31373.0117224489 + '&token=' + token,
+                success: function (result) {
+                    var test = result["GeocodeInfo"];
+                    var test1 = test["0"];
+                    var LATITUDE = test1["LATITUDE"];
+                    var LONGTITUDE = test1["LONGTITUDE"];
+                    var URL = "https://www.onemap.sg/minimap/mm.html?mapStyle=Default&zoomLevel=17&latLng=" + LATITUDE + "," + LONGTITUDE + "&ewt=" + token + "&popupWidth=500&showPopup=false";
+                    document.getElementById('iframejugar').src = URL;
+
+                    //document.getElementById('iframejugar').innerHTML = "";
+                },
+                error: function () {
+                    document.getElementById('iframejugar').src = "../Home/MapNotAvailable";
+                }
+
+            });
+        }
+        function SettingValues() {
+
+            const urlParams = new URLSearchParams(window.location.search);
+            document.getElementById("FloorRange").innerHTML = urlParams.get('FloorRange');
+            document.getElementById("LandArea").innerHTML = urlParams.get('LandArea');
+            document.getElementById("TypeOfArea").innerHTML = urlParams.get('TypeofArea');
+            document.getElementById("Price").innerHTML = urlParams.get('Price');
+            document.getElementById("Tenure").innerHTML = urlParams.get('Tenure');
+            document.getElementById("Location").innerHTML = urlParams.get('Location');
+            document.getElementById("Location1").innerHTML = urlParams.get('Location');
+            document.getElementById("PropertyType").innerHTML = urlParams.get('PropertyType');
+            document.getElementById("SaleType").innerHTML = urlParams.get('SaleType');
+            document.getElementById("MarketSegement").innerHTML = urlParams.get('MarketSegement');
+            document.getElementById("ProjectName").innerHTML = urlParams.get('ProjectName');
+
+            var x = urlParams.get('x');
+            var y = urlParams.get('y');
+            GenerateTokenForMap(x, y);
+
+        }
+    });
+</script>
